@@ -9,11 +9,6 @@ public class UI_Inven : UIScene
         GridPanel
     }
 
-    void Start()
-    {
-        Init();
-    }
-
     public override void Init()
     {
         base.Init();

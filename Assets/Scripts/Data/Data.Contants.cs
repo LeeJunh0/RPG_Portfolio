@@ -3,28 +3,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-#region Stat
-[Serializable]
-public class Stat
+namespace Data
 {
-    public int level;
-    public int hp;
-    public int attack;
-}
-
-[Serializable]
-public class StatData : ILoader<int, Stat>
-{
-    public List<Stat> stats = new List<Stat>();
-
-    public Dictionary<int, Stat> MakeDict()
+    #region Stat
+    [Serializable]
+    public class Stat
     {
-        Dictionary<int, Stat> Dict = new Dictionary<int, Stat>();
-
-        foreach (Stat stat in stats)
-            Dict.Add(stat.level, stat);
-
-        return Dict;
+        public int level;
+        public int hp;
+        public int attack;
+        public int totalExp;
     }
+
+    [Serializable]
+    public class StatData : ILoader<int, Stat>
+    {
+        public List<Stat> stats = new List<Stat>();
+
+        public Dictionary<int, Stat> MakeDict()
+        {
+            Dictionary<int, Stat> Dict = new Dictionary<int, Stat>();
+
+            foreach (Stat stat in stats)
+                Dict.Add(stat.level, stat);
+
+            return Dict;
+        }
+    }
+    #endregion
 }
-#endregion
+

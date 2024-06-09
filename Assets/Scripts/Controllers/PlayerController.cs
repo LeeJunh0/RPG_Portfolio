@@ -3,105 +3,162 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : BaseController
 {
-    [SerializeField]
-    float Speed = 10.0f;
-    Vector3 DestPos;
+    int mask = (1 << (int)Define.Layer.Ground) | (1 << (int)Define.Layer.Monster);
 
-    Animator anim;
-    float Wait_Run_Ratio = 0.0f;
+    PlayerStat stat;
+    bool stopSkill = false;
 
-    void Start()
+    public override void Init()
     {
-        anim = GetComponent<Animator>();
-        Managers.Input.MouseAction -= OnMouseClicked;
-        Managers.Input.MouseAction += OnMouseClicked;  
+        WorldObjectType = Define.WorldObject.Player;
+        stat = gameObject.GetComponent<PlayerStat>();
+        Managers.Input.MouseAction -= OnMouseEvent;
+        Managers.Input.MouseAction += OnMouseEvent;
+        Managers.UI.MakeWorldSpaceUI<UI_HPBar>(transform);
     }
 
-    public enum PlayerState
+    protected override void UpdateMove()
     {
-        Idle,
-        Move,
-        Die,
-    }
+        if(lockTarget != null)
+        {
+            float distance = (DestPos - transform.position).magnitude;
 
-    PlayerState curState = PlayerState.Idle;
+            if(distance <= 1.5f)
+            {
+                State = Define.State.Skill;
+                return;
+            }
+        }
 
-    void UpdateMove()
-    {
         Vector3 dir = DestPos - transform.position;
+        dir.y = 0;
         if (dir.magnitude < 0.1f)
         {
-            curState = PlayerState.Idle;
+            State = Define.State.Idle;
         }
         else
         {
-            NavMeshAgent agent = gameObject.GetOrAddComponent<NavMeshAgent>();
-
-            float Movedis = Mathf.Clamp(Speed * Time.deltaTime, 0f, dir.magnitude);
-            agent.Move(dir.normalized * Movedis);
-
             Debug.DrawRay(transform.position, dir.normalized, Color.green);
             if (Physics.Raycast(transform.position + Vector3.up * 0.5f, dir, 1.0f, LayerMask.GetMask("Block")))
             {
-                curState = PlayerState.Idle;
+                if (Input.GetMouseButton(0) == false)
+                    State = Define.State.Idle;
                 return;
             }
-            
-
-            //transform.position += dir.normalized * Movedis;
+            float Movedis = Mathf.Clamp(stat.Movespeed * Time.deltaTime, 0f, dir.magnitude);
+            transform.position += dir.normalized * Movedis;
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 10f * Time.deltaTime);
         }
 
-        // 애니메이션
-        Wait_Run_Ratio = Mathf.Lerp(Wait_Run_Ratio, 1, 10 * Time.deltaTime);
-        anim.SetFloat("Wait_Run_Ratio", Wait_Run_Ratio);
-        anim.Play("Wait_Run");
     }
 
-    void UpdateIdle()
+    protected override void UpdateIdle()
     {
-        // 애니메이션
-        Wait_Run_Ratio = Mathf.Lerp(Wait_Run_Ratio, 0, 10 * Time.deltaTime);
-        anim.SetFloat("Wait_Run_Ratio", Wait_Run_Ratio);
-        anim.Play("Wait_Run");
+
     }
 
-    void UpdateDie()
+    protected override void UpdateDie()
     {
 
+    }
+
+    protected override void UpDateSkill()
+    {
+        if (lockTarget != null)
+        {
+            Vector3 dir = lockTarget.transform.position - transform.position;
+            Quaternion quat = Quaternion.LookRotation(dir);
+            transform.rotation = Quaternion.Lerp(transform.rotation, quat, 20 * Time.deltaTime);
+        }
+    }
+
+    void OnHitEvent()
+    {
+        if(lockTarget != null)
+        {
+            Stat targetStat = lockTarget.GetComponent<Stat>();
+            targetStat.OnDamaged(stat);
+        }
+
+        if(stopSkill == true)
+        {
+            State = Define.State.Idle;
+        }
+        else
+        {
+            State = Define.State.Skill;
+        }
+        
     }
 
     void Update()
     {
-        switch (curState)
+        switch (State)
         {
-            case PlayerState.Idle:
+            case Define.State.Idle:
                 UpdateIdle();
                 break;
-            case PlayerState.Move:
+            case Define.State.Move:
                 UpdateMove();
                 break;
-            case PlayerState.Die:
+            case Define.State.Die:
                 UpdateDie();
+                break;
+            case Define.State.Skill:
+                UpDateSkill();
                 break;
         }
     }
 
-    void OnMouseClicked(Define.MouseEvent evt)
+    void OnMouseEvent(Define.MouseEvent evt)
     {
-        if (evt != Define.MouseEvent.Click)
-            return;
-
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        //Debug.DrawRay(Camera.main.transform.position, ray.direction * 100.0f, Color.green, 1.0f);
-
-        RaycastHit hit;
-        if(Physics.Raycast(ray,out hit,100.0f,LayerMask.GetMask("Wall")))
+        switch (State)
         {
-            DestPos = hit.point;
-            curState = PlayerState.Move;
+            case Define.State.Idle:
+                OnMouseEvent_IdelRun(evt);
+                break;
+            case Define.State.Move:
+                OnMouseEvent_IdelRun(evt);
+                break;
+            case Define.State.Die:
+                break;
+            case Define.State.Skill:
+                if (evt == Define.MouseEvent.PointerUp)
+                    stopSkill = true;
+                break;
+        }
+    }
+
+    void OnMouseEvent_IdelRun(Define.MouseEvent evt)
+    {
+        RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        bool raycastHit = Physics.Raycast(ray, out hit, 100.0f, mask);
+
+        switch (evt)
+        {
+            case Define.MouseEvent.PointerDown:
+                if (raycastHit == true)
+                {
+                    DestPos = hit.point;
+                    State = Define.State.Move;
+                    stopSkill = false;
+
+                    if (hit.collider.gameObject.layer == (int)Define.Layer.Monster)
+                        lockTarget = hit.collider.gameObject;
+                    else
+                        lockTarget = null;
+                }
+                break;
+            case Define.MouseEvent.Press:
+                if (lockTarget == null && raycastHit)
+                    DestPos = hit.point;
+                break;
+            case Define.MouseEvent.PointerUp:
+                stopSkill = true;
+                break;
         }
     }
 }
