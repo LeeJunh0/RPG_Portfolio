@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LoginScene : BaseScene
+public class TitleScene : BaseScene
 {
     public override void Clear()
     {
@@ -20,6 +20,6 @@ public class LoginScene : BaseScene
     {
         base.Init();
 
-        SceneType = Define.Scene.Login;
+        SceneType = Define.Scene.Title;
     }
 }
