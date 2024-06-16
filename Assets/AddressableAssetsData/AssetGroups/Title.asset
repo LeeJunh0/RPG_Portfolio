@@ -20,7 +20,23 @@ MonoBehaviour:
   - m_GUID: 423ce65c865677246a51c82a53c9c8cf
     m_Address: UI_Title
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Title
+  - m_GUID: 7518c764a92eafd43b4b4758896159cf
+    m_Address: StatData
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Title
+  - m_GUID: 36b189f20f7dad941816f0add8261596
+    m_Address: UI_LoadingScreen
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Title
+  - m_GUID: 3d1e848eda795dc4db083be83319cd07
+    m_Address: EventSystem
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Title
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: c8c0863d2f111984fb854a8e225b02ad, type: 2}
   m_SchemaSet:

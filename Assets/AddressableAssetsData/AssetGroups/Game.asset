@@ -16,7 +16,52 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 727f55a33a0a1ba4f8428f8041471dc3
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 43a78fceefa01df4288b1b3eea1784b4
+    m_Address: Player
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+  - m_GUID: e301819cf47e38e4f98f4a4161f3dd9c
+    m_Address: Knight
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+  - m_GUID: fc5a61295caaf8844b48d7fd500df811
+    m_Address: UI_HPBar
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+  - m_GUID: a1a54c5479259ec48802aea30c170090
+    m_Address: UI_Inven
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+  - m_GUID: 9faca31c6e5e77e408406bd6c803b17b
+    m_Address: UIButton
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+  - m_GUID: d61ae44232b0eae46924eaf7f9c66c1e
+    m_Address: UI_Inven_Item
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+  - m_GUID: 58dfbf39eee62f74aa8ab1183b776b2c
+    m_Address: loot
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+  - m_GUID: 24d21e256b498a944a00e2527ed7618c
+    m_Address: Attack
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+  - m_GUID: 0f45821c9378469498c0044ff9068ea2
+    m_Address: Hand
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: c8c0863d2f111984fb854a8e225b02ad, type: 2}
   m_SchemaSet:

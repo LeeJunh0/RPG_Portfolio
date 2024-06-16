@@ -10,8 +10,8 @@ public class CursorController : MonoBehaviour
 
     void Start()
     {
-        attackIcon = Managers.Resource.Load<Texture2D>("Textures/Cursor/Attack");
-        handIcon = Managers.Resource.Load<Texture2D>("Textures/Cursor/Hand");
+        attackIcon = Managers.Resource.Load<Texture2D>("Attack");
+        handIcon = Managers.Resource.Load<Texture2D>("Hand");
     }
 
     void Update()

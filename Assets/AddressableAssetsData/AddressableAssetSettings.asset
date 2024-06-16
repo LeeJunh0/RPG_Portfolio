@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 468a46d0ae32c3544b7d98094e6448a9, type: 3}
   m_Name: AddressableAssetSettings
   m_EditorClassIdentifier: 
-  m_DefaultGroup: e3b0c2d14abf69e40850d7ade63c0fd8
+  m_DefaultGroup: 14370262682ba3646b8fdfe4fbcdb1da
   m_CachedHash:
     serializedVersion: 2
     Hash: 00000000000000000000000000000000
@@ -42,7 +42,6 @@ MonoBehaviour:
   m_overridePlayerVersion: 
   m_GroupAssets:
   - {fileID: 11400000, guid: c3414862c6a6b484e91ba30d0afa59fd, type: 2}
-  - {fileID: 11400000, guid: d4b124bb1ad37124ab820d48d7aebf9e, type: 2}
   - {fileID: 11400000, guid: a4e4e6381fe0fa24ca93514d593df2f9, type: 2}
   - {fileID: 11400000, guid: dd2e96a6c9211794993e2537cce7a1ed, type: 2}
   m_BuildSettings:
@@ -85,7 +84,8 @@ MonoBehaviour:
     m_ProfileVersion: 1
   m_LabelTable:
     m_LabelNames:
-    - default
+    - Title
+    - Game
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 66ffd14a1de387241a5cde1dad502027, type: 2}

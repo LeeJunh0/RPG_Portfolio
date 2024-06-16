@@ -12,16 +12,25 @@ public class UI_TitleScene : UIBase
         ExitButton,
     }
 
-    public override void Init()
-    {
-        StartLoad();
+    GameObject startButton;
+    GameObject optionButton;
+    GameObject exitButton;
 
+    public override void Init()
+    { 
         Bind<Button>(typeof(GameObjects));
+
+        startButton = GetButton((int)GameObjects.StartButton).gameObject;
+        optionButton = GetButton((int)GameObjects.OptionButton).gameObject;
+        exitButton = GetButton((int)GameObjects.ExitButton).gameObject;
+
         GetButton((int)GameObjects.StartButton).gameObject.BindEvent((evt) =>
         {
             Debug.Log("Change Scene ..");
             //TODO  - 비동기로딩
-            Managers.Scene.LoadScene(Define.Scene.Game);    
+            
+            UILoading loader = Managers.Resource.Instantiate("UI_LoadingScreen").GetOrAddComponent<UILoading>();
+            loader.Loading(Define.Scene.Game);
         });
         GetButton((int)GameObjects.OptionButton).gameObject.BindEvent((evt) =>
         {
@@ -31,19 +40,27 @@ public class UI_TitleScene : UIBase
         {
             Debug.Log("Game Off");
         });
+
+        startButton.SetActive(false);
+        optionButton.SetActive(false);
+        exitButton.SetActive(false);
+
+        StartLoad();
     }
 
     void StartLoad()
     {
+        Debug.Log($"Title Loading!");
         Managers.Resource.LoadAllAsync<Object>("Title", (key, count, total) =>
         {
             Debug.Log($"{key} {count}/{total}");
-
             if(count >= total)
             {
-                GetObject((int)GameObjects.StartButton).SetActive(true);
-                GetObject((int)GameObjects.OptionButton).SetActive(true);                
-                GetObject((int)GameObjects.OptionButton).SetActive(true);
+                Managers.Data.Init();
+
+                startButton.SetActive(true);
+                optionButton.SetActive(true);
+                exitButton.SetActive(true);
             }
         });
     }

@@ -13,40 +13,32 @@ public class ResourceManager
     Dictionary<string, Object> resourceDic = new Dictionary<string, Object>();
     Dictionary<string, AsyncOperationHandle> handleDic = new Dictionary<string, AsyncOperationHandle>();
 
-    public T Load<T>(string path) where T : Object
+    public T Load<T>(string key) where T : Object
     {
-        if(typeof(T) == typeof(GameObject))
-        {
-            string name = path;
-            int index = name.LastIndexOf('/');
-            
-            if(index >= 0)
-                name = name.Substring(index + 1);
+        if (resourceDic.TryGetValue(key, out Object resource))
+            return resource as T;
 
-            GameObject go = Managers.Pool.GetOriginal(name);
-            if (go != null)
-                return go as T;
-        }
-        return Resources.Load<T>(path);
+        return null;
     }
 
-    public GameObject Instantiate(string path, Transform parent = null)
+    public GameObject Instantiate(string key, Transform parent = null)
     {
-        GameObject original = Load<GameObject>($"Prefabs/{path}");
-        if(original == null)
+        GameObject prefab = Load<GameObject>(key);
+        if(prefab == null)
         {
-            Debug.Log($"Failed to load Prefab : {path}");
+            Debug.Log($"Failed to load Prefab : {key}");
             return null;
         }
 
-        if (original.GetComponent<Poolable>() != null)
-            return Managers.Pool.Pop(original, parent).gameObject;
+        if (prefab.GetComponent<Poolable>() != null)
+            return Managers.Pool.Pop(prefab, parent).gameObject;
 
-        GameObject go = Object.Instantiate(original, parent);
-        go.name = original.name;
+        GameObject go = Object.Instantiate(prefab, parent);
+        go.name = prefab.name;
 
         return go;
     }
+
     public void Destroy(GameObject Go)
     {
         if (Go == null)
@@ -92,6 +84,7 @@ public class ResourceManager
             {
                 LoadAsync<T>(result.PrimaryKey, (obj) =>
                 {
+                    curCount++;
                     callback.Invoke(result.PrimaryKey, curCount, totalCount);
                 });
             }
