@@ -15,9 +15,16 @@ public class UILoading : UIScene
 
     private void OnEnable()
     {
-        Canvas canvas = GetComponent<Canvas>();
-        canvas.sortingOrder = 2;
         slider.value = 0.0f;
+
+
+        Managers.UI.SetCanvas(gameObject);
+        //Canvas[] objects = FindObjectsOfType<Canvas>();
+        //foreach (Canvas go in objects)
+        //{
+        //    if (go.gameObject.name != "UI_LoadingScreen(Clone)")
+        //        go.gameObject.SetActive(false);
+        //}
     }
 
     public void Loading(Define.Scene type)

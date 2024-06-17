@@ -9,8 +9,10 @@ public class Managers : MonoBehaviour
 
     #region Contents
     GameManager _game = new GameManager();
+    OptionManager _option = new OptionManager();
 
     public static GameManager Game { get { return Instance._game; } }
+    public static OptionManager Option { get { return Instance._option; } }
     #endregion
 
     #region Core
@@ -21,16 +23,16 @@ public class Managers : MonoBehaviour
     SceneManagerEx _scene = new SceneManagerEx();
     SoundManager _sound = new SoundManager();
     UIManager _ui = new UIManager();
-    #endregion
-
 
     public static DataManager Data { get { return Instance._data; } }
     public static InputManager Input { get { return Instance._input; } }
     public static ResourceManager Resource { get { return Instance._resource; } }
     public static PoolManager Pool { get { return Instance._pool; } }
-    public static SceneManagerEx Scene { get { return Instance._scene; } } 
+    public static SceneManagerEx Scene { get { return Instance._scene; } }
     public static SoundManager Sound { get { return Instance._sound; } }
     public static UIManager UI { get { return Instance._ui; } }
+    #endregion
+
 
     void Start()
     {
@@ -56,7 +58,6 @@ public class Managers : MonoBehaviour
             s_instance = go.GetComponent<Managers>();
             DontDestroyOnLoad(go);
 
-            //s_instance._data.Init();
             s_instance._sound.Init();
             s_instance._pool.Init();
         }
