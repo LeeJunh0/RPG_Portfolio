@@ -65,30 +65,29 @@ public class SoundManager
         audioClips.Clear();
     }
 
-    AudioClip GetorAddAudioClip(string path, Define.Sound type = Define.Sound.Effect)
+    AudioClip GetorAddAudioClip(string key, Define.Sound type = Define.Sound.Effect)
     {
-        if (path.Contains("Sounds/") == false)
-            path = $"Sounds/{path}";
-
         AudioClip audioclip = null;
 
         if (type == Define.Sound.Bgm)
         {
-            AudioClip audioClip = Managers.Resource.Load<AudioClip>(path);
+            AudioClip audioClip = Managers.Resource.Load<AudioClip>(key);
             if (audioClip == null)            
-                Debug.Log($"AudioClip Missing ! {path}");
+                Debug.Log($"AudioClip Missing ! {key}");
         }
         else
         {
-            if (audioClips.TryGetValue(path, out audioclip) == false)
+            if (audioClips.TryGetValue(key, out audioclip) == false)
             {
-                audioclip = Managers.Resource.Load<AudioClip>(path);
-                audioClips.Add(path, audioclip);
+                audioclip = Managers.Resource.Load<AudioClip>(key);
+                audioClips.Add(key, audioclip);
             }
 
             if (audioclip == null)           
-                Debug.Log($"AudioClip Missing ! {path}");
+                Debug.Log($"AudioClip Missing ! {key}");
         }  
         return audioclip;
     }
+
+    public AudioSource GetAudioSource(Define.Sound type) { return audioSources[(int)type]; }
 }

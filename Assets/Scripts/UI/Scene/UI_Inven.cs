@@ -27,9 +27,4 @@ public class UI_Inven : UIScene
             invenitem.SetInfo($"집행검{i}번");
         }
     }
-
-    void Update()
-    {
-        
-    }
 }

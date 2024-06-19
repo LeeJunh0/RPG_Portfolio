@@ -70,4 +70,5 @@ public abstract class UIBase : MonoBehaviour
     protected Text GetText(int idx) { return Get<Text>(idx); }
     protected Image GetImage(int idx) { return Get<Image>(idx); }
     protected Button GetButton(int idx) { return Get<Button>(idx); }
+    protected Slider GetSlider(int idx) { return Get<Slider>(idx); }
 }
