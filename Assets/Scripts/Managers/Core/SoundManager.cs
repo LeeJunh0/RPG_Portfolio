@@ -71,8 +71,8 @@ public class SoundManager
 
         if (type == Define.Sound.Bgm)
         {
-            AudioClip audioClip = Managers.Resource.Load<AudioClip>(key);
-            if (audioClip == null)            
+            audioclip = Managers.Resource.Load<AudioClip>(key);
+            if (audioclip == null)            
                 Debug.Log($"AudioClip Missing ! {key}");
         }
         else

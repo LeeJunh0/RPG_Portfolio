@@ -19,7 +19,6 @@ public class UI_TitleScene : UIBase
     public override void Init()
     { 
         Bind<Button>(typeof(GameObjects));
-        Managers.Sound.Play("univ0015", Define.Sound.Bgm);
         startButton = GetButton((int)GameObjects.StartButton).gameObject;
         optionButton = GetButton((int)GameObjects.OptionButton).gameObject;
         exitButton = GetButton((int)GameObjects.ExitButton).gameObject;
@@ -27,9 +26,7 @@ public class UI_TitleScene : UIBase
         startButton.BindEvent((evt) =>
         {
             Debug.Log("Change Scene ..");
-            //TODO  - 비동기로딩
-            
-            UILoading loader = Managers.Resource.Instantiate("UI_LoadingScreen").GetOrAddComponent<UILoading>();
+            UILoading loader = Managers.UI.ShowPopupUI<UILoading>("UI_LoadingScreen");
             loader.Loading(Define.Scene.Game);
         });
         optionButton.BindEvent((evt) =>
@@ -40,13 +37,14 @@ public class UI_TitleScene : UIBase
         exitButton.BindEvent((evt) =>
         {
             Debug.Log("Game Off");
+            Managers.UI.ShowPopupUI<UI_Exit>("UI_ExitScreen");
         });
 
         startButton.SetActive(false);
         optionButton.SetActive(false);
         exitButton.SetActive(false);
 
-        StartLoad();
+        StartLoad();        
     }
 
     void StartLoad()
@@ -62,6 +60,8 @@ public class UI_TitleScene : UIBase
                 startButton.SetActive(true);
                 optionButton.SetActive(true);
                 exitButton.SetActive(true);
+
+                Managers.Sound.Play("Happy", Define.Sound.Bgm);
             }
         });
     }

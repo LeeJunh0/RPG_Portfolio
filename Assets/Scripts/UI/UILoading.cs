@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UILoading : UIScene
+public class UILoading : UIPopup
 {
     Slider slider;
 
@@ -16,15 +16,6 @@ public class UILoading : UIScene
     private void OnEnable()
     {
         slider.value = 0.0f;
-
-
-        Managers.UI.SetCanvas(gameObject);
-        //Canvas[] objects = FindObjectsOfType<Canvas>();
-        //foreach (Canvas go in objects)
-        //{
-        //    if (go.gameObject.name != "UI_LoadingScreen(Clone)")
-        //        go.gameObject.SetActive(false);
-        //}
     }
 
     public void Loading(Define.Scene type)

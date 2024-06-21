@@ -43,9 +43,15 @@ MonoBehaviour:
     m_SerializedLabels:
     - Title
   - m_GUID: bea93a38b71b64b598109b3a3b1a0048
-    m_Address: Sounds/BGM/Happy
+    m_Address: Happy
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Title
+  - m_GUID: dd52dc132b0224c4fa58756e288671c5
+    m_Address: UI_ExitScreen
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Title
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: c8c0863d2f111984fb854a8e225b02ad, type: 2}
   m_SchemaSet:
