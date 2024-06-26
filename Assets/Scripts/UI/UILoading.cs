@@ -6,16 +6,23 @@ using UnityEngine.UI;
 public class UILoading : UIPopup
 {
     Slider slider;
+    Text tipText;
 
+    [SerializeField]
+    string[] tipArr;
     private void Awake()
     {
         slider = Util.FindChild<Slider>(gameObject, "LoadingBar");
+        tipText = Util.FindChild<Text>(gameObject, "LoadingTip");
         DontDestroyOnLoad(this.gameObject);
     }
 
     private void OnEnable()
     {
         slider.value = 0.0f;
+        int random = Random.Range(0, tipArr.Length);
+        Debug.Log(random);
+        tipText.text = tipArr[random];
     }
 
     public void Loading(Define.Scene type)

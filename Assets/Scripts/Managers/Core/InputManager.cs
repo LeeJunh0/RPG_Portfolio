@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class InputManager
 {
-    public Action KeyAction = null;
+    public Action<KeyCode> KeyAction = null;
     public Action<Define.MouseEvent> MouseAction = null;
 
     bool pressed = false;
@@ -13,12 +13,20 @@ public class InputManager
 
     public void OnUpdate()
     {
-        if(Input.anyKey &&KeyAction != null)
+        if(KeyAction != null)
         {
-            KeyAction.Invoke();
+            if (Input.GetKeyDown(BindKey.Inventory))
+                KeyAction.Invoke(BindKey.Inventory);
+            else if (Input.GetKeyDown(BindKey.Quest))
+                KeyAction.Invoke(BindKey.Quest);
+            else if (Input.GetKeyDown(BindKey.Skill))
+                KeyAction.Invoke(BindKey.Skill);
+            else if (Input.GetKeyDown(BindKey.Pause))
+                KeyAction.Invoke(BindKey.Pause);
         }
 
-        if(MouseAction != null)
+
+        if (MouseAction != null)
         {
             if(Input.GetMouseButton(0))
             {

@@ -33,12 +33,6 @@ public class Managers : MonoBehaviour
     public static UIManager UI { get { return Instance._ui; } }
     #endregion
 
-
-    void Start()
-    {
-
-    }
-
     void Update()
     {
         _input.OnUpdate();
@@ -58,6 +52,7 @@ public class Managers : MonoBehaviour
             s_instance = go.GetComponent<Managers>();
             DontDestroyOnLoad(go);
 
+            BindKey.Init();
             s_instance._sound.Init();
             s_instance._pool.Init();
         }

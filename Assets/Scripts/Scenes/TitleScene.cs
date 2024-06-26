@@ -8,17 +8,4 @@ public class TitleScene : BaseScene
     {
         Debug.Log("TitleScene Clear!");
     }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Q))
-        {
-            Managers.Scene.LoadScene(Define.Scene.Game);
-        }
-    }
-    protected override void Init()
-    {
-        base.Init();
-        SceneType = Define.Scene.Title;
-    }
 }

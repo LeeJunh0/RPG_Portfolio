@@ -423,6 +423,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StartButton
       objectReference: {fileID: 0}
+    - target: {fileID: 5801598893889212964, guid: 423ce65c865677246a51c82a53c9c8cf, type: 3}
+      propertyPath: m_Text
+      value: 3D RPG TITLE
+      objectReference: {fileID: 0}
     - target: {fileID: 5801598894489907200, guid: 423ce65c865677246a51c82a53c9c8cf, type: 3}
       propertyPath: m_AnchorMax.x
       value: 1
