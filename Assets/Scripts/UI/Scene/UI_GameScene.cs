@@ -13,7 +13,7 @@ public class UI_GameScene : UIBase
     void OnKeyEvent(KeyCode key)
     {
         if (key == BindKey.Inventory)
-            OnInventory();
+            OnGameUIPopup<UI_Inven>();
         else if (key == BindKey.Quest)
             OnQuest();
         else if (key == BindKey.Skill)
@@ -22,6 +22,17 @@ public class UI_GameScene : UIBase
             OnPause();
         else
             return;
+    }
+
+    void OnGameUIPopup<T>() where T : UIPopup
+    {
+        T uiType = Util.FindChild<T>(Managers.UI.Root);
+        Debug.Log($"On{typeof(T)}");
+
+        if (uiType != null)
+            uiType.ClosePopupUI();
+        else
+            Managers.UI.ShowPopupUI<T>();
     }
 
     void OnInventory()
@@ -34,10 +45,16 @@ public class UI_GameScene : UIBase
         else
             Managers.UI.ShowPopupUI<UI_Inven>();
     }
-
+    
     void OnQuest()
     {
+        UI_Quest quest = Util.FindChild<UI_Quest>(Managers.UI.Root);
         Debug.Log("OnQuest");
+
+        if (quest != null)
+            quest.ClosePopupUI();
+        else
+            Managers.UI.ShowPopupUI<UI_Quest>();
     }
 
     void OnSkill()
