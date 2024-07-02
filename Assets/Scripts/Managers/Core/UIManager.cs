@@ -138,6 +138,17 @@ public class UIManager
             popupStack.Pop();
     }
 
+    public void OnGameUIPopup<T>() where T : UIPopup
+    {
+        T uiType = Util.FindChild<T>(Managers.UI.Root);
+        Debug.Log($"On{typeof(T)}");
+
+        if (uiType != null)
+            uiType.ClosePopupUI();
+        else
+            Managers.UI.ShowPopupUI<T>();
+    }
+
     public void Clear()
     {
         CloseAllPopupUI();

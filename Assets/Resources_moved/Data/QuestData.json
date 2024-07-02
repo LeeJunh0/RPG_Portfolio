@@ -1,0 +1,31 @@
+{
+  "Quest": [
+    {
+      "id": 1,
+      "description": "First Quest",
+      "isCompleted": false,
+      "rewords": {
+        "experience": 100,
+        "items": [ "Gold", "Sword" ]
+      }
+    },
+    {
+      "id": 2,
+      "description": "Second Quest",
+      "isCompleted": false,
+      "rewords": {
+        "experience": 110,
+        "items": [ "Sword" ]
+      }
+    },
+    {
+      "id": 3,
+      "description": "Third Quest",
+      "isCompleted": false,
+      "rewords": {
+        "experience": 120,
+        "items": [ "Gold" ]
+      }
+    }
+  ]
+} 

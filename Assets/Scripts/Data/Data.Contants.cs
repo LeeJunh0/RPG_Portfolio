@@ -16,18 +16,53 @@ namespace Data
     }
 
     [Serializable]
-    public class StatData : ILoader<int, Stat>
+    public class StatData : IStatLoader<object, Stat>
     {
         public List<Stat> stats = new List<Stat>();
 
-        public Dictionary<int, Stat> MakeDict()
+        public Dictionary<object, Stat> MakeDict()
         {
-            Dictionary<int, Stat> Dict = new Dictionary<int, Stat>();
+            Dictionary<object, Stat> dict = new Dictionary<object, Stat>();
 
             foreach (Stat stat in stats)
-                Dict.Add(stat.level, stat);
+                dict.Add(stat.level, stat);
 
-            return Dict;
+            return dict;
+        }
+    }
+    #endregion
+
+    #region Quest
+    [Serializable]
+    public class Quest
+    {
+        public int id;
+        public string name;
+        public string description;
+        public bool isCompleted;
+        public Rewards rewards;
+    }
+
+    [Serializable]
+    public class Rewards
+    {
+        public int experience;
+        public List<string> items;
+
+    }
+    [Serializable]
+    public class QuestData : IQuestLoader<Quest>
+    {
+        public List<Quest> questList = new List<Quest>();
+
+        public Dictionary <object, Quest> MakeDict()
+        {
+            Dictionary<object, Quest> dict = new Dictionary<object, Quest>();
+
+            foreach(Quest quest in questList)
+                dict.Add(quest.id, quest);
+
+            return dict;
         }
     }
     #endregion

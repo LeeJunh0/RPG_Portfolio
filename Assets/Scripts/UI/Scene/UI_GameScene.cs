@@ -13,57 +13,14 @@ public class UI_GameScene : UIBase
     void OnKeyEvent(KeyCode key)
     {
         if (key == BindKey.Inventory)
-            OnGameUIPopup<UI_Inven>();
+            Managers.UI.OnGameUIPopup<UI_Inven>();
         else if (key == BindKey.Quest)
-            OnQuest();
+            Managers.UI.OnGameUIPopup<UI_Quest>();
         else if (key == BindKey.Skill)
-            OnSkill();
+            Managers.UI.OnGameUIPopup<UI_Skill>();
         else if (key == BindKey.Pause)
-            OnPause();
+            Managers.UI.OnGameUIPopup<UI_Pause>();
         else
             return;
-    }
-
-    void OnGameUIPopup<T>() where T : UIPopup
-    {
-        T uiType = Util.FindChild<T>(Managers.UI.Root);
-        Debug.Log($"On{typeof(T)}");
-
-        if (uiType != null)
-            uiType.ClosePopupUI();
-        else
-            Managers.UI.ShowPopupUI<T>();
-    }
-
-    void OnInventory()
-    {
-        UI_Inven inven = Util.FindChild<UI_Inven>(Managers.UI.Root);
-        Debug.Log("OnInventory");
-
-        if (inven != null)
-            inven.ClosePopupUI();
-        else
-            Managers.UI.ShowPopupUI<UI_Inven>();
-    }
-    
-    void OnQuest()
-    {
-        UI_Quest quest = Util.FindChild<UI_Quest>(Managers.UI.Root);
-        Debug.Log("OnQuest");
-
-        if (quest != null)
-            quest.ClosePopupUI();
-        else
-            Managers.UI.ShowPopupUI<UI_Quest>();
-    }
-
-    void OnSkill()
-    {
-        Debug.Log("OnSkill");
-    }
-
-    void OnPause()
-    {
-        Debug.Log("OnPause");
     }
 }

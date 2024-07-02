@@ -67,6 +67,26 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
+  - m_GUID: 1b13c17c2c358894096d128ad4d64e8f
+    m_Address: UI_Quest
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+  - m_GUID: 3ddbe3a2c217bc74b8afec66230537df
+    m_Address: UI_Pause
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+  - m_GUID: caef00d5531c60b479057c371d3c1c79
+    m_Address: UI_Skill
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+  - m_GUID: ec4f3350e1d2ff84f935063d2a1e6d76
+    m_Address: UI_Quest_Item
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: c8c0863d2f111984fb854a8e225b02ad, type: 2}
   m_SchemaSet:

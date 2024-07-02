@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UI_Pause : MonoBehaviour
+public class UI_Pause : UIPopup
 {
     // Start is called before the first frame update
     void Start()

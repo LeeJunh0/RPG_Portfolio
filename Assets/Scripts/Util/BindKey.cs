@@ -4,10 +4,10 @@ using UnityEngine;
 
 public static class BindKey
 {
-    public static KeyCode Inventory;
-    public static KeyCode Quest;
-    public static KeyCode Skill;
-    public static KeyCode Pause;
+    public static KeyCode Inventory { get; private set; }
+    public static KeyCode Quest { get; private set; }
+    public static KeyCode Skill { get; private set; }
+    public static KeyCode Pause { get; private set; }
 
     public static void Init()
     {
