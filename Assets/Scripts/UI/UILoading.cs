@@ -21,7 +21,6 @@ public class UILoading : UIPopup
     {
         slider.value = 0.0f;
         int random = Random.Range(0, tipArr.Length);
-        Debug.Log(random);
         tipText.text = tipArr[random];
     }
 

@@ -50,7 +50,7 @@ public class PlayerStat : Stat
 
     public void SetStat(int level)
     {
-        Dictionary<object, Data.Stat> dict = Managers.Data.StatDict;
+        Dictionary<int, Data.Stat> dict = Managers.Data.StatDict;
         Data.Stat stat = dict[level];
         hp = stat.hp;
         maxHp = stat.hp;

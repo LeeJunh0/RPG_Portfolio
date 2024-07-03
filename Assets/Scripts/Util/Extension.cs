@@ -20,9 +20,4 @@ public static class Extension
     {
         return go != null && go.activeSelf == true;
     }
-
-    public static bool UIVaild(this UIPopup popup)
-    {
-        return popup == null;
-    }
 }

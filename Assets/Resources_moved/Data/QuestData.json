@@ -1,30 +1,33 @@
 {
-  "Quest": [
+  "quests": [
     {
       "id": 1,
+      "name": "Quest 1",
       "description": "First Quest",
       "isCompleted": false,
-      "rewords": {
+      "rewards": {
         "experience": 100,
-        "items": [ "Gold", "Sword" ]
+        "items": ["Gold","Sword"]
       }
     },
     {
       "id": 2,
+      "name": "Quest 2",
       "description": "Second Quest",
       "isCompleted": false,
-      "rewords": {
-        "experience": 110,
-        "items": [ "Sword" ]
+      "rewards": {
+        "experience": 100,
+        "items": [ "Gold" ]
       }
     },
     {
       "id": 3,
+      "name": "Quest 3",
       "description": "Third Quest",
       "isCompleted": false,
-      "rewords": {
-        "experience": 120,
-        "items": [ "Gold" ]
+      "rewards": {
+        "experience": 100,
+        "items": [ "Sword" ]
       }
     }
   ]

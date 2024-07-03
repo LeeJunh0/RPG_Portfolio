@@ -16,13 +16,13 @@ namespace Data
     }
 
     [Serializable]
-    public class StatData : IStatLoader<object, Stat>
+    public class StatData : ILoader<int, Stat>
     {
         public List<Stat> stats = new List<Stat>();
 
-        public Dictionary<object, Stat> MakeDict()
+        public Dictionary<int, Stat> MakeDict()
         {
-            Dictionary<object, Stat> dict = new Dictionary<object, Stat>();
+            Dictionary<int, Stat> dict = new Dictionary<int, Stat>();
 
             foreach (Stat stat in stats)
                 dict.Add(stat.level, stat);
@@ -48,18 +48,18 @@ namespace Data
     {
         public int experience;
         public List<string> items;
-
     }
+
     [Serializable]
-    public class QuestData : IQuestLoader<Quest>
+    public class QuestData : ILoader<int, Quest>
     {
-        public List<Quest> questList = new List<Quest>();
+        public List<Quest> quests = new List<Quest>();
 
-        public Dictionary <object, Quest> MakeDict()
+        public Dictionary <int, Quest> MakeDict()
         {
-            Dictionary<object, Quest> dict = new Dictionary<object, Quest>();
+            Dictionary<int, Quest> dict = new Dictionary<int, Quest>();
 
-            foreach(Quest quest in questList)
+            foreach(Quest quest in quests)
                 dict.Add(quest.id, quest);
 
             return dict;

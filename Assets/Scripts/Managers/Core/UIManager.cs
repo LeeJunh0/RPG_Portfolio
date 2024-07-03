@@ -58,22 +58,6 @@ public class UIManager
         return poPup;
     }
 
-    public T ShowSceneUI<T>(string name = null) where T : UIScene
-    {
-        if (string.IsNullOrEmpty(name))
-        {
-            name = typeof(T).Name;
-        }
-
-        GameObject go = Managers.Resource.Instantiate(name);
-        T sceneUI = Util.GetOrAddComponent<T>(go);
-        SceneUI = sceneUI;
-
-        go.transform.SetParent(Root.transform);
-
-        return sceneUI;
-    }
-
     public T MakeSubItem<T>(Transform parent = null ,string name = null) where T : UIBase
     {
         if (string.IsNullOrEmpty(name))
@@ -138,7 +122,7 @@ public class UIManager
             popupStack.Pop();
     }
 
-    public void OnGameUIPopup<T>() where T : UIPopup
+    public void OnGameUIPopup<T>(GameObject parent = null) where T : UIPopup
     {
         T uiType = Util.FindChild<T>(Managers.UI.Root);
         Debug.Log($"On{typeof(T)}");

@@ -11,7 +11,7 @@ public class UI_Inven : UIPopup
 
     public override void Init()
     {
-        base.Init();
+        //base.Init();
 
         Bind<GameObject>(typeof(GameObjects));
 

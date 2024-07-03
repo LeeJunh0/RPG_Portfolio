@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_Inven_Item : UIBase
+public class UI_Quest_Item : UIBase
 {
     enum GameObjects
     {
-        ItemIcon,
-        ItemNameText,
+        QuestIcon,
+        QuestNameText
     }
 
     string myName;
@@ -16,11 +16,11 @@ public class UI_Inven_Item : UIBase
     public override void Init()
     {
         Bind<GameObject>(typeof(GameObjects));
-        Get<GameObject>((int)GameObjects.ItemNameText).GetComponent<Text>().text = myName;
 
-        Get<GameObject>((int)GameObjects.ItemIcon).BindEvent((PointerEventData) => 
-        { 
-            Debug.Log($"아이템 클릭! {myName}");
+        Get<GameObject>((int)GameObjects.QuestNameText).GetComponent<Text>().text = myName;
+        Get<GameObject>((int)GameObjects.QuestIcon).BindEvent((PointerEventData) =>
+        {
+
         });
     }
 
