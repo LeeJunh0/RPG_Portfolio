@@ -12,19 +12,24 @@ public class UI_Quest : UIPopup
     }
 
     GameObject list;
-    GameObject popup;
+    protected GameObject popup;
 
     public override void Init()
     {
         base.Init();
 
         Bind<GameObject>(typeof(GameObjects));
-
         list = GetObject((int)GameObjects.QuestList);
         popup = GetObject((int)GameObjects.UI_Quest_Popup);
 
-        foreach (Transform child in list.transform)
-            Managers.Resource.Destroy(child.gameObject);   
+        if(list != null)
+        {
+            foreach (Transform child in list.transform)
+                Managers.Resource.Destroy(child.gameObject);
+        }
+
+        popup.SetActive(false);
+        QuestListInit();
     }
 
     void QuestListInit()
@@ -33,19 +38,11 @@ public class UI_Quest : UIPopup
         {
             GameObject item = Managers.UI.MakeSubItem<UI_Quest_Item>(parent : list.transform).gameObject;
             UI_Quest_Item questItem = item.GetOrAddComponent<UI_Quest_Item>();
-            questItem.SetInfo(Managers.Data.QuestDict[i].name);
+            questItem.SetInfo(Managers.Data.QuestDict[i].name, Managers.Data.QuestDict[i].id);
         }
     }
 
     public void OnQuestPopup()
-    {
-        if(popup.IsValid() == true)
-        {
-            popup.SetActive(false);
-        }
-        else
-        {
-
-        }
+    {   
     }
 }

@@ -29,10 +29,8 @@ public abstract class UIBase : MonoBehaviour
             else
                 objects[i] = Util.FindChild<T>(gameObject, names[i], true);
 
-            if (objects[i] == null)
-            {
-                Debug.Log($"Faild to bind ({names[i]})");
-            }
+            if (objects[i] == null)            
+                Debug.Log($"Faild to bind ({names[i]})");       
         }
     }
 

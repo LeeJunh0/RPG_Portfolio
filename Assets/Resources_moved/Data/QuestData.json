@@ -1,7 +1,7 @@
 {
   "quests": [
     {
-      "id": 1,
+      "id": 0,
       "name": "Quest 1",
       "description": "First Quest",
       "isCompleted": false,
@@ -11,7 +11,7 @@
       }
     },
     {
-      "id": 2,
+      "id": 1,
       "name": "Quest 2",
       "description": "Second Quest",
       "isCompleted": false,
@@ -21,7 +21,7 @@
       }
     },
     {
-      "id": 3,
+      "id": 2,
       "name": "Quest 3",
       "description": "Third Quest",
       "isCompleted": false,

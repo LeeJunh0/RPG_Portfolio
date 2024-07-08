@@ -21,12 +21,12 @@ public class UI_Quest_Popup : UIPopup
         base.Init();
 
         Bind<Text>(typeof(QuestPopupObject));
+        ClosePopupUI();
     }
 
     public void QuestPopupInit(int id)
     {
         string check = Managers.Data.QuestDict[id].isCompleted ? "O" : "X";
-
         GetText((int)QuestPopupObject.QuestName).text = string.Format($"{Managers.Data.QuestDict[id].name}");
         GetText((int)QuestPopupObject.QuestDescript).text = string.Format($"{Managers.Data.QuestDict[id].description}");    
         GetText((int)QuestPopupObject.QuestCompleted).text = string.Format($"¿Ï·á : {check}");
