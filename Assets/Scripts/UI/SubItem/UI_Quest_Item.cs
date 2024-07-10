@@ -18,15 +18,15 @@ public class UI_Quest_Item : UI_Quest
     {
         //TODO
         // 초기화 다시생각
-        base.Init();
-
         Bind<GameObject>(typeof(ItemObjects));
 
         Get<GameObject>((int)ItemObjects.QuestNameText).GetComponent<Text>().text = myName;
         Get<GameObject>((int)ItemObjects.QuestIcon).BindEvent((PointerEventData) =>
         {
-            OnQuestPopup();
-            popup.GetOrAddComponent<UI_Quest_Popup>().QuestPopupInit(myId);
+            if (popup != null)
+                OnQuestPopup();
+            else
+                Debug.Log("popup null !!");
         });
     }
 

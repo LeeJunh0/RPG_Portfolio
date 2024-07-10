@@ -14,21 +14,12 @@ public class UI_Quest : UIPopup
     GameObject list;
     protected GameObject popup;
 
-    public override void Init()
+    public void Awake()
     {
-        base.Init();
-
         Bind<GameObject>(typeof(GameObjects));
         list = GetObject((int)GameObjects.QuestList);
         popup = GetObject((int)GameObjects.UI_Quest_Popup);
 
-        if(list != null)
-        {
-            foreach (Transform child in list.transform)
-                Managers.Resource.Destroy(child.gameObject);
-        }
-
-        popup.SetActive(false);
         QuestListInit();
     }
 
@@ -43,6 +34,7 @@ public class UI_Quest : UIPopup
     }
 
     public void OnQuestPopup()
-    {   
+    {
+        popup.SetActive(true);
     }
 }

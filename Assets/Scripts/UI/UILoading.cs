@@ -10,6 +10,7 @@ public class UILoading : UIPopup
 
     [SerializeField]
     string[] tipArr;
+
     private void Awake()
     {
         slider = Util.FindChild<Slider>(gameObject, "LoadingBar");
