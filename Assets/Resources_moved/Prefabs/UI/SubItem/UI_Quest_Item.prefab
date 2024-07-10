@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 5936898350914926922}
   - component: {fileID: 1903404748986733902}
   - component: {fileID: 4262536653695220789}
-  - component: {fileID: 7095341546735226902}
   m_Layer: 5
   m_Name: QuestIcon
   m_TagString: Untagged
@@ -123,18 +122,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &7095341546735226902
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 987040215574834111}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 722ff4aab32123140b0db4284524c71c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3125430770039498930
 GameObject:
   m_ObjectHideFlags: 0

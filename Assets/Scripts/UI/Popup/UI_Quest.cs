@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,19 +13,34 @@ public class UI_Quest : UIPopup
     }
 
     GameObject list;
-    protected GameObject popup;
+    GameObject popup;
+    int questId = int.MaxValue;
 
     public void Awake()
     {
         Bind<GameObject>(typeof(GameObjects));
-        list = GetObject((int)GameObjects.QuestList);
-        popup = GetObject((int)GameObjects.UI_Quest_Popup);
+        Debug.Log("UI_Quest Binding");
+    }
 
+    public override void Init()
+    {
+        base.Init();
+               
+        if (list == null)
+        {
+            list = GetObject((int)GameObjects.QuestList);
+            popup = GetObject((int)GameObjects.UI_Quest_Popup);
+        }
+            
         QuestListInit();
+        popup.SetActive(false);
     }
 
     void QuestListInit()
     {
+        foreach(Transform child in list.transform)
+            Managers.Resource.Destroy(child.gameObject);
+        
         for(int i = 0; i < Managers.Data.QuestDict.Count; i++)
         {
             GameObject item = Managers.UI.MakeSubItem<UI_Quest_Item>(parent : list.transform).gameObject;
@@ -33,8 +49,16 @@ public class UI_Quest : UIPopup
         }
     }
 
-    public void OnQuestPopup()
-    {
-        popup.SetActive(true);
+    public void OnQuestPopup(int id)
+    {            
+        popup.GetOrAddComponent<UI_Quest_Popup>().QuestPopupInit(id);
+        if(id != questId)
+        {
+            questId = id;
+            return;
+        }
+
+        questId = int.MaxValue;
+        popup.SetActive(false);
     }
 }

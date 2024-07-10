@@ -3,30 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_Quest_Item : UI_Quest
+public class UI_Quest_Item : UIPopup
 {
-    enum ItemObjects
+    enum QuestTitles
     {
-        QuestIcon,
         QuestNameText
+    }
+
+    enum QuestIcons
+    {
+        QuestIcon
     }
 
     string myName;
     int myId;
-
     public override void Init()
     {
-        //TODO
-        // 초기화 다시생각
-        Bind<GameObject>(typeof(ItemObjects));
-
-        Get<GameObject>((int)ItemObjects.QuestNameText).GetComponent<Text>().text = myName;
-        Get<GameObject>((int)ItemObjects.QuestIcon).BindEvent((PointerEventData) =>
+        Bind<Text>(typeof(QuestTitles));
+        Bind<Button>(typeof(QuestIcons));
+        
+        GetText((int)QuestTitles.QuestNameText).GetComponent<Text>().text = myName;
+        GetButton((int)QuestIcons.QuestIcon).gameObject.BindEvent((PointerEventData) =>
         {
-            if (popup != null)
-                OnQuestPopup();
-            else
-                Debug.Log("popup null !!");
+            UI_Quest quest = FindObjectOfType<UI_Quest>();
+            quest.OnQuestPopup(myId);
         });
     }
 

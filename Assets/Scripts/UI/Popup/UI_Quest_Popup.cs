@@ -16,16 +16,16 @@ public class UI_Quest_Popup : UIPopup
         QuestRewards
     }
 
+    
+
     public override void Init()
     {
-        base.Init();
-
         Bind<Text>(typeof(QuestPopupObject));
-        ClosePopupUI();
     }
 
     public void QuestPopupInit(int id)
     {
+        gameObject.SetActive(true);
         string check = Managers.Data.QuestDict[id].isCompleted ? "O" : "X";
         GetText((int)QuestPopupObject.QuestName).text = string.Format($"{Managers.Data.QuestDict[id].name}");
         GetText((int)QuestPopupObject.QuestDescript).text = string.Format($"{Managers.Data.QuestDict[id].description}");    
