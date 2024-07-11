@@ -25,7 +25,7 @@ public class UI_TitleScene : UIBase
 
         startButton.BindEvent((evt) =>
         {
-            Debug.Log("Change Scene ..");
+            Debug.Log("Change GameScene ..");
             UILoading loader = Managers.UI.ShowPopupUI<UILoading>("UI_LoadingScreen");
             loader.Loading(Define.Scene.Game);
         });

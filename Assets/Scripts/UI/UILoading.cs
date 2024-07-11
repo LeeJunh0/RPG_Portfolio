@@ -28,6 +28,7 @@ public class UILoading : UIPopup
     public void Loading(Define.Scene type)
     {
         string label = "";
+        Time.timeScale = 1.0f;
 
         switch (type)
         {
@@ -56,7 +57,6 @@ public class UILoading : UIPopup
     IEnumerator SceneAsyncLoad(Define.Scene type)
     {
         yield return new WaitForSeconds(1.5f); // 디버그용 하드코딩
-        gameObject.SetActive(false);
         Managers.Scene.LoadScene(type);
         Managers.Pool.Push(gameObject.GetOrAddComponent<Poolable>());
     }
