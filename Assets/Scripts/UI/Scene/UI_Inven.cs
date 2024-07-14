@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class UI_Inven : UIPopup
 {
     enum GameObjects
     {
-        GridPanel
+        GridPanel,
+        CreatButton
     }
 
     public override void Init()
@@ -16,7 +18,10 @@ public class UI_Inven : UIPopup
         Bind<GameObject>(typeof(GameObjects));
 
         GameObject gridPanel = GetObject((int)GameObjects.GridPanel);
+        GetObject((int)GameObjects.CreatButton).BindEvent((evt) =>
+        {
 
+        });
         foreach(Transform child in gridPanel.transform)        
             Managers.Resource.Destroy(child.gameObject);
         
