@@ -1,0 +1,64 @@
+{
+  "items": [
+    {
+      "id": 101,
+      "hp": 0,
+      "att": 10,
+      "gold": 15,
+      "uiInfo": {
+        "icon": "sword",
+        "name": "하급 소드",
+        "description": "상점에서 파는 하급소드.",
+        "isStack": false
+      }
+    },
+    {
+      "id": 102,
+      "hp": 10,
+      "att": 0,
+      "gold": 15,
+      "uiInfo": {
+        "icon": "armor",
+        "name": "하급 갑옷",
+        "description": "상점에서 파는 하급갑옷.",
+        "isStack": false
+      }
+    },
+    {
+      "id": 103,
+      "hp": 8,
+      "att": 0,
+      "gold": 15,
+      "uiInfo": {
+        "icon": "pants",
+        "name": "하급 바지",
+        "description": "상점에서 파는 하급바지",
+        "isStack": false
+      }
+    },
+    {
+      "id": 104,
+      "hp": 0,
+      "att": 0,
+      "gold": 5,
+      "uiInfo": {
+        "icon": "apple",
+        "name": "작은 사과",
+        "description": "떨어트린 사과다.",
+        "isStack": true
+      }
+    },
+    {
+      "id": 105,
+      "hp": 20,
+      "att": 0,
+      "gold": 30,
+      "uiInfo": {
+        "icon": "hp",
+        "name": "하급 힐링포션",
+        "description": "상점에서 파는 하급 힐링포션이다.",
+        "isStack": true
+      }
+    }
+  ]
+}

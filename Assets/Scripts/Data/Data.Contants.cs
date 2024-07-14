@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Data
 {
@@ -62,6 +63,43 @@ namespace Data
             foreach(Quest quest in quests)
                 dict.Add(quest.id, quest);
 
+            return dict;
+        }
+    }
+    #endregion
+
+    #region Item
+    [Serializable]
+    public class Iteminfo 
+    {
+        public int id;
+        public int hp;
+        public int att;
+        public int gold;
+        public ItemUIinfo uiInfo;
+    }
+
+    [Serializable]
+    public class ItemUIinfo
+    {
+        public string icon;
+        public string name;
+        public string description;
+        public bool isStack;
+    }
+    
+    [Serializable]
+    public class ItemData : ILoader<int, Iteminfo>
+    { 
+        public List<Iteminfo> items = new List<Iteminfo>();
+
+        public Dictionary<int, Iteminfo> MakeDict()
+        {
+            Dictionary<int,Iteminfo> dict = new Dictionary<int, Iteminfo>();
+
+            foreach(Iteminfo item in items)
+                dict.Add(item.id, item);
+            
             return dict;
         }
     }
