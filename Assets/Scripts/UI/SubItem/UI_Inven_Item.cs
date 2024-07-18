@@ -9,23 +9,43 @@ public class UI_Inven_Item : UIBase
     {
         ItemIcon,
         ItemNameText,
+        ItemStack
     }
+    Data.Iteminfo myInfo;
+    int myStack = 1;
+    public int MyStack 
+    { 
+        get { return myStack; }
 
-    string myName;
+        set 
+        { 
+            myStack = value;
+            GetObject((int)GameObjects.ItemStack).GetComponent<Text>().text = string.Format($"{myStack}");
+        } 
+    }
 
     public override void Init()
     {
         Bind<GameObject>(typeof(GameObjects));
-        Get<GameObject>((int)GameObjects.ItemNameText).GetComponent<Text>().text = myName;
 
-        Get<GameObject>((int)GameObjects.ItemIcon).BindEvent((PointerEventData) => 
+        GetObject((int)GameObjects.ItemStack).SetActive(false);
+        GetObject((int)GameObjects.ItemIcon).BindEvent((PointerEventData) => 
         { 
-            Debug.Log($"아이템 클릭! {myName}");
+            Debug.Log($"아이템 클릭! {myInfo.uiInfo.name}");
         });
     }
 
-    public void SetInfo(string name)
+    public void SetInfo(Data.Iteminfo iteminfo)
     {
-        myName = name;
+        myInfo = iteminfo;
+
+        Texture2D texture = Managers.Resource.Load<Texture2D>(myInfo.uiInfo.icon);
+        GetObject((int)GameObjects.ItemIcon).GetComponent<Image>().sprite = Managers.UI.TextureToSprite(texture);
+        GetObject((int)GameObjects.ItemNameText).GetComponent<Text>().text = myInfo.uiInfo.name;
+        if (myInfo.uiInfo.isStack)
+        {
+            GetObject((int)GameObjects.ItemStack).SetActive(true);
+            GetObject((int)GameObjects.ItemStack).GetComponent<Text>().text = string.Format($"{myStack}");
+        }
     }
 }
