@@ -25,7 +25,6 @@ public class InputManager
                 KeyAction.Invoke(BindKey.Pause);
         }
 
-
         if (MouseAction != null)
         {
             if(Input.GetMouseButton(0))

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Managers : MonoBehaviour
@@ -9,8 +10,10 @@ public class Managers : MonoBehaviour
 
     #region Contents
     GameManager _game = new GameManager();
+    InventoryManager _inven = new InventoryManager();
 
     public static GameManager Game { get { return Instance._game; } }
+    public static InventoryManager Inventory { get { return Instance._inven; } }
     #endregion
 
     #region Core
@@ -34,6 +37,7 @@ public class Managers : MonoBehaviour
     void Update()
     {
         _input.OnUpdate();
+        _inven.OnUpdate();
     }
 
     static void Init()
@@ -63,5 +67,6 @@ public class Managers : MonoBehaviour
         UI.Clear();
         Scene.Clear();
         Pool.Clear();
+        Inventory.Clear();
     }
 }
