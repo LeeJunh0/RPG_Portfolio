@@ -47,18 +47,25 @@ public abstract class UIBase : MonoBehaviour
     {
         UIEventHandler evt = Util.GetOrAddComponent<UIEventHandler>(go);
 
-        switch (type)
-        {
+        switch (type) 
+        { 
             case Define.EUiEvent.Click:
                 evt.OnClickHandler -= action;
                 evt.OnClickHandler += action;
+                break;
+            case Define.EUiEvent.BeginDrag:
+                evt.OnBeginDragHandler -= action;
+                evt.OnBeginDragHandler += action;
                 break;
             case Define.EUiEvent.Drag:
                 evt.OnDragHandler -= action;
                 evt.OnDragHandler += action;
                 break;
+            case Define.EUiEvent.EndDrag:
+                evt.OnEndDragHandler -= action;
+                evt.OnEndDragHandler += action;
+                break;
         }
-
     }
 
    // protected 

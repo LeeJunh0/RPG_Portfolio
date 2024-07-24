@@ -49,7 +49,9 @@ public class Define
     public enum EUiEvent
     {
         Click,
+        BeginDrag,
         Drag,
+        EndDrag
     }
 
     public enum CameraMode

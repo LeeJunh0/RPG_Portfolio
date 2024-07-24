@@ -12,30 +12,41 @@ public class UI_Inven_Item : UIBase
         ItemStack
     }
 
+    [SerializeField]
     Data.Iteminfo myInfo;
 
     public Data.Iteminfo MyInfo
     {
-        get { return myInfo == null ? myInfo : Managers.Data.ItemDict[101]; }
+        get 
+        { 
+            if(myInfo == null)
+                myInfo = Managers.Data.ItemDict[101];
+
+            return myInfo;
+        }
 
         set
         {
-            if(value == null)            
-                value = Managers.Data.ItemDict[101];
-            
-            Texture2D texture = Managers.Resource.Load<Texture2D>(value.uiInfo.icon);
-            GetObject((int)GameObjects.ItemIcon).GetComponent<Image>().sprite = Managers.UI.TextureToSprite(texture);
-            GetObject((int)GameObjects.ItemNameText).GetComponent<Text>().text = value.uiInfo.name;
+            myInfo = value ?? Managers.Data.ItemDict[101];
 
-            if (value.uiInfo.isStack == true)
+            Texture2D texture = Managers.Resource.Load<Texture2D>(myInfo.uiInfo.icon);
+            GetObject((int)GameObjects.ItemIcon).GetComponent<Image>().sprite = Managers.UI.TextureToSprite(texture);
+            GetObject((int)GameObjects.ItemNameText).GetComponent<Text>().text = myInfo.uiInfo.name;
+
+            if (myInfo.uiInfo.isStack == true)
             {
                 GetObject((int)GameObjects.ItemStack).SetActive(true);
-                GetObject((int)GameObjects.ItemStack).GetComponent<Text>().text = string.Format($"{MyStack}");
+                MyStack++;
+            }
+            else
+            {
+                myStack = 0;
+                GetObject((int)GameObjects.ItemStack).SetActive(false);
             }
         }
     }
 
-    int myStack = 1;
+    int myStack = 0;
     public int MyStack
     {
         get { return myStack; }
@@ -52,9 +63,10 @@ public class UI_Inven_Item : UIBase
         Bind<GameObject>(typeof(GameObjects));
 
         GetObject((int)GameObjects.ItemStack).SetActive(false);
-        GetObject((int)GameObjects.ItemIcon).BindEvent((PointerEventData) =>
+        GetObject((int)GameObjects.ItemIcon).BindEvent((click) =>
         {
             Debug.Log($"아이템 클릭! {MyInfo.uiInfo.name}");
+            Managers.Inventory.CurItem = this.gameObject;
         });
     }
 }
