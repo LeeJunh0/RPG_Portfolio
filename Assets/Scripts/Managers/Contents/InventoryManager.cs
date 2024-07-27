@@ -12,7 +12,6 @@ public class InventoryManager
     List<UI_Inven_Item> itemList;
     GameObject Inven;
 
-
     public UI_Inven_Item CurItem { get; set; }
 
     public void AddItem(Data.Iteminfo item)
@@ -70,10 +69,7 @@ public class InventoryManager
     {
         if (itemList == null)
             ListLoad();
-        /*
-         * 정보리스트가 빈상태면 빈칸으로 채우고 리턴
-         * 아니라면 정보리스트에 있는걸 실제 UI에 전달.
-        */
+        
         if(itemInfos == null)
         {
             itemInfos = new List<Data.Iteminfo>(itemList.Count);

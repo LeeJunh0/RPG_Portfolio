@@ -16,8 +16,6 @@ public class UI_Quest_Popup : UIPopup
         QuestRewards
     }
 
-    
-
     public override void Init()
     {
         Bind<Text>(typeof(QuestPopupObject));

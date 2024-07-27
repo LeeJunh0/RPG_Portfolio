@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
 using UnityEngine;
 
 public class UIManager
@@ -44,23 +45,30 @@ public class UIManager
 
     public T ShowPopupUI<T>(string name = null) where T : UIPopup
     {
-        if(string.IsNullOrEmpty(name))
-        {
+        if(string.IsNullOrEmpty(name))       
             name = typeof(T).Name;
-        }
 
         GameObject go = Managers.Resource.Instantiate(name);
         T poPup = Util.GetOrAddComponent<T>(go);
         popupStack.Push(poPup);
 
-        GameObject root = GameObject.Find("UIRoot");
+        go.transform.SetParent(Root.transform);
+        return poPup;
+    }
 
-        if (root == null)
-            root = new GameObject { name = "UIRoot" };
+    public T MakeSceneUI<T>(string name = null) where T : UIScene
+    {
+        if (string.IsNullOrEmpty(name)) 
+            name = typeof(T).Name;
+
+        GameObject go = Util.FindChild(Root);
+        if (go == null)
+            go = Managers.Resource.Instantiate(typeof(T).Name);
+        
+        T scene = Util.GetOrAddComponent<T>(go);
 
         go.transform.SetParent(Root.transform);
-
-        return poPup;
+        return scene;
     }
 
     public T MakeSubItem<T>(Transform parent = null ,string name = null) where T : UIBase
@@ -96,6 +104,28 @@ public class UIManager
         return go.GetOrAddComponent<T>();
     }
 
+    public void OnGameUIPopup<T>(GameObject parent = null) where T : UIPopup
+    {
+        T uiType = Util.FindChild<T>(Root);
+        Debug.Log($"On{typeof(T)}");
+
+        if (uiType != null)
+            uiType.ClosePopupUI();
+        else
+            ShowPopupUI<T>();
+    }
+
+    public void OnGameUIScene<T>(GameObject parent = null) where T : UIScene
+    {
+        T uiType = Util.FindChild<T>(Root);
+        Debug.Log($"On{typeof(T)}");
+
+        if (uiType == null)
+            MakeSceneUI<T>();
+        else
+            uiType.StateChange();
+    }
+
     public void ClosePopupUI()
     {
         if (popupStack.Count == 0)
@@ -112,7 +142,7 @@ public class UIManager
         if (popupStack.Count == 0)
             return;
 
-        if(popupStack.Peek() != popup)
+        if (popupStack.Peek() != popup)
         {
             Debug.Log("Close Popup Failded!");
             return;
@@ -125,32 +155,6 @@ public class UIManager
     {
         while (popupStack.Count > 0)
             popupStack.Pop();
-    }
-
-    public void OnGameUIPopup<T>(GameObject parent = null) where T : UIPopup
-    {
-        T uiType = Util.FindChild<T>(Managers.UI.Root);
-        Debug.Log($"On{typeof(T)}");
-
-        if (uiType != null)
-            uiType.ClosePopupUI();
-        else
-            Managers.UI.ShowPopupUI<T>();
-    }
-
-    public void OnGameUIScene<T>(GameObject parent = null) where T : UIScene
-    {
-        GameObject uiType = GameObject.Find(typeof(T).Name);
-        Debug.Log($"On{typeof(T)}");
-
-        if (uiType == null)
-        {
-            uiType = Managers.Resource.Instantiate(typeof(T).Name);
-            uiType.GetOrAddComponent<T>();
-        }
-        else
-            uiType.GetOrAddComponent<T>().OnActive();
-
     }
 
     public void Clear()

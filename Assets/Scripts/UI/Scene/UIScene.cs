@@ -9,8 +9,8 @@ public class UIScene : UIBase
         Managers.UI.SetCanvas(gameObject, false);
     }
 
-    public void OnActive()
+    public void StateChange()
     {
-        this.gameObject.SetActive(!gameObject.activeSelf);
+        gameObject.SetActive(!gameObject.activeSelf);
     }
 }
