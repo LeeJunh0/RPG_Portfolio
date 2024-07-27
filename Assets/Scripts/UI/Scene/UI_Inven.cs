@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UI_Inven : UIPopup
+public class UI_Inven : UIScene
 {
     enum GameObjects
     {

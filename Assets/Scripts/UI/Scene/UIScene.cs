@@ -8,4 +8,9 @@ public class UIScene : UIBase
     {
         Managers.UI.SetCanvas(gameObject, false);
     }
+
+    public void OnActive()
+    {
+        this.gameObject.SetActive(!gameObject.activeSelf);
+    }
 }

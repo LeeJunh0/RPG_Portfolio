@@ -13,7 +13,7 @@ public class UI_GameScene : UIBase
     void OnKeyEvent(KeyCode key)
     {
         if (key == BindKey.Inventory)
-            Managers.UI.OnGameUIPopup<UI_Inven>();
+            Managers.UI.OnGameUIScene<UI_Inven>();
         else if (key == BindKey.Quest)
             Managers.UI.OnGameUIPopup<UI_Quest>();
         else if (key == BindKey.Skill)

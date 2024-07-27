@@ -9,9 +9,11 @@ using UnityEngine;
 public class InventoryManager
 {
     List<Data.Iteminfo> itemInfos;
-    List<UI_Inven_Item> itemList = new List<UI_Inven_Item>();
+    List<UI_Inven_Item> itemList;
+    GameObject Inven;
 
-    public GameObject CurItem { get; set; }
+
+    public UI_Inven_Item CurItem { get; set; }
 
     public void AddItem(Data.Iteminfo item)
     {
@@ -20,6 +22,7 @@ public class InventoryManager
             if (itemList[i].MyInfo.id == 101) // 101은 빈칸
             {
                 itemList[i].MyInfo = item;
+                itemInfos[i] = itemList[i].MyInfo;
                 return;
             }
             
@@ -48,21 +51,25 @@ public class InventoryManager
         }
 
         Debug.Log($"삭제된 아이템 : {CurItem.GetComponent<UI_Inven_Item>().MyInfo.uiInfo.name}");
-        CurItem.GetComponent<UI_Inven_Item>().MyInfo = Managers.Data.ItemDict[101];
+        CurItem.MyInfo = Managers.Data.ItemDict[101];
         CurItem = null;
     }
 
     public void ListLoad()
     {
-        GameObject content = Util.FindChild(parent: Managers.UI.Root, "Content", true);
+        Inven = GameObject.Find(typeof(UI_Inven).Name);
+        itemList = new List<UI_Inven_Item>();
 
-        foreach (Transform icon in content.transform)       
-            itemList.Add(icon.GetOrAddComponent<UI_Inven_Item>());        
+        GameObject content = Util.FindChild(parent: Inven.gameObject, "Content", true);
+
+        foreach (Transform child in content.transform)
+            itemList.Add(child.GetOrAddComponent<UI_Inven_Item>());
     }
 
     public void Interlocking()
     {
-        ListLoad();
+        if (itemList == null)
+            ListLoad();
         /*
          * 정보리스트가 빈상태면 빈칸으로 채우고 리턴
          * 아니라면 정보리스트에 있는걸 실제 UI에 전달.

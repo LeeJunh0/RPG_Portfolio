@@ -138,6 +138,21 @@ public class UIManager
             Managers.UI.ShowPopupUI<T>();
     }
 
+    public void OnGameUIScene<T>(GameObject parent = null) where T : UIScene
+    {
+        GameObject uiType = GameObject.Find(typeof(T).Name);
+        Debug.Log($"On{typeof(T)}");
+
+        if (uiType == null)
+        {
+            uiType = Managers.Resource.Instantiate(typeof(T).Name);
+            uiType.GetOrAddComponent<T>();
+        }
+        else
+            uiType.GetOrAddComponent<T>().OnActive();
+
+    }
+
     public void Clear()
     {
         CloseAllPopupUI();
