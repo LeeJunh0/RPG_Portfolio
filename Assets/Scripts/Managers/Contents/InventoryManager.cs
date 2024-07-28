@@ -18,18 +18,19 @@ public class InventoryManager
     {
         for (int i = 0; i < itemList.Count; i++)
         {
-            if (itemList[i].MyInfo.id == 101) // 101은 빈칸
+            if (itemList[i].MyInfo == Managers.Data.ItemDict[199]) // 101은 빈칸
             {
                 itemList[i].MyInfo = item;
                 itemInfos[i] = itemList[i].MyInfo;
+                Debug.Log($"빈칸에 Add한 아이템 : {itemInfos[i].uiInfo.name}");
                 return;
             }
-            
-            if(item.uiInfo.isStack == true)
+
+            if (item.uiInfo.isStack == true)
             {
-                for(int j = 0; j < itemList.Count; j++)
+                for (int j = 0; j < itemList.Count; j++)
                 {
-                    if (itemList[j].MyInfo.id != item.id) 
+                    if (itemList[j].MyInfo.id != item.id)
                         continue;
 
                     itemList[j].MyStack++;
@@ -37,7 +38,7 @@ public class InventoryManager
                 }
             }
 
-            Debug.Log("인벤토리에 공간이 부족합니다.");
+            continue;
         }
     }
 
@@ -50,7 +51,7 @@ public class InventoryManager
         }
 
         Debug.Log($"삭제된 아이템 : {CurItem.GetComponent<UI_Inven_Item>().MyInfo.uiInfo.name}");
-        CurItem.MyInfo = Managers.Data.ItemDict[101];
+        CurItem.MyInfo = null;
         CurItem = null;
     }
 
@@ -81,9 +82,14 @@ public class InventoryManager
             }
             return;
         }
-            
+
+        ItemInfosLoad();
+    }
+
+    public void ItemInfosLoad()
+    {
         for (int i = 0; i < itemList.Count; i++)
-            itemList[i].MyInfo = itemInfos[i];        
+            itemList[i].MyInfo = itemInfos[i];
     }
 
     public Data.Iteminfo GetItem(int index)
@@ -101,7 +107,12 @@ public class InventoryManager
 
     public void ItemSort()
     {
-        itemList.Sort();
+        //Todo
+        //정렬 알고리즘에 조건 걸어서 빈칸은 전부 제외시키는것으로..
+        //이후 정렬한 itemList에 있는 정보들을 매니저에서 저장하고 있도록.
+
+        itemList.Sort((item1, item2) => item1.MyInfo.id.CompareTo(item2.MyInfo.id));
+        ItemInfosLoad();
     }
 
     public void Clear()

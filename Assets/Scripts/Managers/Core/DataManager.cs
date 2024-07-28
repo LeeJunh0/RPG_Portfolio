@@ -15,6 +15,7 @@ public class DataManager
     public Dictionary<int, Data.Stat> StatDict { get; private set; } = new Dictionary<int, Data.Stat>();
     public Dictionary<int, Data.Quest> QuestDict { get; private set; } = new Dictionary<int, Data.Quest>();
     public Dictionary<int, Data.Iteminfo> ItemDict { get; private set; } = new Dictionary<int, Iteminfo>();
+
     public void Init()
     {
         StatDict = LoadJson<Data.StatData, int, Data.Stat>("StatData").MakeDict();        

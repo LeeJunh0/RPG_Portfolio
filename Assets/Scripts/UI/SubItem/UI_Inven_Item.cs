@@ -20,14 +20,14 @@ public class UI_Inven_Item : UIBase
         get 
         { 
             if(myInfo == null)
-                myInfo = Managers.Data.ItemDict[101];
+                myInfo = Managers.Data.ItemDict[199];
 
             return myInfo;
         }
 
         set
         {
-            myInfo = value ?? Managers.Data.ItemDict[101];
+            myInfo = value ?? Managers.Data.ItemDict[199];
 
             Texture2D texture = Managers.Resource.Load<Texture2D>(myInfo.uiInfo.icon);
             transform.Find("ItemIcon").GetComponent<Image>().sprite = Managers.UI.TextureToSprite(texture);

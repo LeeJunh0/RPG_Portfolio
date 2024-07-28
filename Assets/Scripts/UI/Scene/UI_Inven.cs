@@ -22,7 +22,8 @@ public class UI_Inven : UIScene
         Bind<GameObject>(typeof(GameObjects));
         GetObject((int)GameObjects.Sorting).BindEvent((evt) => 
         { 
-            Debug.Log("정렬버튼 on"); 
+            Debug.Log("정렬버튼 on");
+            Managers.Inventory.ItemSort();
         });
         GetObject((int)GameObjects.Create).BindEvent((evt) => 
         { 
