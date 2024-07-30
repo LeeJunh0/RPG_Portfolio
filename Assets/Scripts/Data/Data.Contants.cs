@@ -76,6 +76,7 @@ namespace Data
         public int hp;
         public int att;
         public int gold;
+        public int myStack;
         public ItemUIinfo uiInfo;
     }
 

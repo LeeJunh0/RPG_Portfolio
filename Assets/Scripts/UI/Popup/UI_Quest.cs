@@ -16,14 +16,11 @@ public class UI_Quest : UIPopup
     GameObject popup;
     int questId = int.MaxValue;
 
-    public void Awake()
+    public override void Init()
     {
         Bind<GameObject>(typeof(GameObjects));
         Debug.Log("UI_Quest Binding");
-    }
 
-    public override void Init()
-    {
         base.Init();
                
         if (list == null)
@@ -45,6 +42,7 @@ public class UI_Quest : UIPopup
         {
             GameObject item = Managers.UI.MakeSubItem<UI_Quest_Item>(parent : list.transform).gameObject;
             UI_Quest_Item questItem = item.GetOrAddComponent<UI_Quest_Item>();
+            Debug.Log($"SetInfo할 아이콘 : {item.name}");
             questItem.SetInfo(Managers.Data.QuestDict[i].name, Managers.Data.QuestDict[i].id);
         }
     }

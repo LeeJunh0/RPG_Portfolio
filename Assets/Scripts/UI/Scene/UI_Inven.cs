@@ -10,9 +10,9 @@ public class UI_Inven : UIScene
     enum GameObjects
     {
         Sorting,
+        Trimming,
         Create,
         Delete,
-        temp1,
         temp2,
         temp3
     }
@@ -23,7 +23,12 @@ public class UI_Inven : UIScene
         GetObject((int)GameObjects.Sorting).BindEvent((evt) => 
         { 
             Debug.Log("정렬버튼 on");
-            Managers.Inventory.ItemSort();
+            Managers.Inventory.SortAll();
+        }); 
+        GetObject((int)GameObjects.Trimming).BindEvent((evt) =>
+        {
+            Debug.Log("공백제거 on");
+            Managers.Inventory.TrimAll();
         });
         GetObject((int)GameObjects.Create).BindEvent((evt) => 
         { 
@@ -33,10 +38,7 @@ public class UI_Inven : UIScene
         {
             Managers.Inventory.DeleteItem();
         });
-        GetObject((int)GameObjects.temp1).BindEvent((evt) =>
-        {
-            Debug.Log("temp1 on");
-        });
+
         GetObject((int)GameObjects.temp2).BindEvent((evt) =>
         {
             Debug.Log("temp2 on");

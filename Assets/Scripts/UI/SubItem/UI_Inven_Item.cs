@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,51 +13,50 @@ public class UI_Inven_Item : UIBase
         ItemStack
     }
 
-    [SerializeField]
     Data.Iteminfo myInfo;
-
-    public Data.Iteminfo MyInfo
+    public Data.Iteminfo GetInfo()
     {
-        get 
-        { 
-            if(myInfo == null)
-                myInfo = Managers.Data.ItemDict[199];
+        if (myInfo == null)
+            myInfo = Managers.Data.ItemDict[199];
 
-            return myInfo;
-        }
+        return myInfo;
+    }
 
-        set
+    public void SetInfo(Data.Iteminfo value)
+    {
+        myInfo = value ?? Managers.Data.ItemDict[199];
+
+        Texture2D texture = Managers.Resource.Load<Texture2D>(myInfo.uiInfo.icon);
+        transform.Find("ItemIcon").GetComponent<Image>().sprite = Managers.UI.TextureToSprite(texture);
+        GetObject((int)GameObjects.ItemNameText).GetComponent<Text>().text = myInfo.uiInfo.name;
+
+        if (myInfo.uiInfo.isStack == true)
         {
-            myInfo = value ?? Managers.Data.ItemDict[199];
-
-            Texture2D texture = Managers.Resource.Load<Texture2D>(myInfo.uiInfo.icon);
-            transform.Find("ItemIcon").GetComponent<Image>().sprite = Managers.UI.TextureToSprite(texture);
-            GetObject((int)GameObjects.ItemNameText).GetComponent<Text>().text = myInfo.uiInfo.name;
-
-            if (myInfo.uiInfo.isStack == true)
-            {
-                GetObject((int)GameObjects.ItemStack).SetActive(true);
-                MyStack++;
-            }
-            else
-            {
-                myStack = 0;
-                GetObject((int)GameObjects.ItemStack).SetActive(false);
-            }
+            GetObject((int)GameObjects.ItemStack).SetActive(true);
+            SetStack(myInfo.myStack++);
+        }
+        else
+        {
+            SetStack(0);
+            GetObject((int)GameObjects.ItemStack).SetActive(false);
         }
     }
 
-    int myStack = 0;
-    public int MyStack
-    {
-        get { return myStack; }
-
-        set
-        {
-            myStack = value;
-            GetObject((int)GameObjects.ItemStack).GetComponent<Text>().text = string.Format($"{myStack}");
-        }
+    public int GetStack() 
+    { 
+        return myInfo.myStack; 
     }
+
+    public void SetStack(int value)
+    {
+        myInfo.myStack = value;
+        GetObject((int)GameObjects.ItemStack).GetComponent<Text>().text = string.Format($"{myInfo.myStack}");
+    }
+
+
+    public int Index { get; private set; }
+
+    public void SetIndex(int index) { Index = index; }
 
     public override void Init()
     {
@@ -65,9 +65,15 @@ public class UI_Inven_Item : UIBase
         GetObject((int)GameObjects.ItemStack).SetActive(false);
         GetObject((int)GameObjects.ItemIcon).BindEvent((click) =>
         {
-            Debug.Log($"선택된 아이템이름 : {MyInfo.uiInfo.name}");
-            Managers.Inventory.CurItem = this;
+            Debug.Log($"선택된 아이템이름 : {myInfo.uiInfo.name}");
+            Managers.Inventory.CurItemIndex = Index;
+            Debug.Log($"선택된 Index : {Index}");
         });
+    }
+
+    public void InfoUpdate()
+    {
+
     }
 }
 
