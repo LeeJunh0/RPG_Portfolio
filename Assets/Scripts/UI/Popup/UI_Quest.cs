@@ -44,6 +44,7 @@ public class UI_Quest : UIPopup
             UI_Quest_Item questItem = item.GetOrAddComponent<UI_Quest_Item>();
             Debug.Log($"SetInfo할 아이콘 : {item.name}");
             questItem.SetInfo(Managers.Data.QuestDict[i].name, Managers.Data.QuestDict[i].id);
+            item.GetComponent<RectTransform>().localScale = Vector3.one;
         }
     }
 

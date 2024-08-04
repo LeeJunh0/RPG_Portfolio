@@ -19,6 +19,7 @@ public class Managers : MonoBehaviour
     #region Core
     DataManager _data = new DataManager();
     InputManager _input = new InputManager();
+    OptionManager _option = new OptionManager();
     ResourceManager _resource = new ResourceManager();
     PoolManager _pool = new PoolManager();
     SceneManagerEx _scene = new SceneManagerEx();
@@ -27,6 +28,7 @@ public class Managers : MonoBehaviour
 
     public static DataManager Data { get { return Instance._data; } }
     public static InputManager Input { get { return Instance._input; } }
+    public static OptionManager Option { get { return Instance._option; } }
     public static ResourceManager Resource { get { return Instance._resource; } }
     public static PoolManager Pool { get { return Instance._pool; } }
     public static SceneManagerEx Scene { get { return Instance._scene; } }
@@ -56,6 +58,7 @@ public class Managers : MonoBehaviour
             BindKey.Init();
             s_instance._sound.Init();
             s_instance._pool.Init();
+            s_instance._inven.Init();
         }
     }
 

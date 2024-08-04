@@ -10,47 +10,48 @@ public class UI_Inven : UIScene
     enum GameObjects
     {
         Sorting,
-        Trimming,
         Create,
         Delete,
-        temp2,
-        temp3
     }
+
+    GameObject InvenUI;
+    UI_Inven_Item[] iconInfos;
 
     public override void Init()
     {
         Bind<GameObject>(typeof(GameObjects));
-        GetObject((int)GameObjects.Sorting).BindEvent((evt) => 
-        { 
+        InvenUI = Util.FindChild(this.gameObject, "Content", true);
+
+        GetObject((int)GameObjects.Sorting).BindEvent((evt) =>
+        {
             Debug.Log("정렬버튼 on");
             Managers.Inventory.SortAll();
-        }); 
-        GetObject((int)GameObjects.Trimming).BindEvent((evt) =>
-        {
-            Debug.Log("공백제거 on");
-            Managers.Inventory.TrimAll();
         });
-        GetObject((int)GameObjects.Create).BindEvent((evt) => 
-        { 
+        GetObject((int)GameObjects.Create).BindEvent((evt) =>
+        {
+            Debug.Log("생성버튼 on");
             Managers.Inventory.AddItem(Managers.Data.ItemDict[Random.Range(102, 106)]);
         });
         GetObject((int)GameObjects.Delete).BindEvent((evt) =>
         {
-            Managers.Inventory.DeleteItem();
+            Debug.Log("제거버튼 on");
+            //Managers.Inventory.RemoveItem();
         });
-
-        GetObject((int)GameObjects.temp2).BindEvent((evt) =>
-        {
-            Debug.Log("temp2 on");
-        });
-        GetObject((int)GameObjects.temp3).BindEvent((evt) =>
-        {
-            Debug.Log("temp3 on");
-        });     
     }
 
     private void Start()
+    {     
+        Managers.Inventory.InterLocking();
+    }
+
+    public void InfosInit()
     {
-        Managers.Inventory.Interlocking();
+        iconInfos = new UI_Inven_Item[Managers.Option.InventoryCount];
+
+        for(int i = 0; i < iconInfos.Length; i++)
+        {
+            iconInfos[i] = InvenUI.transform.GetChild(i).GetOrAddComponent<UI_Inven_Item>();
+            iconInfos[i].SetIndex(i);
+        }
     }
 }
