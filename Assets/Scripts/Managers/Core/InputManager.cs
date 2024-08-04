@@ -16,8 +16,7 @@ public class InputManager
         if(KeyAction != null)
         {
             if (Input.GetKeyDown(BindKey.Inventory))
-                Debug.Log("OnInventory");
-            //KeyAction.Invoke(BindKey.Inventory);
+                KeyAction.Invoke(BindKey.Inventory);
             else if (Input.GetKeyDown(BindKey.Quest))
                 KeyAction.Invoke(BindKey.Quest);
             else if (Input.GetKeyDown(BindKey.Skill))

@@ -19,9 +19,8 @@ public class UI_Inven : UIScene
 
     public override void Init()
     {
-        Bind<GameObject>(typeof(GameObjects));
+        Bind<GameObject>(typeof(GameObjects));      
         InvenUI = Util.FindChild(this.gameObject, "Content", true);
-
         GetObject((int)GameObjects.Sorting).BindEvent((evt) =>
         {
             Debug.Log("정렬버튼 on");
@@ -35,12 +34,15 @@ public class UI_Inven : UIScene
         GetObject((int)GameObjects.Delete).BindEvent((evt) =>
         {
             Debug.Log("제거버튼 on");
-            //Managers.Inventory.RemoveItem();
+            Managers.Inventory.RemoveItem(Managers.Inventory.SelectIndex);
         });
+
+        InfosInit();
     }
 
     private void Start()
-    {     
+    {
+        Managers.Inventory.SetInvenReference(iconInfos);
         Managers.Inventory.InterLocking();
     }
 

@@ -28,7 +28,6 @@ public class UI_Inven_Item : UIBase
         if (value.uiInfo.isStack == true)
         {
             GetObject((int)GameObjects.ItemStack).SetActive(true);
-            //SetStack(value.myStack++);
         }
         else
         {
@@ -37,17 +36,6 @@ public class UI_Inven_Item : UIBase
         }
     }
 
-    //public int GetStack()
-    //{
-    //    return .myStack;
-    //}
-
-    //public void SetStack(int value)
-    //{
-    //    myInfo.myStack = value;
-    //    GetObject((int)GameObjects.ItemStack).GetComponent<Text>().text = string.Format($"{myInfo.myStack}");
-    //}
-
     public override void Init()
     {
         Bind<GameObject>(typeof(GameObjects));
@@ -55,15 +43,9 @@ public class UI_Inven_Item : UIBase
         GetObject((int)GameObjects.ItemStack).SetActive(false);
         GetObject((int)GameObjects.ItemIcon).BindEvent((click) =>
         {
-            //Debug.Log($"선택된 아이템이름 : {myInfo.uiInfo.name}");
-            //Managers.Inventory.CurItemIndex = Index;
-            Debug.Log($"선택된 Index : {Index}");
-        });
-    }
-
-    public void InfoUpdate()
-    {
-
+            Debug.Log($"아이콘 Index : {Index}");
+            Managers.Inventory.SelectIndex = Index;
+        }, Define.EUiEvent.Click);
     }
 }
 
