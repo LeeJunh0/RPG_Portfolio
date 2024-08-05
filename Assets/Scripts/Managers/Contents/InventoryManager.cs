@@ -3,18 +3,35 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class InventoryManager
 {
-    //Todo
-    //아이템에 우선순위를 만들어 가중치를 적용한다 Dict = 우선순위, 가중치
     Iteminfo[] invenInfos;
     UI_Inven_Item[] invenIcons;
 
     public int SelectIndex { get; set; }
+
+    public class ItemComparer : IComparer<Iteminfo>
+    {
+        public int Compare(Iteminfo x, Iteminfo y)
+        {
+            if (x == null) 
+                return 1;
+            else if (y == null) 
+                return -1;
+            else if (x == null || y == null)
+                return 0;
+            else 
+                return x.id.CompareTo(y.id);
+        }      
+    }
+
+    ItemComparer comparer = new ItemComparer();
 
     public void Init()
     {
@@ -31,31 +48,41 @@ public class InventoryManager
 
     public void UpdateAllSlot()
     {
-        for(int i = 0; i < invenInfos.Length; i++)
-            invenIcons[i].SetInfo(invenInfos[i]);
+        for (int i = 0; i < invenInfos.Length; i++)
+            UpdateSlotInfo(i);
     }
 
     public void AddItem(Iteminfo item)
     {
-        if (invenInfos == null) 
+        if (invenInfos == null)
             return;
 
-        int index = -1;
-
-        if (invenInfos.Contains(item))
+        if (item.uiInfo.isStack == true)
         {
-            while (++index <= invenInfos.Length && invenInfos[index] != item) ;
-            invenInfos[index].myStack++;
+            for (int i = 0; i < invenInfos.Length; i++)
+            {
+                if (invenInfos[i] == null)
+                    continue;
+
+                if (invenInfos[i].id == item.id)
+                {
+                    invenInfos[i].MyStack++;
+                    UpdateSlotInfo(i);
+                    return;
+                }
+            }
+        }
+
+        for (int i = 0; i < invenInfos.Length; i++)
+        {
+            if (invenInfos[i] != null)
+                continue;
+
+            invenInfos[i] = item;
+            UpdateSlotInfo(i);
             return;
         }
 
-        while (++index <= invenInfos.Length && invenInfos[index] != Managers.Data.ItemDict[199])
-        {
-            if (index >= invenInfos.Length)
-                break;
-        }            
-        invenInfos[index] = item;
-        UpdateSlotInfo(index);
     }
 
     public void RemoveItem(int index)
@@ -63,7 +90,8 @@ public class InventoryManager
         if (invenInfos == null)
             return;
 
-        invenInfos[index] = Managers.Data.ItemDict[199];
+        invenInfos[index] = null;
+        UpdateSlotInfo(index);
     }
 
     public void TrimAll()
@@ -72,26 +100,36 @@ public class InventoryManager
             return;
 
         int voidSearch = -1;
-        while (invenInfos[++voidSearch] == Managers.Data.ItemDict[199]) ;
+        while (++voidSearch < invenInfos.Length && invenInfos[voidSearch] != null)
+        {
+            if (voidSearch >= invenInfos.Length)
+            {
+                Debug.Log("빈칸이 존재하지 않아 공백제거 불가.");
+                return;
+            }
+        }
+
         int itemSearch = voidSearch;
 
         while (true)
         {
-            while (++itemSearch <= invenInfos.Length && invenInfos[itemSearch] != Managers.Data.ItemDict[199]) ;
+            while (++itemSearch < invenInfos.Length && invenInfos[itemSearch] == null) ;
 
-            if (itemSearch <= invenInfos.Length)
+            if (itemSearch >= invenInfos.Length)
                 break;
 
             invenInfos[voidSearch] = invenInfos[itemSearch];
-            invenInfos[itemSearch] = Managers.Data.ItemDict[199];
+            invenInfos[itemSearch] = null;
             voidSearch++;
         }
+        UpdateAllSlot();
     }
 
     public void SortAll()
     {
         TrimAll();
-        invenInfos = invenInfos.OrderBy(item => item.id).ToArray();
+        Array.Sort(invenInfos, comparer);
+        UpdateAllSlot();
     }
 
     public void SetInvenReference(UI_Inven_Item[] icons)

@@ -12,6 +12,7 @@ public class UI_Inven : UIScene
         Sorting,
         Create,
         Delete,
+        Trimming
     }
 
     GameObject InvenUI;
@@ -21,6 +22,7 @@ public class UI_Inven : UIScene
     {
         Bind<GameObject>(typeof(GameObjects));      
         InvenUI = Util.FindChild(this.gameObject, "Content", true);
+
         GetObject((int)GameObjects.Sorting).BindEvent((evt) =>
         {
             Debug.Log("정렬버튼 on");
@@ -29,14 +31,18 @@ public class UI_Inven : UIScene
         GetObject((int)GameObjects.Create).BindEvent((evt) =>
         {
             Debug.Log("생성버튼 on");
-            Managers.Inventory.AddItem(Managers.Data.ItemDict[Random.Range(102, 106)]);
+            Managers.Inventory.AddItem(new Iteminfo(Managers.Data.ItemDict[Random.Range(102, 106)]));
         });
         GetObject((int)GameObjects.Delete).BindEvent((evt) =>
         {
             Debug.Log("제거버튼 on");
             Managers.Inventory.RemoveItem(Managers.Inventory.SelectIndex);
         });
-
+        GetObject((int)GameObjects.Trimming).BindEvent((evt) =>
+        {
+            Debug.Log("공백제거버튼 on");
+            Managers.Inventory.TrimAll();
+        });
         InfosInit();
     }
 

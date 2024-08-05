@@ -70,14 +70,22 @@ namespace Data
 
     #region Item
     [Serializable]
-    public class Iteminfo 
+    public class Iteminfo : ItemStack
     {
         public int id;
         public int hp;
         public int att;
         public int gold;
-        public int myStack;
         public ItemUIinfo uiInfo;
+
+        public Iteminfo(Iteminfo info)
+        {
+            this.id = info.id;
+            this.hp = info.hp;
+            this.att = info.att;
+            this.gold = info.gold;
+            this.uiInfo = info.uiInfo;
+        }
     }
 
     [Serializable]

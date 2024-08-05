@@ -28,11 +28,12 @@ public class UI_Inven_Item : UIBase
         if (value.uiInfo.isStack == true)
         {
             GetObject((int)GameObjects.ItemStack).SetActive(true);
+            GetObject((int)GameObjects.ItemStack).GetComponent<Text>().text = string.Format($"{value.MyStack}");
         }
         else
         {
-            //SetStack(1);
             GetObject((int)GameObjects.ItemStack).SetActive(false);
+            GetObject((int)GameObjects.ItemStack).GetComponent<Text>().text = "1";
         }
     }
 
@@ -45,7 +46,7 @@ public class UI_Inven_Item : UIBase
         {
             Debug.Log($"아이콘 Index : {Index}");
             Managers.Inventory.SelectIndex = Index;
-        }, Define.EUiEvent.Click);
+        });
     }
 }
 
