@@ -2,6 +2,7 @@ using Data;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,7 +14,8 @@ public class UI_Quest_Popup : UIPopup
         QuestName,
         QuestDescript,
         QuestCompleted,
-        QuestRewards
+        QuestRewards,
+        QuestConditions
     }
 
     public override void Init()
@@ -33,5 +35,11 @@ public class UI_Quest_Popup : UIPopup
 
         foreach (string item in Managers.Data.QuestDict[id].rewards.items)
             rewards.text += string.Format($"{item}, ");
+
+        GameObject conditions = GetObject((int)QuestPopupObject.QuestConditions);
+        for(int i = 0; i < Managers.Data.QuestDict[id].conditions.Count; i++)
+        {
+
+        }
     }
 }

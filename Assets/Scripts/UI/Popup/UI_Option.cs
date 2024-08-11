@@ -34,11 +34,11 @@ public class UI_Option : UIPopup
 
         bgmBar.onValueChanged.AddListener((evt) =>
         {
-            Managers.Sound.GetAudioSource(Define.Sound.Bgm).volume = bgmBar.value;
+            Managers.ESound.GetAudioSource(Define.ESound.Bgm).volume = bgmBar.value;
         });
         effectBar.onValueChanged.AddListener((evt) =>
         {
-            Managers.Sound.GetAudioSource(Define.Sound.Effect).volume = effectBar.value;
+            Managers.ESound.GetAudioSource(Define.ESound.Effect).volume = effectBar.value;
         });
     }
 }

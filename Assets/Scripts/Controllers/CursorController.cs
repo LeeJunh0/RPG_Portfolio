@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CursorController : MonoBehaviour
 {
-    int mask = (1 << (int)Define.Layer.Ground) | (1 << (int)Define.Layer.Monster);
+    int mask = (1 << (int)Define.ELayer.Ground) | (1 << (int)Define.ELayer.Monster);
     Texture2D attackIcon;
     Texture2D handIcon;
 
@@ -24,7 +24,7 @@ public class CursorController : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 100.0f, mask))
         {
-            if (hit.collider.gameObject.layer == (int)Define.Layer.Monster)
+            if (hit.collider.gameObject.layer == (int)Define.ELayer.Monster)
                 Cursor.SetCursor(attackIcon, new Vector2(attackIcon.width / 5, 0), CursorMode.Auto);
             else
                 Cursor.SetCursor(handIcon, new Vector2(handIcon.width / 3, 0), CursorMode.Auto);

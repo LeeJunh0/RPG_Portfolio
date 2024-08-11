@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     [SerializeField]
-    Define.CameraMode Mode = Define.CameraMode.QuaterView;
+    Define.ECameraMode Mode = Define.ECameraMode.QuaterView;
 
     [SerializeField]
     Vector3 Delta = new Vector3(0.0f, 6.0f, -5.0f);
@@ -22,7 +22,7 @@ public class CameraController : MonoBehaviour
 
     void LateUpdate()
     {
-        if(Mode == Define.CameraMode.QuaterView)
+        if(Mode == Define.ECameraMode.QuaterView)
         {
             if (Player.IsValid() == false)
                 return;
@@ -43,7 +43,7 @@ public class CameraController : MonoBehaviour
 
     public void SetQuaterView(Vector3 delta)
     {
-        Mode = Define.CameraMode.QuaterView;
+        Mode = Define.ECameraMode.QuaterView;
         Delta = delta;
     }
 }

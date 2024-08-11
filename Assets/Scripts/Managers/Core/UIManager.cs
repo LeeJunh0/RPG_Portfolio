@@ -65,10 +65,10 @@ public class UIManager
         if (go == null)
             go = Managers.Resource.Instantiate(typeof(T).Name);
         
-        T scene = Util.GetOrAddComponent<T>(go);
+        T EScene = Util.GetOrAddComponent<T>(go);
 
         go.transform.SetParent(Root.transform);
-        return scene;
+        return EScene;
     }
 
     public T MakeSubItem<T>(Transform parent = null ,string name = null) where T : UIBase

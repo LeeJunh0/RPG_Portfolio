@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Define
 {
-    public enum WorldObject
+    public enum EWorldObject
     {
         Unknown,
         Player,
         Monster
     }
-    public enum State
+    public enum EState
     {
         Die,
         Idle,
@@ -18,27 +18,27 @@ public class Define
         Skill
     }
 
-    public enum Layer
+    public enum ELayer
     {
         Ground = 6,
         Monster = 7,
         Block = 8
     }
 
-    public enum Scene
+    public enum EScene
     {
         Title,
         Game
     }
 
-    public enum Sound
+    public enum ESound
     {
         Bgm,
         Effect,
         MaxCount
     }
 
-    public enum MouseEvent
+    public enum EMouseEvent
     {
         Press,
         PointerDown,
@@ -54,7 +54,14 @@ public class Define
         EndDrag
     }
 
-    public enum CameraMode
+    public enum EQuestEvent
+    {
+        Kill,
+        Get,
+        Level
+    }
+
+    public enum ECameraMode
     {
         QuaterView,
     }

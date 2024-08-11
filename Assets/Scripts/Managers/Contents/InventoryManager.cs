@@ -82,7 +82,6 @@ public class InventoryManager
             UpdateSlotInfo(i);
             return;
         }
-
     }
 
     public void RemoveItem(int index)

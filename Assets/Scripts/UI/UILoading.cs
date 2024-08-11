@@ -25,17 +25,17 @@ public class UILoading : UIPopup
         tipText.text = tipArr[random];
     }
 
-    public void Loading(Define.Scene type)
+    public void Loading(Define.EScene type)
     {
         string label = "";
         Time.timeScale = 1.0f;
 
         switch (type)
         {
-            case Define.Scene.Title:
+            case Define.EScene.Title:
                 label = "Title";
                 break;
-            case Define.Scene.Game:
+            case Define.EScene.Game:
                 label = "Game";
                 break;
         }
@@ -54,10 +54,10 @@ public class UILoading : UIPopup
         });
     }
 
-    IEnumerator SceneAsyncLoad(Define.Scene type)
+    IEnumerator SceneAsyncLoad(Define.EScene type)
     {
         yield return new WaitForSeconds(1.5f); // 디버그용 하드코딩
-        Managers.Scene.LoadScene(type);
+        Managers.EScene.LoadScene(type);
         Managers.Pool.Push(gameObject.GetOrAddComponent<Poolable>());
     }
 }

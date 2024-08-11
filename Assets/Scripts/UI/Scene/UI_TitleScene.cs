@@ -27,7 +27,7 @@ public class UI_TitleScene : UIBase
         {
             Debug.Log("Change GameScene ..");
             UILoading loader = Managers.UI.ShowPopupUI<UILoading>("UI_LoadingScreen");
-            loader.Loading(Define.Scene.Game);
+            loader.Loading(Define.EScene.Game);
         });
         optionButton.BindEvent((evt) =>
         {
@@ -61,7 +61,7 @@ public class UI_TitleScene : UIBase
                 optionButton.SetActive(true);
                 exitButton.SetActive(true);
 
-                Managers.Sound.Play("Happy", Define.Sound.Bgm);
+                Managers.ESound.Play("Happy", Define.ESound.Bgm);
             }
         });
     }

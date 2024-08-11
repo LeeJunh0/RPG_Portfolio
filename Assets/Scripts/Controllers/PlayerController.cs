@@ -5,14 +5,14 @@ using UnityEngine.AI;
 
 public class PlayerController : BaseController
 {
-    int mask = (1 << (int)Define.Layer.Ground) | (1 << (int)Define.Layer.Monster);
+    int mask = (1 << (int)Define.ELayer.Ground) | (1 << (int)Define.ELayer.Monster);
 
     PlayerStat stat;
     bool stopSkill = false;
 
     public override void Init()
     {
-        WorldObjectType = Define.WorldObject.Player;
+        WorldObjectType = Define.EWorldObject.Player;
         stat = gameObject.GetComponent<PlayerStat>();
         Managers.Input.MouseAction -= OnMouseEvent;
         Managers.Input.MouseAction += OnMouseEvent;
@@ -27,7 +27,7 @@ public class PlayerController : BaseController
 
             if(distance <= 1.5f)
             {
-                State = Define.State.Skill;
+                EState = Define.EState.Skill;
                 return;
             }
         }
@@ -36,7 +36,7 @@ public class PlayerController : BaseController
         dir.y = 0;
         if (dir.magnitude < 0.1f)
         {
-            State = Define.State.Idle;
+            EState = Define.EState.Idle;
         }
         else
         {
@@ -44,7 +44,7 @@ public class PlayerController : BaseController
             if (Physics.Raycast(transform.position + Vector3.up * 0.5f, dir, 1.0f, LayerMask.GetMask("Block")))
             {
                 if (Input.GetMouseButton(0) == false)
-                    State = Define.State.Idle;
+                    EState = Define.EState.Idle;
                 return;
             }
             float Movedis = Mathf.Clamp(stat.Movespeed * Time.deltaTime, 0f, dir.magnitude);
@@ -84,54 +84,54 @@ public class PlayerController : BaseController
 
         if(stopSkill == true)
         {
-            State = Define.State.Idle;
+            EState = Define.EState.Idle;
         }
         else
         {
-            State = Define.State.Skill;
+            EState = Define.EState.Skill;
         }
         
     }
 
     void Update()
     {
-        switch (State)
+        switch (EState)
         {
-            case Define.State.Idle:
+            case Define.EState.Idle:
                 UpdateIdle();
                 break;
-            case Define.State.Move:
+            case Define.EState.Move:
                 UpdateMove();
                 break;
-            case Define.State.Die:
+            case Define.EState.Die:
                 UpdateDie();
                 break;
-            case Define.State.Skill:
+            case Define.EState.Skill:
                 UpDateSkill();
                 break;
         }
     }
 
-    void OnMouseEvent(Define.MouseEvent evt)
+    void OnMouseEvent(Define.EMouseEvent evt)
     {
-        switch (State)
+        switch (EState)
         {
-            case Define.State.Idle:
+            case Define.EState.Idle:
                 OnMouseEvent_IdelRun(evt);
                 break;
-            case Define.State.Move:
+            case Define.EState.Move:
                 OnMouseEvent_IdelRun(evt);
                 break;
-            case Define.State.Die:
+            case Define.EState.Die:
                 break;
-            case Define.State.Skill:
-                if (evt == Define.MouseEvent.PointerUp)
+            case Define.EState.Skill:
+                if (evt == Define.EMouseEvent.PointerUp)
                     stopSkill = true;
                 break;
         }
     }
 
-    void OnMouseEvent_IdelRun(Define.MouseEvent evt)
+    void OnMouseEvent_IdelRun(Define.EMouseEvent evt)
     {
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -139,24 +139,24 @@ public class PlayerController : BaseController
 
         switch (evt)
         {
-            case Define.MouseEvent.PointerDown:
+            case Define.EMouseEvent.PointerDown:
                 if (raycastHit == true)
                 {
                     DestPos = hit.point;
-                    State = Define.State.Move;
+                    EState = Define.EState.Move;
                     stopSkill = false;
 
-                    if (hit.collider.gameObject.layer == (int)Define.Layer.Monster)
+                    if (hit.collider.gameObject.layer == (int)Define.ELayer.Monster)
                         lockTarget = hit.collider.gameObject;
                     else
                         lockTarget = null;
                 }
                 break;
-            case Define.MouseEvent.Press:
+            case Define.EMouseEvent.Press:
                 if (lockTarget == null && raycastHit)
                     DestPos = hit.point;
                 break;
-            case Define.MouseEvent.PointerUp:
+            case Define.EMouseEvent.PointerUp:
                 stopSkill = true;
                 break;
         }

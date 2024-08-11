@@ -8,12 +8,12 @@ public abstract class BaseController : MonoBehaviour
     protected GameObject lockTarget = null;
 
     [SerializeField]
-    protected Define.State curState = Define.State.Idle;
+    protected Define.EState curState = Define.EState.Idle;
 
     [SerializeField]
     protected Vector3 DestPos;
 
-    public virtual Define.State State
+    public virtual Define.EState EState
     {
         get { return curState; }
         set
@@ -23,21 +23,21 @@ public abstract class BaseController : MonoBehaviour
 
             switch (curState)
             {
-                case Define.State.Die:
+                case Define.EState.Die:
                     break;
-                case Define.State.Idle:
+                case Define.EState.Idle:
                     anim.CrossFade("WAIT", 0.1f);
                     break;
-                case Define.State.Move:
+                case Define.EState.Move:
                     anim.CrossFade("MOVE", 0.1f);
                     break;
-                case Define.State.Skill:
+                case Define.EState.Skill:
                     anim.CrossFade("ATTACK", 0.1f, -1, 0);
                     break;
             }
         }
     }
-    public Define.WorldObject WorldObjectType { get; protected set; } = Define.WorldObject.Unknown;
+    public Define.EWorldObject WorldObjectType { get; protected set; } = Define.EWorldObject.Unknown;
     public abstract void Init();
 
     private void Start()
@@ -47,18 +47,18 @@ public abstract class BaseController : MonoBehaviour
 
     void Update()
     {
-        switch (State)
+        switch (EState)
         {
-            case Define.State.Idle:
+            case Define.EState.Idle:
                 UpdateIdle();
                 break;
-            case Define.State.Move:
+            case Define.EState.Move:
                 UpdateMove();
                 break;
-            case Define.State.Die:
+            case Define.EState.Die:
                 UpdateDie();
                 break;
-            case Define.State.Skill:
+            case Define.EState.Skill:
                 UpDateSkill();
                 break;
         }

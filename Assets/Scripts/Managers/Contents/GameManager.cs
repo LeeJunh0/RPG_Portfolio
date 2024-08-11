@@ -12,48 +12,48 @@ public class GameManager
 
     public GameObject GetPlayer() { return player; }
 
-    public GameObject Spawn(Define.WorldObject type, string path, Transform parent = null)
+    public GameObject Spawn(Define.EWorldObject type, string path, Transform parent = null)
     {
         GameObject go = Managers.Resource.Instantiate(path, parent);
 
         switch (type)
         {
-            case Define.WorldObject.Monster:
+            case Define.EWorldObject.Monster:
                 monsters.Add(go);
                 if (OnSpawnEvent != null)
                     OnSpawnEvent.Invoke(1);
                 break;
-            case Define.WorldObject.Player:
+            case Define.EWorldObject.Player:
                 player = go;
                 break;
         }
         return go;
     }
 
-    public Define.WorldObject GetWorldObjectType(GameObject go)
+    public Define.EWorldObject GetWorldObjectType(GameObject go)
     {
         BaseController bc = go.GetComponent<BaseController>();
         if (bc.WorldObjectType == null)
-            return Define.WorldObject.Unknown;
+            return Define.EWorldObject.Unknown;
 
         return bc.WorldObjectType;
     }
 
     public void Despawn(GameObject go)
     {
-        Define.WorldObject type = GetWorldObjectType(go);
+        Define.EWorldObject type = GetWorldObjectType(go);
 
         switch (type)
         {
-            case Define.WorldObject.Unknown:
+            case Define.EWorldObject.Unknown:
                 break;
-            case Define.WorldObject.Player:
+            case Define.EWorldObject.Player:
                 {
                     if (player == go)
                         player = null;                    
                 }
                 break;
-            case Define.WorldObject.Monster:
+            case Define.EWorldObject.Monster:
                 {
                     if (monsters.Contains(go) == true)
                     {

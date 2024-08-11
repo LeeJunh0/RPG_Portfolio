@@ -1,6 +1,9 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -34,6 +37,11 @@ namespace Data
     #endregion
 
     #region Quest
+    public interface ICondition
+    {
+        bool CompleteCheck();
+    }
+
     [Serializable]
     public class Quest
     {
@@ -41,7 +49,34 @@ namespace Data
         public string name;
         public string description;
         public bool isCompleted;
+        public List<QuestCondition> conditions;
         public Rewards rewards;
+
+        public Quest(Quest quest)
+        {
+            this.id = quest.id;
+            this.name = quest.name;
+            this.description = quest.description;
+            this.isCompleted = quest.isCompleted;
+            this.conditions = quest.conditions;
+            this.rewards = quest.rewards;
+        }
+
+        public bool Complete()
+        {
+            return conditions.All(condition => condition.CompleteCheck());
+        }
+    }
+
+    [Serializable]
+    public class QuestCondition : ICondition
+    {
+        public int type;
+        public string target;
+        public int now;
+        public int how;
+
+        public bool CompleteCheck() { return now >= how; }
     }
 
     [Serializable]

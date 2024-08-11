@@ -27,7 +27,7 @@ public class UI_Pause : UIPopup
         {
             Debug.Log("Change TitleScene ..");
             UILoading loader = Managers.UI.ShowPopupUI<UILoading>("UI_LoadingScreen");
-            loader.Loading(Define.Scene.Title);         
+            loader.Loading(Define.EScene.Title);         
         }); 
         GetObject((int)Buttons.NoButton).BindEvent((PointerEventData) =>
         {

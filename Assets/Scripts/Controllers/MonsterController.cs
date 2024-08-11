@@ -15,7 +15,7 @@ public class MonsterController : BaseController
 
     public override void Init()
     {
-        WorldObjectType = Define.WorldObject.Monster;
+        WorldObjectType = Define.EWorldObject.Monster;
         stat = GetComponent<Stat>();
 
         if(gameObject.GetComponentInChildren<UI_HPBar>() == null)
@@ -32,7 +32,7 @@ public class MonsterController : BaseController
         if(dis <= scanRange)
         {
             lockTarget = player;
-            State = Define.State.Move;
+            EState = Define.EState.Move;
             return;
         }
     }
@@ -49,7 +49,7 @@ public class MonsterController : BaseController
                 NavMeshAgent agent = gameObject.GetOrAddComponent<NavMeshAgent>();
                 agent.SetDestination(transform.position);
 
-                State = Define.State.Skill;
+                EState = Define.EState.Skill;
                 return;
             }
         }
@@ -57,7 +57,7 @@ public class MonsterController : BaseController
         Vector3 dir = DestPos - transform.position;
         if (dir.magnitude < 0.1f)
         {
-            State = Define.State.Idle;
+            EState = Define.EState.Idle;
         }
         else
         {
@@ -95,18 +95,18 @@ public class MonsterController : BaseController
             {
                 float dis = (lockTarget.transform.position - transform.position).magnitude;
                 if (dis <= attackRange)
-                    State = Define.State.Skill;
+                    EState = Define.EState.Skill;
                 else
-                    State = Define.State.Move;
+                    EState = Define.EState.Move;
             }
             else
             {
-                State = Define.State.Idle;
+                EState = Define.EState.Idle;
             }
         }
         else
         {
-            State = Define.State.Idle;
+            EState = Define.EState.Idle;
         }
     }
 }

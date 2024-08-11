@@ -11,9 +11,13 @@ public class Managers : MonoBehaviour
     #region Contents
     GameManager _game = new GameManager();
     InventoryManager _inven = new InventoryManager();
+    QuestManager _quest = new QuestManager();
+    QuestEventManager _questEvt = new QuestEventManager();
 
     public static GameManager Game { get { return Instance._game; } }
     public static InventoryManager Inventory { get { return Instance._inven; } }
+    public static QuestManager Quest { get { return Instance._quest; } }
+    public static QuestEventManager QuestEvt { get {  return Instance._questEvt; } }
     #endregion
 
     #region Core
@@ -31,8 +35,8 @@ public class Managers : MonoBehaviour
     public static OptionManager Option { get { return Instance._option; } }
     public static ResourceManager Resource { get { return Instance._resource; } }
     public static PoolManager Pool { get { return Instance._pool; } }
-    public static SceneManagerEx Scene { get { return Instance._scene; } }
-    public static SoundManager Sound { get { return Instance._sound; } }
+    public static SceneManagerEx EScene { get { return Instance._scene; } }
+    public static SoundManager ESound { get { return Instance._sound; } }
     public static UIManager UI { get { return Instance._ui; } }
     #endregion
 
@@ -64,10 +68,10 @@ public class Managers : MonoBehaviour
 
     static public void Clear()
     {
-        Sound.Clear();
+        ESound.Clear();
         Input.Clear();
         UI.Clear();
-        Scene.Clear();
+        EScene.Clear();
         Pool.Clear();
     }
 }

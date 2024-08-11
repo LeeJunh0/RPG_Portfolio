@@ -40,7 +40,7 @@ public class SpawningPool : MonoBehaviour
     {
         reserveCount++;
         yield return new WaitForSeconds(Random.Range(0, spawnTime));
-        GameObject go = Managers.Game.Spawn(Define.WorldObject.Monster, "Knight");
+        GameObject go = Managers.Game.Spawn(Define.EWorldObject.Monster, "Knight");
         NavMeshAgent agent = go.GetOrAddComponent<NavMeshAgent>();
 
         Vector3 randPos;

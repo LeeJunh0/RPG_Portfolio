@@ -2,19 +2,35 @@
   "quests": [
     {
       "id": 0,
-      "name": "Quest 1",
-      "description": "First Quest",
+      "name": "마을 정리",
+      "description": "기사 두명을 처리하자.",
       "isCompleted": false,
+      "conditions": [
+        {
+          "type": 0,
+          "target": "Knight",
+          "now": 0,
+          "how": 2
+        }
+      ],
       "rewards": {
         "experience": 100,
-        "items": ["Gold","Sword"]
+        "items": [ "Gold", "Sword" ]
       }
     },
     {
       "id": 1,
-      "name": "Quest 2",
-      "description": "Second Quest",
+      "name": "싸움 준비",
+      "description": "3 레벨을 달성하자.",
       "isCompleted": false,
+      "conditions": [
+        {
+          "type": 2,
+          "target": "Level",
+          "now": 0,
+          "how": 3
+        }
+      ],
       "rewards": {
         "experience": 100,
         "items": [ "Gold" ]
@@ -22,9 +38,17 @@
     },
     {
       "id": 2,
-      "name": "Quest 3",
-      "description": "Third Quest",
+      "name": "보스 처치",
+      "description": "방패병 한명을 처리후 전리품을 획득하자.",
       "isCompleted": false,
+      "conditions": [
+        {
+          "type": 1,
+          "target": "Shield",
+          "now": 0,
+          "how": 1
+        }
+      ],
       "rewards": {
         "experience": 100,
         "items": [ "Sword" ]
