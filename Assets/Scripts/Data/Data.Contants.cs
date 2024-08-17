@@ -37,46 +37,35 @@ namespace Data
     #endregion
 
     #region Quest
-    public interface ICondition
-    {
-        bool CompleteCheck();
-    }
-
     [Serializable]
-    public class Quest
+    public class QuestInfo
     {
         public int id;
         public string name;
         public string description;
         public bool isCompleted;
-        public List<QuestCondition> conditions;
+        public Task task;
+        public int successCount;
         public Rewards rewards;
 
-        public Quest(Quest quest)
+        public QuestInfo(QuestInfo info)
         {
-            this.id = quest.id;
-            this.name = quest.name;
-            this.description = quest.description;
-            this.isCompleted = quest.isCompleted;
-            this.conditions = quest.conditions;
-            this.rewards = quest.rewards;
+            this.id = info.id;
+            this.name = info.name;
+            this.description = info.description;
+            this.isCompleted = info.isCompleted;
+            this.task = info.task;
+            this.rewards = info.rewards;
         }
 
-        public bool Complete()
-        {
-            return conditions.All(condition => condition.CompleteCheck());
-        }
     }
 
     [Serializable]
-    public class QuestCondition : ICondition
+    public class Task
     {
         public int type;
         public string target;
-        public int now;
-        public int how;
-
-        public bool CompleteCheck() { return now >= how; }
+        public int currentSuccess;
     }
 
     [Serializable]
@@ -87,15 +76,15 @@ namespace Data
     }
 
     [Serializable]
-    public class QuestData : ILoader<int, Quest>
+    public class QuestData : ILoader<int, QuestInfo>
     {
-        public List<Quest> quests = new List<Quest>();
+        public List<QuestInfo> quests = new List<QuestInfo>();
 
-        public Dictionary <int, Quest> MakeDict()
+        public Dictionary <int, QuestInfo> MakeDict()
         {
-            Dictionary<int, Quest> dict = new Dictionary<int, Quest>();
+            Dictionary<int, QuestInfo> dict = new Dictionary<int, QuestInfo>();
 
-            foreach(Quest quest in quests)
+            foreach(QuestInfo quest in quests)
                 dict.Add(quest.id, quest);
 
             return dict;

@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
+using static Define;
 using static UnityEditor.Progress;
 
 public class InventoryManager
@@ -44,6 +45,7 @@ public class InventoryManager
     public void UpdateSlotInfo(int index)
     {
         invenIcons[index].SetInfo(invenInfos[index]);
+        
     }
 
     public void UpdateAllSlot()
@@ -54,9 +56,9 @@ public class InventoryManager
 
     public void AddItem(Iteminfo item)
     {
-        if (invenInfos == null)
+        if (invenInfos.Length <= 0)
             return;
-
+        
         if (item.uiInfo.isStack == true)
         {
             for (int i = 0; i < invenInfos.Length; i++)
@@ -67,6 +69,7 @@ public class InventoryManager
                 if (invenInfos[i].id == item.id)
                 {
                     invenInfos[i].MyStack++;
+                    Managers.Quest.OnGetQuestAction?.Invoke(item.uiInfo.name, GetItemCount(item.uiInfo.name));
                     UpdateSlotInfo(i);
                     return;
                 }
@@ -79,14 +82,15 @@ public class InventoryManager
                 continue;
 
             invenInfos[i] = item;
+            Managers.Quest.OnGetQuestAction?.Invoke(item.uiInfo.name, GetItemCount(item.uiInfo.name));
             UpdateSlotInfo(i);
-            return;
+            break;
         }
     }
 
     public void RemoveItem(int index)
     {
-        if (invenInfos == null)
+        if (invenInfos.Length <= 0)
             return;
 
         invenInfos[index] = null;
@@ -95,7 +99,7 @@ public class InventoryManager
 
     public void TrimAll()
     {
-        if (invenInfos == null)
+        if (invenInfos.Length <= 0)
             return;
 
         int voidSearch = -1;
@@ -142,5 +146,23 @@ public class InventoryManager
             return;
 
         UpdateAllSlot();  
+    }
+
+    public int GetItemCount(string target)
+    {
+        if (target == "")
+            return -1;
+
+        int curCount = 0;
+        for(int i = 0; i < invenInfos.Length; i++)
+        {
+            if (invenInfos[i] == null)
+                continue;
+
+            curCount = invenInfos[i].uiInfo.name == target ? curCount + invenInfos[i].MyStack : curCount;
+        }
+                   
+        return curCount;
+
     }
 }

@@ -31,10 +31,13 @@ public class PlayerStat : Stat
             {
                 Debug.Log("Level UP!");
                 Level = level;
+
                 SetStat(Level);
+                Managers.Quest.OnLevelQuestAction?.Invoke(Level);
             }
         }
     }
+
     public int Gold { get { return gold; } set { gold = value; } }
 
     private void Start()
@@ -61,5 +64,4 @@ public class PlayerStat : Stat
     {
         Debug.Log("Player Dead!");
     }
-
 }

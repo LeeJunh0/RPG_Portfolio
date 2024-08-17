@@ -22,36 +22,30 @@ public class UI_Quest : UIPopup
         Debug.Log("UI_Quest Binding");
 
         base.Init();
-               
-        if (list == null)
-        {
-            list = GetObject((int)GameObjects.QuestList);
-            popup = GetObject((int)GameObjects.UI_Quest_Popup);
-        }
-            
+        list = GetObject((int)GameObjects.QuestList);
+        popup = GetObject((int)GameObjects.UI_Quest_Popup);
+
         QuestListInit();
         popup.SetActive(false);
     }
 
     void QuestListInit()
     {
-        foreach(Transform child in list.transform)
-            Managers.Resource.Destroy(child.gameObject);
-        
-        for(int i = 0; i < Managers.Data.QuestDict.Count; i++)
+        // 실시간 Quest만큼 생성
+        for (int i = list.transform.childCount; i < Managers.Quest.activeQuests.Count; i++)
         {
-            GameObject item = Managers.UI.MakeSubItem<UI_Quest_Item>(parent : list.transform).gameObject;
+            GameObject item = Managers.UI.MakeSubItem<UI_Quest_Item>(parent: list.transform).gameObject;
             UI_Quest_Item questItem = item.GetOrAddComponent<UI_Quest_Item>();
             Debug.Log($"SetInfo할 아이콘 : {item.name}");
-            questItem.SetInfo(Managers.Data.QuestDict[i].name, Managers.Data.QuestDict[i].id);
+            questItem.SetInfo(Managers.Quest.activeQuests[i].QuestName, i);
             item.GetComponent<RectTransform>().localScale = Vector3.one;
         }
     }
 
     public void OnQuestPopup(int id)
-    {            
+    {
         popup.GetOrAddComponent<UI_Quest_Popup>().QuestPopupInit(id);
-        if(id != questId)
+        if (id != questId)
         {
             questId = id;
             return;
@@ -59,5 +53,10 @@ public class UI_Quest : UIPopup
 
         questId = int.MaxValue;
         popup.SetActive(false);
+    }
+
+    private void Update()
+    {
+        QuestListInit();
     }
 }

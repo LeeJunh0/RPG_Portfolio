@@ -1,48 +1,108 @@
 using Data;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class QuestManager
 {
-    //QuestManager는 진행중인 퀘스트를 저장하고 있는다
-    //QuestManager는 퀘스트 상태 관리를 한다. 완료인지 진행중인지 포기하는지.
-    //QuestManager는 퀘스트 
-    List<Quest> activeQuests = new List<Quest>();
+    public List<Quest> activeQuests = new List<Quest>();
 
-    public void AddQuest(Quest quest) { activeQuests.Add(new Quest(quest)); }
-    public void RemoveQuest(Quest quest) { activeQuests.Remove(quest); }
-    public void CompleteQeust(Quest quest)
+    public Action<QuestInfo> OnStartQuest = null;
+    public Action<Quest> OnCompletedQuest = null;
+
+    public Action<string> OnKillQuestAction = null;
+    public Action<string, int> OnGetQuestAction = null;
+    public Action<int> OnLevelQuestAction = null;
+
+    public Action<int> OnCurrentUpdate = null;
+
+    public void Init()
     {
+        OnStartQuest -= AddQuest;
+        OnStartQuest += AddQuest;
+        OnCompletedQuest -= CompleteQuest;
+        OnCompletedQuest += CompleteQuest;
 
+        OnKillQuestAction -= UpdateKill;
+        OnKillQuestAction += UpdateKill;
+        OnGetQuestAction -= UpdateGet;
+        OnGetQuestAction += UpdateGet;
+        OnLevelQuestAction -= UpdateLevel;
+        OnLevelQuestAction += UpdateLevel;
     }
 
-    public void UpdateQuest()
-    {
-        if (activeQuests.Count <= 0)
-            return;
+    public void AddQuest(QuestInfo questInfo) 
+    {     
+        Quest quest = new Quest(questInfo);
 
-        foreach(Quest quest in activeQuests)
+        if(activeQuests.Count <= 0)
+            activeQuests.Add(quest);
+        else
         {
+            bool check = true;
+            for (int i = 0; i < activeQuests.Count; i++)
+            {
+                if (activeQuests[i].QuestName == quest.QuestName)
+                {
+                    check = false;
+                    break;
+                }    
+            }
 
+            if (check == true)
+                activeQuests.Add(quest);
         }
+
+        if (quest.Task.Type == (int)Define.EQuestEvent.Level)
+            OnLevelQuestAction?.Invoke(Managers.Game.GetPlayer().GetComponent<PlayerStat>().Level);
+
+        if (quest.Task.Type == (int)Define.EQuestEvent.Get)
+            OnGetQuestAction?.Invoke(quest.Task.Target, Managers.Inventory.GetItemCount(quest.Task.Target));
+    }
+
+    public void RemoveQuest(Quest quest) 
+    { 
+        activeQuests.Remove(quest); 
+    }
+
+    public void CompleteQuest(Quest quest)
+    {
+        RemoveQuest(quest);
+        quest.Complete();
     }
 
     public void UpdateKill(string target)
     {
-        foreach(Quest quest in activeQuests)
-        {
+        if (activeQuests.Count <= 0)
+            return;
 
+        foreach (Quest quest in activeQuests)
+        {
+            quest.Task.Counting(target);
         }
     }
 
-    public void UpdateGet(string target)
+    public void UpdateGet(string target, int count)
     {
+        if (activeQuests.Count <= 0)
+            return;
 
+        foreach (Quest quest in activeQuests)
+        {
+            quest.Task.CountSet(target, count);
+        }
     }
 
-    public void UpdateLevel(int target)
+    public void UpdateLevel(int curLevel)
     {
+        if (activeQuests.Count <= 0)
+            return;
 
+        foreach (Quest quest in activeQuests)
+        {
+            quest.Task.CountSet("Level", curLevel);
+        }
     }
 }

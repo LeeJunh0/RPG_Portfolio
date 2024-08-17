@@ -9,7 +9,7 @@ public class PlayerController : BaseController
 
     PlayerStat stat;
     bool stopSkill = false;
-
+    
     public override void Init()
     {
         WorldObjectType = Define.EWorldObject.Player;
@@ -89,8 +89,7 @@ public class PlayerController : BaseController
         else
         {
             EState = Define.EState.Skill;
-        }
-        
+        }      
     }
 
     void Update()

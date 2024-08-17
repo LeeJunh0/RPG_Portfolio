@@ -15,27 +15,27 @@ public class UI_Quest_Item : UIPopup
         QuestIcon
     }
 
-    string myName;
-    int myId;
+    public string MyName { get; private set; }
+    public int MyIndex { get; private set; }
 
     public override void Init()
     {
         Bind<Text>(typeof(QuestTitles));
         Bind<Button>(typeof(QuestIcons));
-              
+
         GetButton((int)QuestIcons.QuestIcon).gameObject.BindEvent((PointerEventData) =>
         {
             UI_Quest quest = FindObjectOfType<UI_Quest>();
-            quest.OnQuestPopup(myId);
+            quest?.OnQuestPopup(MyIndex);
         });
     }
 
-    public void SetInfo(string name, int id)
+    public void SetInfo(string name, int index)
     {
         Debug.Log($"SetInfo 중인 아이콘 : {this.name}");
-        myName = name;
-        GetText((int)QuestTitles.QuestNameText).GetComponent<Text>().text = myName;
+        MyName = name;
+        GetText((int)QuestTitles.QuestNameText).GetComponent<Text>().text = MyName;
 
-        myId = id;
+        MyIndex = index;
     }
 }

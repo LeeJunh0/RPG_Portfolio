@@ -12,12 +12,10 @@ public class Managers : MonoBehaviour
     GameManager _game = new GameManager();
     InventoryManager _inven = new InventoryManager();
     QuestManager _quest = new QuestManager();
-    QuestEventManager _questEvt = new QuestEventManager();
 
     public static GameManager Game { get { return Instance._game; } }
     public static InventoryManager Inventory { get { return Instance._inven; } }
     public static QuestManager Quest { get { return Instance._quest; } }
-    public static QuestEventManager QuestEvt { get {  return Instance._questEvt; } }
     #endregion
 
     #region Core
@@ -62,7 +60,9 @@ public class Managers : MonoBehaviour
             BindKey.Init();
             s_instance._sound.Init();
             s_instance._pool.Init();
+            s_instance._quest.Init();
             s_instance._inven.Init();
+
         }
     }
 

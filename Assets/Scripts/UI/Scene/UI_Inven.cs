@@ -31,7 +31,9 @@ public class UI_Inven : UIScene
         GetObject((int)GameObjects.Create).BindEvent((evt) =>
         {
             Debug.Log("생성버튼 on");
-            Managers.Inventory.AddItem(new Iteminfo(Managers.Data.ItemDict[Random.Range(102, 106)]));
+            int random = Random.Range(102, 106);
+            Managers.Inventory.AddItem(new Iteminfo(Managers.Data.ItemDict[random]));
+            Debug.Log($"생성한 아이템 : {Managers.Data.ItemDict[random].uiInfo.name}");
         });
         GetObject((int)GameObjects.Delete).BindEvent((evt) =>
         {

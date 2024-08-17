@@ -1,9 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Stat : MonoBehaviour
-{
+{    
     [SerializeField]
     protected int level;
     [SerializeField]
@@ -41,6 +42,7 @@ public class Stat : MonoBehaviour
         if(Hp <= 0)
         {
             Hp = 0;
+            
             OnDead(attacker);
         }
     }
@@ -52,6 +54,7 @@ public class Stat : MonoBehaviour
         {
             playerStat.Exp += 15;
         }
+        Managers.Quest.OnKillQuestAction?.Invoke(this.name);
         Managers.Game.Despawn(gameObject);
     }
 }
