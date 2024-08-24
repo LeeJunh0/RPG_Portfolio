@@ -16,6 +16,7 @@ public class InventoryManager
     UI_Inven_Item[] invenIcons;
 
     public int SelectIndex { get; set; }
+    public Iteminfo[] InvenInfos    { get { return invenInfos; } private set { } }
 
     public class ItemComparer : IComparer<Iteminfo>
     {
@@ -160,9 +161,7 @@ public class InventoryManager
                 continue;
 
             curCount = invenInfos[i].uiInfo.name == target ? curCount + invenInfos[i].MyStack : curCount;
-        }
-                   
+        }                  
         return curCount;
-
     }
 }

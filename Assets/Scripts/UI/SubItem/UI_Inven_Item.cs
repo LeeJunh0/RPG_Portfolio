@@ -46,6 +46,8 @@ public class UI_Inven_Item : UIBase
         {
             Debug.Log($"아이콘 Index : {Index}");
             Managers.Inventory.SelectIndex = Index;
+            UI_Inven inven = FindObjectOfType<UI_Inven>();
+            inven?.OnInvenPopup(Index);
         });
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CursorController : MonoBehaviour
 {
-    int mask = (1 << (int)Define.ELayer.Ground) | (1 << (int)Define.ELayer.Monster);
+    int mask = (1 << (int)Define.ELayer.Ground) | (1 << (int)Define.ELayer.Monster) | (1 << (int)Define.ELayer.Giver);
     Texture2D attackIcon;
     Texture2D handIcon;
 

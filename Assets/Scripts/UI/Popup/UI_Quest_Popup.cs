@@ -33,12 +33,12 @@ public class UI_Quest_Popup : UIPopup
         QuestIndex = index;
         gameObject.SetActive(true);
         Text rewards = GetText((int)QuestPopupObject.QuestRewards);
-        GetText((int)QuestPopupObject.QuestName).text = string.Format($"{Managers.Quest.activeQuests[QuestIndex].QuestName}");
-        GetText((int)QuestPopupObject.QuestDescript).text = string.Format($"{Managers.Quest.activeQuests[QuestIndex].Description}"); 
-        GetText((int)QuestPopupObject.QuestCondition).text = string.Format($"현재 : {Managers.Quest.activeQuests[QuestIndex].Task.CurrentSuccess} / {Managers.Quest.activeQuests[QuestIndex].SuccessCount}");
+        GetText((int)QuestPopupObject.QuestName).text = string.Format($"{Managers.Quest.ActiveQuests[QuestIndex].QuestName}");
+        GetText((int)QuestPopupObject.QuestDescript).text = string.Format($"{Managers.Quest.ActiveQuests[QuestIndex].Description}"); 
+        GetText((int)QuestPopupObject.QuestCondition).text = string.Format($"현재 : {Managers.Quest.ActiveQuests[QuestIndex].Task.CurrentSuccess} / {Managers.Quest.ActiveQuests[QuestIndex].SuccessCount}");
         
-        rewards.text = string.Format($"보상 : {Managers.Quest.activeQuests[QuestIndex].Rewards.experience} ");
-        foreach (string item in Managers.Quest.activeQuests[QuestIndex].Rewards.items)
+        rewards.text = string.Format($"보상 : {Managers.Quest.ActiveQuests[QuestIndex].Rewards.experience} ");
+        foreach (string item in Managers.Quest.ActiveQuests[QuestIndex].Rewards.items)
             rewards.text += string.Format($",{item} ");
 
         ConditionUpdate(QuestIndex);
@@ -46,8 +46,8 @@ public class UI_Quest_Popup : UIPopup
 
     void ConditionUpdate(int current)
     {
-        string check = Managers.Quest.activeQuests[QuestIndex].IsComplete ? "O" : "X"; 
+        string check = Managers.Quest.ActiveQuests[QuestIndex].IsComplete ? "O" : "X"; 
         GetText((int)QuestPopupObject.QuestCompleted).text = string.Format($"완료 : {check}");
-        GetText((int)QuestPopupObject.QuestCondition).text = string.Format($"현재 : {Managers.Quest.activeQuests[QuestIndex].Task.CurrentSuccess} / {Managers.Quest.activeQuests[QuestIndex].SuccessCount}");
+        GetText((int)QuestPopupObject.QuestCondition).text = string.Format($"현재 : {Managers.Quest.ActiveQuests[QuestIndex].Task.CurrentSuccess} / {Managers.Quest.ActiveQuests[QuestIndex].SuccessCount}");
     }
 }

@@ -8,7 +8,7 @@ public class GameManager
     GameObject player;
     HashSet<GameObject> monsters = new HashSet<GameObject>();
 
-    public Action<int> OnSpawnEvent;
+    public event Action<int> OnSpawnEvent;
 
     public GameObject GetPlayer() { return player; }
 

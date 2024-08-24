@@ -31,13 +31,11 @@ public class UI_Quest : UIPopup
 
     void QuestListInit()
     {
-        // 실시간 Quest만큼 생성
-        for (int i = list.transform.childCount; i < Managers.Quest.activeQuests.Count; i++)
+        for (int i = list.transform.childCount; i < Managers.Quest.ActiveQuests.Count; i++)
         {
             GameObject item = Managers.UI.MakeSubItem<UI_Quest_Item>(parent: list.transform).gameObject;
             UI_Quest_Item questItem = item.GetOrAddComponent<UI_Quest_Item>();
-            Debug.Log($"SetInfo할 아이콘 : {item.name}");
-            questItem.SetInfo(Managers.Quest.activeQuests[i].QuestName, i);
+            questItem.SetInfo(Managers.Quest.ActiveQuests[i].QuestName, i);
             item.GetComponent<RectTransform>().localScale = Vector3.one;
         }
     }

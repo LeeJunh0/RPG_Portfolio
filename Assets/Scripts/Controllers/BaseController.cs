@@ -32,11 +32,17 @@ public abstract class BaseController : MonoBehaviour
                     anim.CrossFade("MOVE", 0.1f);
                     break;
                 case Define.EState.Skill:
-                    anim.CrossFade("ATTACK", 0.1f, -1, 0);
+                    if(lockTarget.layer == (int)Define.ELayer.Monster)
+                    {
+                        anim.CrossFade("ATTACK", 0.1f, -1, 0);
+                        break;
+                    }
+                    curState = Define.EState.Idle;
                     break;
             }
         }
     }
+
     public Define.EWorldObject WorldObjectType { get; protected set; } = Define.EWorldObject.Unknown;
     public abstract void Init();
 

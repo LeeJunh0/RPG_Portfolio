@@ -11,17 +11,19 @@ public class UI_Inven : UIScene
     {
         Sorting,
         Create,
-        Delete,
-        Trimming
+        UI_Inven_Popup
     }
 
     GameObject InvenUI;
     UI_Inven_Item[] iconInfos;
+    GameObject popup;
+    int curIndex = int.MaxValue;
 
     public override void Init()
     {
-        Bind<GameObject>(typeof(GameObjects));      
+        Bind<GameObject>(typeof(GameObjects));
         InvenUI = Util.FindChild(this.gameObject, "Content", true);
+        popup = GetObject((int)GameObjects.UI_Inven_Popup);
 
         GetObject((int)GameObjects.Sorting).BindEvent((evt) =>
         {
@@ -30,22 +32,11 @@ public class UI_Inven : UIScene
         });
         GetObject((int)GameObjects.Create).BindEvent((evt) =>
         {
-            Debug.Log("생성버튼 on");
             int random = Random.Range(102, 106);
             Managers.Inventory.AddItem(new Iteminfo(Managers.Data.ItemDict[random]));
-            Debug.Log($"생성한 아이템 : {Managers.Data.ItemDict[random].uiInfo.name}");
-        });
-        GetObject((int)GameObjects.Delete).BindEvent((evt) =>
-        {
-            Debug.Log("제거버튼 on");
-            Managers.Inventory.RemoveItem(Managers.Inventory.SelectIndex);
-        });
-        GetObject((int)GameObjects.Trimming).BindEvent((evt) =>
-        {
-            Debug.Log("공백제거버튼 on");
-            Managers.Inventory.TrimAll();
         });
         InfosInit();
+        popup.SetActive(false);
     }
 
     private void Start()
@@ -63,5 +54,20 @@ public class UI_Inven : UIScene
             iconInfos[i] = InvenUI.transform.GetChild(i).GetOrAddComponent<UI_Inven_Item>();
             iconInfos[i].SetIndex(i);
         }
+    }
+
+    public void OnInvenPopup(int index)
+    {
+        Iteminfo iteminfo = Managers.Inventory.InvenInfos[index];
+        popup.GetComponent<UI_Inven_Popup>().InvenPopupInit(iteminfo);
+
+        if (curIndex != index)
+        {
+            curIndex = index;
+            return;
+        }
+
+        curIndex = int.MaxValue;
+        popup.SetActive(false);
     }
 }

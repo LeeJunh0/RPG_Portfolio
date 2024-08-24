@@ -4,10 +4,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 public class QuestManager
 {
-    public List<Quest> activeQuests = new List<Quest>();
+    List<Quest> activeQuests = new List<Quest>();
 
     public Action<QuestInfo> OnStartQuest = null;
     public Action<Quest> OnCompletedQuest = null;
@@ -17,6 +18,8 @@ public class QuestManager
     public Action<int> OnLevelQuestAction = null;
 
     public Action<int> OnCurrentUpdate = null;
+
+    public IReadOnlyList<Quest> ActiveQuests => activeQuests;
 
     public void Init()
     {

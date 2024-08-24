@@ -22,7 +22,8 @@ public class Define
     {
         Ground = 6,
         Monster = 7,
-        Block = 8
+        Block = 8,
+        Giver = 9
     }
 
     public enum EScene

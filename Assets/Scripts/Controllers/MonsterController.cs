@@ -11,7 +11,7 @@ public class MonsterController : BaseController
     float scanRange = 10f;
 
     [SerializeField]
-    float attackRange = 2f;
+    float attackRange = 1f;
 
     public override void Init()
     {

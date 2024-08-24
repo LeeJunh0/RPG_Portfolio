@@ -110,6 +110,8 @@ namespace Data
             this.gold = info.gold;
             this.uiInfo = info.uiInfo;
         }
+
+        public string GetItemName() { return uiInfo.name; }
     }
 
     [Serializable]

@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class PlayerController : BaseController
 {
-    int mask = (1 << (int)Define.ELayer.Ground) | (1 << (int)Define.ELayer.Monster);
+    int mask = (1 << (int)Define.ELayer.Ground) | (1 << (int)Define.ELayer.Monster | (1 << (int)Define.ELayer.Giver));
 
     PlayerStat stat;
     bool stopSkill = false;
@@ -25,11 +26,13 @@ public class PlayerController : BaseController
         {
             float distance = (DestPos - transform.position).magnitude;
 
-            if(distance <= 1.5f)
+            if (distance <= 1.5f && lockTarget.layer == (int)Define.ELayer.Monster)
             {
                 EState = Define.EState.Skill;
                 return;
             }
+            else
+                return;
         }
 
         Vector3 dir = DestPos - transform.position;
@@ -82,7 +85,7 @@ public class PlayerController : BaseController
             targetStat.OnDamaged(stat);
         }
 
-        if(stopSkill == true)
+        if (stopSkill == true)
         {
             EState = Define.EState.Idle;
         }
@@ -135,7 +138,6 @@ public class PlayerController : BaseController
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         bool raycastHit = Physics.Raycast(ray, out hit, 100.0f, mask);
-
         switch (evt)
         {
             case Define.EMouseEvent.PointerDown:
@@ -145,10 +147,15 @@ public class PlayerController : BaseController
                     EState = Define.EState.Move;
                     stopSkill = false;
 
-                    if (hit.collider.gameObject.layer == (int)Define.ELayer.Monster)
-                        lockTarget = hit.collider.gameObject;
-                    else
-                        lockTarget = null;
+                    switch (hit.collider.gameObject.layer)
+                    {
+                        case (int)Define.ELayer.Ground:
+                            lockTarget = null;
+                            break;
+                        default:
+                            lockTarget = hit.collider.gameObject;
+                            break;
+                    }       
                 }
                 break;
             case Define.EMouseEvent.Press:
