@@ -1,0 +1,18 @@
+{
+  "drops": [
+    {
+      "name": "Knight",
+      "drops": {
+        "experience": 15,
+        "items": [ "작은 사과" ]
+      }
+    },
+    {
+      "name": "ShieldMan",
+      "drops": {
+        "experience": 15,
+        "items": [ "Shield" ]
+      }
+    }
+  ]
+}

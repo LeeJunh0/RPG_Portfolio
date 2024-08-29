@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerStat : Stat
 {
     [SerializeField]
-    protected int exp;
+    protected int exp; 
+    [SerializeField]
+    protected int totalExp;
     [SerializeField]
     protected int gold;
 
@@ -58,10 +61,16 @@ public class PlayerStat : Stat
         hp = stat.hp;
         maxHp = stat.hp;
         attack = stat.attack;
+        exp = 0;
+
+        if(Managers.Data.StatDict.TryGetValue(level + 1, out stat) == true)
+            totalExp = stat.totalExp;
     }
 
     protected override void OnDead(Stat attacker)
     {
         Debug.Log("Player Dead!");
     }
+
+    public int GetTotalExp() { return totalExp; }
 }

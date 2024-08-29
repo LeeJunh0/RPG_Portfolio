@@ -31,7 +31,13 @@ public class Quest
         task.OnCurrentUpdate -= CheckingTask;
         task.OnCurrentUpdate += CheckingTask;
     }
-
-    public void CheckingTask() { IsComplete = task.CurrentSuccess >= successCount; }
+    
     public void Complete() { task.Complete(this); }
+    public void CheckingTask() 
+    {
+        IsComplete = task.CurrentSuccess >= successCount;
+
+        if (IsComplete == true)
+            Complete();
+    }
 }

@@ -1,6 +1,9 @@
+using Data;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Stat : MonoBehaviour
@@ -30,7 +33,7 @@ public class Stat : MonoBehaviour
         level = 1;
         hp = 100;
         maxHp = 100;
-        attack = 25;
+        attack = 6;
         defense = 5;
         movespeed = 5.0f;
     }
@@ -52,9 +55,29 @@ public class Stat : MonoBehaviour
         PlayerStat playerStat = attacker as PlayerStat;
         if(playerStat != null)
         {
-            playerStat.Exp += 15;
+            DropInfo drop;
+            if (Managers.Data.DropDict.TryGetValue(gameObject.name, out drop) == true)
+            {
+                playerStat.Exp += drop.drops.experience;
+                DropEvent(drop);
+            }               
         }
+
         Managers.Quest.OnKillQuestAction?.Invoke(this.name);
         Managers.Game.Despawn(gameObject);
+    }
+
+    protected void DropEvent(DropInfo drop)
+    {
+        for (int i = 0; i < Managers.Data.ItemDict.Count - 1; i++)
+        {
+            for (int j = 0; j < drop.drops.items.Count; j++)
+            {
+                if (Managers.Data.ItemDict[102 + i].uiInfo.name == drop.drops.items[j])
+                {
+                    Managers.Inventory.AddItem(new Iteminfo(Managers.Data.ItemDict[102 + i]));
+                }
+            }
+        }
     }
 }

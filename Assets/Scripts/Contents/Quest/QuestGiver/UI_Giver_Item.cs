@@ -16,24 +16,22 @@ public class UI_Giver_Item : UIPopup
         QuestIcon
     }
 
-    public QuestInfo Quest { get; private set; }
+    public QuestInfo quest;
 
     public override void Init()
-    {
+    { 
         Bind<Text>(typeof(GiverQuestTitle));
-        Bind<Button>(typeof(GiverQuestIcon));
-
-        GetButton((int)GiverQuestIcon.QuestIcon).gameObject.BindEvent((evt) =>
+        Bind<GameObject>(typeof(GiverQuestIcon));
+        GetObject((int)GiverQuestIcon.QuestIcon).BindEvent((evt) =>
         {
             UI_Giver giver = FindObjectOfType<UI_Giver>();
-            giver.OnGiverPopup(Quest);
+            giver?.OnGiverPopup(quest);
         });
     }
 
-    public void SetInfo(QuestInfo info)
+    public void SetInfo(QuestInfo info) 
     {
-        Quest = info;
-
-        GetText((int)GiverQuestTitle.QuestNameText).text = Quest.name;
+        quest = info;
+        GetText((int)GiverQuestTitle.QuestNameText).text = quest.name;
     }
 }

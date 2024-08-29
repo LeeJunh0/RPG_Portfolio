@@ -12,7 +12,7 @@
       },
       "rewards": {
         "experience": 100,
-        "items": [ "Gold", "Sword" ]
+        "items": [ "작은 사과", "하급 소드" ]
       }
     },
     {
@@ -27,7 +27,7 @@
       },
       "rewards": {
         "experience": 100,
-        "items": [ "Gold" ]
+        "items": [ "하급 힐링포션" ]
       }
     },
     {
@@ -42,7 +42,7 @@
       },
       "rewards": {
         "experience": 100,
-        "items": [ "Gold" ]
+        "items": [ "하급 바지" ]
       }
     },
     {
@@ -57,7 +57,7 @@
       },
       "rewards": {
         "experience": 100,
-        "items": [ "Sword" ]
+        "items": [ "하급 갑옷" ]
       }
     }
   ]

@@ -1,6 +1,8 @@
 using Data;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.TerrainTools;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,24 +11,34 @@ public class UI_Giver : UIPopup
     enum GiverObject
     {
         PossibleList,
-        GiverQuest_Popup
+        GiverQuest_Popup,
+        UI_Giver_ExitButton
     }
 
     List<QuestInfo> ownerQuests = new List<QuestInfo>();
     GameObject popup;
     GameObject list;
 
-    private void OnEnable() { Time.timeScale = 0; }
-    private void OnDisable() { Time.timeScale = 1f; }
-
     public override void Init()
     {
+        base.Init();
+
         Bind<GameObject>(typeof(GiverObject));
         popup = GetObject((int)GiverObject.GiverQuest_Popup);
         list = GetObject((int)GiverObject.PossibleList);
         
         popup.SetActive(false);
-        ListUp();
+
+        GetObject((int)GiverObject.UI_Giver_ExitButton).BindEvent((evt) =>
+        {
+            Managers.UI.ClosePopupUI();
+        });
+    }
+
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.Escape))
+            Managers.UI.ClosePopupUI();
     }
 
     public void ListUp()
@@ -42,6 +54,15 @@ public class UI_Giver : UIPopup
         }
     }
 
-    public void UIListInit(List<QuestInfo> quests) { ownerQuests = quests; }
-    public void OnGiverPopup(QuestInfo quest) { popup.GetOrAddComponent<GiverQuest_Popup>().GiverPopupInit(quest); }
+    public void UIListInit(List<QuestInfo> quests) 
+    { 
+        ownerQuests = quests;
+        ListUp();
+    }
+
+    public void OnGiverPopup(QuestInfo quest) 
+    {
+        popup.GetOrAddComponent<GiverQuest_Popup>().SetInfo(quest);
+        popup.GetOrAddComponent<GiverQuest_Popup>().GiverPopupInit();
+    }
 }

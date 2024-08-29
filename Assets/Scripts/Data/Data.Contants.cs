@@ -43,9 +43,8 @@ namespace Data
         public int id;
         public string name;
         public string description;
-        public bool isCompleted;
-        public Task task;
         public int successCount;
+        public Task task;
         public Rewards rewards;
 
         public QuestInfo(QuestInfo info)
@@ -53,11 +52,10 @@ namespace Data
             this.id = info.id;
             this.name = info.name;
             this.description = info.description;
-            this.isCompleted = info.isCompleted;
+            this.successCount = info.successCount;
             this.task = info.task;
             this.rewards = info.rewards;
         }
-
     }
 
     [Serializable]
@@ -135,6 +133,30 @@ namespace Data
             foreach(Iteminfo item in items)
                 dict.Add(item.id, item);
             
+            return dict;
+        }
+    }
+    #endregion
+
+    #region Drop
+    [Serializable]
+    public class DropInfo
+    {
+        public string name;
+        public Rewards drops;
+    }
+
+    [Serializable]
+    public class DropData : ILoader<string, DropInfo>
+    {
+        public List<DropInfo> drops = new List<DropInfo>();
+        public Dictionary<string, DropInfo> MakeDict()
+        {
+            Dictionary<string, DropInfo> dict = new Dictionary<string, DropInfo>();
+
+            foreach (DropInfo drop in drops)
+                dict.Add(drop.name, drop);
+
             return dict;
         }
     }

@@ -45,8 +45,10 @@ public class InventoryManager
 
     public void UpdateSlotInfo(int index)
     {
-        invenIcons[index].SetInfo(invenInfos[index]);
-        
+        if (invenIcons == null)
+            return;
+
+        invenIcons[index].SetInfo(invenInfos[index]);       
     }
 
     public void UpdateAllSlot()
@@ -57,7 +59,7 @@ public class InventoryManager
 
     public void AddItem(Iteminfo item)
     {
-        if (invenInfos.Length <= 0)
+        if (invenInfos.Length <= 0 || item == null)
             return;
         
         if (item.uiInfo.isStack == true)

@@ -13,11 +13,6 @@ public class InputManager
 
     public void OnUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Managers.Quest.AddQuest(Managers.Data.QuestDict[UnityEngine.Random.Range(0, Managers.Data.QuestDict.Count)]);
-        }
-
         if (KeyAction != null)
         {
             if (Input.GetKeyDown(BindKey.Inventory))

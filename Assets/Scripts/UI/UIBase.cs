@@ -68,9 +68,6 @@ public abstract class UIBase : MonoBehaviour
         }
     }
 
-   // protected 
-
-
     protected GameObject GetObject(int idx) { return Get<GameObject>(idx); }
     protected Text GetText(int idx) { return Get<Text>(idx); }
     protected Image GetImage(int idx) { return Get<Image>(idx); }

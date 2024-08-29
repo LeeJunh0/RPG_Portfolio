@@ -48,9 +48,5 @@ public class Task
         CurrentSuccess = count;
     }
 
-    public void Complete(Quest quest)
-    {
-        CurrentSuccess = quest.SuccessCount;
-        Managers.Quest.OnCompletedQuest?.Invoke(quest);
-    }
+    public void Complete(Quest quest) { Managers.Quest.OnCompletedQuest?.Invoke(quest); }
 }

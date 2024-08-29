@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 using UnityEngine.SocialPlatforms;
 
@@ -12,6 +13,7 @@ public class QuestManager
 
     public Action<QuestInfo> OnStartQuest = null;
     public Action<Quest> OnCompletedQuest = null;
+    public Action<Quest> OnRewardsQuest = null;
 
     public Action<string> OnKillQuestAction = null;
     public Action<string, int> OnGetQuestAction = null;
@@ -73,7 +75,18 @@ public class QuestManager
     public void CompleteQuest(Quest quest)
     {
         RemoveQuest(quest);
-        quest.Complete();
+
+        foreach(string name in quest.Rewards.items)
+        {
+            for(int i = 0; i < Managers.Data.ItemDict.Count - 1; i++)
+            {
+                if (Managers.Data.ItemDict[102 + i].uiInfo.name == name)
+                {
+                    Managers.Inventory.AddItem(new Iteminfo(Managers.Data.ItemDict[102 + i]));
+                }
+            }
+        }
+            
     }
 
     public void UpdateKill(string target)
@@ -81,10 +94,8 @@ public class QuestManager
         if (activeQuests.Count <= 0)
             return;
 
-        foreach (Quest quest in activeQuests)
-        {
-            quest.Task.Counting(target);
-        }
+        for(int i = 0; i < ActiveQuests.Count; i++)
+            ActiveQuests[i].Task.Counting(target);      
     }
 
     public void UpdateGet(string target, int count)
@@ -92,10 +103,8 @@ public class QuestManager
         if (activeQuests.Count <= 0)
             return;
 
-        foreach (Quest quest in activeQuests)
-        {
-            quest.Task.CountSet(target, count);
-        }
+        for (int i = 0; i < ActiveQuests.Count; i++)
+            ActiveQuests[i].Task.CountSet(target, count);
     }
 
     public void UpdateLevel(int curLevel)
@@ -103,9 +112,7 @@ public class QuestManager
         if (activeQuests.Count <= 0)
             return;
 
-        foreach (Quest quest in activeQuests)
-        {
-            quest.Task.CountSet("Level", curLevel);
-        }
+        for (int i = 0; i < ActiveQuests.Count; i++)
+            ActiveQuests[i].Task.CountSet("Level", curLevel);
     }
 }

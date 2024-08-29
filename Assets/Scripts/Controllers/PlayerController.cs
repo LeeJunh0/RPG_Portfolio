@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
 public class PlayerController : BaseController
 {
-    int mask = (1 << (int)Define.ELayer.Ground) | (1 << (int)Define.ELayer.Monster | (1 << (int)Define.ELayer.Giver));
+    int mask =  (1 << (int)Define.ELayer.Ground) | (1 << (int)Define.ELayer.Monster | (1 << (int)Define.ELayer.Giver));
 
     PlayerStat stat;
     bool stopSkill = false;
@@ -17,7 +18,6 @@ public class PlayerController : BaseController
         stat = gameObject.GetComponent<PlayerStat>();
         Managers.Input.MouseAction -= OnMouseEvent;
         Managers.Input.MouseAction += OnMouseEvent;
-        Managers.UI.MakeWorldSpaceUI<UI_HPBar>(transform);
     }
 
     protected override void UpdateMove()
@@ -25,18 +25,22 @@ public class PlayerController : BaseController
         if(lockTarget != null)
         {
             float distance = (DestPos - transform.position).magnitude;
-
-            if (distance <= 1.5f && lockTarget.layer == (int)Define.ELayer.Monster)
+            if (distance <= 1.5f)
             {
-                EState = Define.EState.Skill;
+                if (lockTarget.layer == (int)Define.ELayer.Monster)
+                    EState = Define.EState.Skill;
+                else
+                {
+                    EState = Define.EState.Idle;
+                    lockTarget.GetOrAddComponent<QuestGiver>().GiverUIOpen();
+                }                   
                 return;
-            }
-            else
-                return;
+            }                        
         }
 
         Vector3 dir = DestPos - transform.position;
         dir.y = 0;
+
         if (dir.magnitude < 0.1f)
         {
             EState = Define.EState.Idle;
@@ -54,7 +58,6 @@ public class PlayerController : BaseController
             transform.position += dir.normalized * Movedis;
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 10f * Time.deltaTime);
         }
-
     }
 
     protected override void UpdateIdle()
@@ -136,17 +139,18 @@ public class PlayerController : BaseController
     void OnMouseEvent_IdelRun(Define.EMouseEvent evt)
     {
         RaycastHit hit;
+        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * 200f, Color.green);
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         bool raycastHit = Physics.Raycast(ray, out hit, 100.0f, mask);
+
+        if (EventSystem.current.IsPointerOverGameObject() == true) // UI클릭시 이동X
+            return;
+
         switch (evt)
         {
             case Define.EMouseEvent.PointerDown:
                 if (raycastHit == true)
                 {
-                    DestPos = hit.point;
-                    EState = Define.EState.Move;
-                    stopSkill = false;
-
                     switch (hit.collider.gameObject.layer)
                     {
                         case (int)Define.ELayer.Ground:
@@ -155,7 +159,10 @@ public class PlayerController : BaseController
                         default:
                             lockTarget = hit.collider.gameObject;
                             break;
-                    }       
+                    }
+                    DestPos = hit.point;
+                    EState = Define.EState.Move;
+                    stopSkill = false;
                 }
                 break;
             case Define.EMouseEvent.Press:
