@@ -99,8 +99,7 @@ public void LoadAllAsync<T>(string label, Action<string, int, int> callback = nu
 </details>
 
 # 3. UI 자동화
-UI의 클래스 이름과 오브젝트 이름을 동일하게 하여 생성시 스크립트를 붙게 만들었으며 리플렉션을 이용해 바인딩 할수있도록 설계 했고   
-바인딩 한 것을 꺼내 쓰기위한 메서드 또한 제네릭메서드로 만든후 쓰기 편하도록 타입별로 묶어 구현 했습니다.
+오브젝트 이름과 컴포넌트 이름을 동일하게 하여 생성시 스크립트를 붙게 만들었으며 리플렉션을 이용해 바인딩 할수있도록 설계 했고 바인딩 한 것을 꺼내 쓰기위한 메서드 또한 제네릭메서드로 만든후 쓰기 편하도록 타입별로 묶어 구현 했습니다.
 
 <details>
   <summary>Bind Code Open</summary>
