@@ -68,10 +68,10 @@ public class DataManager
 ```
 </details>
 
-# 2. Addressable 에셋 비동기 로드
+# 2. Addressable 에셋 비동기 로드   
+Addressable 에셋을 사용해 해당 Scene에 필요한 에셋들만 로드해 사용합니다. 
+
 <img src = https://github.com/user-attachments/assets/24ee439c-b832-40de-a69d-00abb4dc3e21 width = "450px" height = "500px">
-   
-Addressable 에셋을 사용해 Scene에 필요한 에셋들만 로드해 사용합니다. 
 
 <details>
 <summary>AsyncLoadAsset Code Open</summary>
