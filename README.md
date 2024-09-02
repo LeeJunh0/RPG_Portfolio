@@ -12,7 +12,8 @@
 - UI 자동화
 - 확장메서드 및 정적메서드 활용
 - 비동기 SceneLoad
-
+- Input 관리 매니저
+  
 # 컨텐츠 기능구성
 - 카메라 제어
 - 3D 캐릭터의 행동 및 애니메이션 제어
@@ -34,6 +35,38 @@ T LoadJson<T, Key, Value>(string path) where T : ILoader<Key, Value>
 ```    
 </details>
 
+<details>
+<summary>Full Code</summary>
+
+```C#
+public interface ILoader<Key,Value>
+{
+    Dictionary<Key, Value> MakeDict();
+}
+
+public class DataManager
+{
+    public Dictionary<int, Data.Stat> StatDict { get; private set; } = new Dictionary<int, Data.Stat>();
+    public Dictionary<int, QuestInfo> QuestDict { get; private set; } = new Dictionary<int, QuestInfo>();
+    public Dictionary<int, Iteminfo> ItemDict { get; private set; } = new Dictionary<int, Iteminfo>();
+    public Dictionary<string, DropInfo> DropDict { get; private set; } = new Dictionary<string, DropInfo>();
+
+    public void Init()
+    {
+        StatDict = LoadJson<StatData, int, Data.Stat>("StatData").MakeDict();        
+        QuestDict = LoadJson<QuestData, int, QuestInfo>("QuestData").MakeDict();
+        ItemDict = LoadJson<ItemData, int, Iteminfo>("ItemsData").MakeDict();
+        DropDict = LoadJson<DropData, string, DropInfo>("DropData").MakeDict();
+    }
+
+    T LoadJson<T, Key, Value>(string path) where T : ILoader<Key, Value>
+    {
+        TextAsset textAsset = Managers.Resource.Load<TextAsset>(path);
+        return JsonUtility.FromJson<T>(textAsset.text);
+    }
+}
+```
+</details>
 
 # 2. Addressable 에셋 비동기 로드
 <img src = https://github.com/user-attachments/assets/24ee439c-b832-40de-a69d-00abb4dc3e21 width = "450px" height = "500px">
@@ -204,6 +237,33 @@ Scene을 이동할때 에셋들을 불러오면서 화면에 다른것을 연출
  ```
 </details>
 
+# 6. Input 관리 매니저
+리스너 패턴을 사용하여 구독 해놓은 입력 이벤트 관리 및 실행을 하도록 구현 했습니다.
+
+<details open>
+<summary>InputManager Code</summary>
+
+```C#
+public class InputManager
+{
+    public Action<KeyCode> KeyAction = null;
+    public Action<Define.EMouseEvent> MouseAction = null;
+    ...
+    private void OnUpdate()
+    {
+        if(KeyAction != null)
+        {
+            if(Input.GetKeyDown(BindKey.Inventory))
+                KeyAction.Invoke(인벤토리);
+            if(Input.GetKeyDown(BindKEy.Quest))
+                KeyAction.Invoke(퀘스트);
+            ...
+        }
+    }
+}
+```
+</details>
+
 # 컨텐츠 기능설명
 # 1. 카메라 제어
 게임의 카메라는 3인칭 쿼터뷰 이며 플레이어와 카메라 사이에 사물이 들어올시 카메라의 위치를 조절합니다.
@@ -237,4 +297,69 @@ void LateUpdate()
 </details>
 
 # 2. 3D 캐릭터의 행동 및 애니메이션 제어
+State를 프로퍼티로 관리하여 Set 안에서 Switch로 구별하여 애니메이션을 동작시키고    
+Update 메서드들을 오버라이드 하여 개별 관리하도록 합니다.
+    
+<img src = https://github.com/user-attachments/assets/cd1c64ff-4cb1-4edf-ae63-8ba8e1dc0c9a width = "1000px" height = "500px">        
+
+
+<details>
+<summary>Property Code Open</summary>
+    
+```C#
+
+protected Define.EState curState = Define.EState.Idle;
+
+public virtual Define.EState EState
+{
+    get { return curState; }
+    set
+    {
+        curState = value;
+        Animator anim = GetComponent<Animator>();
+
+        switch (curState)
+        {
+            case Define.EState.Die:
+                break;
+            case Define.EState.Idle:
+                anim.CrossFade("WAIT", 0.1f);
+                break;
+            case Define.EState.Move:
+                anim.CrossFade("MOVE", 0.1f);
+                break;
+            case Define.EState.Skill:
+                anim.CrossFade("ATTACK", 0.1f, -1, 0);
+                break;
+        }
+    }
+}
+```
+</details>
+
+<details>
+<summary>State Code Open</summary>
+    
+```C#
+// 마우스 이벤트
+void OnMouseEvent(Define.EMouseEvent evt)
+{
+    switch (EState)
+    {
+        case Define.EState.Idle:
+            OnMouseEvent_IdelRun(evt);
+            break;
+        case Define.EState.Move:
+            OnMouseEvent_IdelRun(evt);
+            break;
+        case Define.EState.Die:
+            break;
+        case Define.EState.Skill:
+            if (evt == Define.EMouseEvent.PointerUp)
+                stopSkill = true;
+            break;
+    }
+}  
+```   
+</details>
 
