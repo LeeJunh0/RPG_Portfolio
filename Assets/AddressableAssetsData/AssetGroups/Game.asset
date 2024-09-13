@@ -37,11 +37,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
-  - m_GUID: 9faca31c6e5e77e408406bd6c803b17b
-    m_Address: UIButton
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Game
   - m_GUID: d61ae44232b0eae46924eaf7f9c66c1e
     m_Address: UI_Inven_Item
     m_ReadOnly: 0
@@ -82,133 +77,8 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
-  - m_GUID: db427fab3e94daf4caa704d9314a77a1
-    m_Address: scroll
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Game
-  - m_GUID: 970324311431c794ca338446ea889948
-    m_Address: rings
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Game
-  - m_GUID: 70a77abda853dd941a0c8debf1de9b04
-    m_Address: bracers
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Game
-  - m_GUID: 6592b916f86b19e428db6f6847c7b6dd
-    m_Address: mp
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Game
-  - m_GUID: 3e4fcc84a0ac95b429c56452575f6021
-    m_Address: ingots
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Game
-  - m_GUID: e420c5bc93cb2604695a893500c897e3
-    m_Address: boots
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Game
-  - m_GUID: 4a39cb4b272639541b7bd5ac0649acf7
-    m_Address: Meat
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Game
-  - m_GUID: d4f5634edede200468fc1ccf30e6f3a1
-    m_Address: gloves
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Game
-  - m_GUID: b97c91e8b348f3f4ebdc11f5c82182cd
-    m_Address: shield
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Game
-  - m_GUID: 2f1eaeeaad36ee5469eff7ff158f37ba
-    m_Address: armor
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Game
-  - m_GUID: da09804303305f542a686824630e7269
-    m_Address: belts
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Game
-  - m_GUID: ae496f5dad56ea645b72d374a0376368
-    m_Address: book
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Game
-  - m_GUID: 5d9ba4e7d0964044ea54abe409d81dfd
-    m_Address: apple
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Game
-  - m_GUID: 3676a0b185daeb54fb257f700ba7ead4
-    m_Address: coins
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Game
-  - m_GUID: 6fc27c9d7fc2d9448af6851bf935e6d2
-    m_Address: cloaks
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Game
-  - m_GUID: 5fd50594014b70e48bd6993443d46b32
-    m_Address: sword
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Game
-  - m_GUID: e7d29a79bc7fae248887c8a08a160303
-    m_Address: gem
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Game
-  - m_GUID: fe025e83f69d0b54f8a4fe3c7c128fd7
-    m_Address: bag
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Game
-  - m_GUID: 0e123cfdc54a3ca4684816a34167a566
-    m_Address: necklace
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Game
-  - m_GUID: e52ea25af699fd445b7046374f81a5b9
-    m_Address: hp
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Game
-  - m_GUID: fd6e4fc32c78509458fc45ea4a478ba8
-    m_Address: helmets
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Game
-  - m_GUID: f126324fd2486a641842ea5a8244c2d1
-    m_Address: shoulders
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Game
-  - m_GUID: 5d7061fc7da05ce44add317708ec7215
-    m_Address: b_t_01
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Game
-  - m_GUID: b8fb302c5768e334ca82005f50e58121
-    m_Address: pants
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Game
-  - m_GUID: 172774604c1bee84185a69041576525b
-    m_Address: axe
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Game
   - m_GUID: ed1074391f139544d941ae0870937dc0
-    m_Address: Void
+    m_Address: f
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
@@ -229,6 +99,71 @@ MonoBehaviour:
     - Game
   - m_GUID: 60acd552359d0944886eb3660ba2af99
     m_Address: UI_Stat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+  - m_GUID: 1abef9e0aed83ae43bcc695adfb4dd9f
+    m_Address: Minimap_RT
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+  - m_GUID: 40d6a8a1c60dcc74cb5280b981e18f3c
+    m_Address: UI_MiniMap
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+  - m_GUID: b0ee30cc5fb75f449a2fb86ca64db6c4
+    m_Address: Minimap_Camera
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+  - m_GUID: 993035a55caab5a439d8c40689c9f6d1
+    m_Address: MiniMapIcon
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+  - m_GUID: 34ba00aead6526c479f4eeed81994ebe
+    m_Address: ClickMoveArrows
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+  - m_GUID: a6a89319110f1f946b7c2f8cea9906a0
+    m_Address: armor
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+  - m_GUID: 422ce2ba344177449a97fe0f91d36fe7
+    m_Address: sword
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+  - m_GUID: c5c40b2e98ae02b4aa1267a5be0d70fb
+    m_Address: boots
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+  - m_GUID: ee4889b4c0dfa3340af884b75725b6d1
+    m_Address: pants
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+  - m_GUID: f8a54a8c47e8af744bdb702d2bba08cd
+    m_Address: chest_background
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+  - m_GUID: ff8444197b8825b4e94c3ffc4c98f31a
+    m_Address: melee_background
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+  - m_GUID: ee71e85eb53f88b428deb24d87246a10
+    m_Address: boots_background
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+  - m_GUID: 233a77205485c7041b356d6db13d4ee4
+    m_Address: pants_background
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game

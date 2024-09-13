@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class CursorController : MonoBehaviour
 {
-    int mask = (1 << (int)Define.ELayer.Ground) | (1 << (int)Define.ELayer.Monster) | (1 << (int)Define.ELayer.Giver);
+    int mask = (1 << (int)Define.ELayer.Ground) | (1 << (int)Define.ELayer.Monster) | (1 << (int)Define.ELayer.NPC);
     Texture2D attackIcon;
     Texture2D handIcon;
-
+    
     void Start()
     {
         attackIcon = Managers.Resource.Load<Texture2D>("Attack");

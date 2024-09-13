@@ -7,24 +7,23 @@ public class UI_Stat : UIPopup
 {    
     enum GameObjects
     {
-        OpenPopup_Button,
-        UI_Stat_Popup
+        UI_Frame
     }
 
-    GameObject popup;
+    Stat level;
+    Text levelText;
 
     public override void Init()
     {
         base.Init();
-
+        
         Bind<GameObject>(typeof(GameObjects));
-        popup = GetObject((int)GameObjects.UI_Stat_Popup);
-        popup.SetActive(false);
+        level = Managers.Game.GetPlayer().GetComponent<Stat>();
+        levelText = Util.FindChild(GetObject((int)GameObjects.UI_Frame), "Character_Level_Text").GetComponent<Text>();
+    }
 
-        GetObject((int)GameObjects.OpenPopup_Button).BindEvent((evt) =>
-        {
-            popup.SetActive(!popup.activeSelf);
-            popup.GetOrAddComponent<UI_Stat_Popup>().StatPopupInit();
-        });
+    private void Update()
+    {
+        levelText.text = string.Format($"{level.Level}");
     }
 }

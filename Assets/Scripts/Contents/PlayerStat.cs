@@ -36,6 +36,7 @@ public class PlayerStat : Stat
                 Level = level;
 
                 SetStat(Level);
+                Managers.UI.UIStatUpdate?.Invoke(Level);
                 Managers.Quest.OnLevelQuestAction?.Invoke(Level);
             }
         }

@@ -7,15 +7,16 @@ using System.Reflection;
 using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
-using static Define;
-using static UnityEditor.Progress;
+
 
 public class InventoryManager
 {
     Iteminfo[] invenInfos;
     UI_Inven_Item[] invenIcons;
+    int sliver;
 
     public int SelectIndex { get; set; }
+    public int Sliver { get; set; }
     public Iteminfo[] InvenInfos    { get { return invenInfos; } private set { } }
 
     public class ItemComparer : IComparer<Iteminfo>

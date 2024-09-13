@@ -23,8 +23,16 @@ public class Define
         Ground = 6,
         Monster = 7,
         Block = 8,
-        Giver = 9
+        NPC = 9
     }
+
+    public enum ENpc
+    {
+        Giver,
+        Trader,
+        Normal
+    }
+
 
     public enum EScene
     {
@@ -65,5 +73,11 @@ public class Define
     public enum ECameraMode
     {
         QuaterView,
+    }
+
+    public enum ECameraType
+    {
+        MainCamera,
+        MiniMapCamera
     }
 }

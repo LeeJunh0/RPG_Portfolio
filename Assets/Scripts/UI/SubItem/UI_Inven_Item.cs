@@ -9,7 +9,6 @@ public class UI_Inven_Item : UIBase
     enum GameObjects
     {
         ItemIcon,
-        ItemNameText,
         ItemStack
     }
 
@@ -23,7 +22,6 @@ public class UI_Inven_Item : UIBase
 
         Texture2D texture = Managers.Resource.Load<Texture2D>(value.uiInfo.icon);
         transform.Find("ItemIcon").GetComponent<Image>().sprite = Managers.UI.TextureToSprite(texture);
-        GetObject((int)GameObjects.ItemNameText).GetComponent<Text>().text = value.uiInfo.name;
 
         if (value.uiInfo.isStack == true)
         {

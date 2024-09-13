@@ -9,10 +9,12 @@ public class Managers : MonoBehaviour
     static Managers Instance { get { Init(); return s_instance; } }
 
     #region Contents
+    EquipManager _equip = new EquipManager();
     GameManager _game = new GameManager();
     InventoryManager _inven = new InventoryManager();
     QuestManager _quest = new QuestManager();
 
+    public static EquipManager Equip { get { return Instance._equip; } }
     public static GameManager Game { get { return Instance._game; } }
     public static InventoryManager Inventory { get { return Instance._inven; } }
     public static QuestManager Quest { get { return Instance._quest; } }

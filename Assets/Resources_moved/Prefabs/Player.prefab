@@ -4731,7 +4731,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &8552071022910263773
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -4748,7 +4748,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &8552071022910263772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4775,6 +4776,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lockTarget: {fileID: 0}
+  minimapIcon: {fileID: 0}
   curState: 1
   DestPos: {x: 0, y: 0, z: 0}
 --- !u!114 &8552071022910263762
@@ -4796,6 +4798,7 @@ MonoBehaviour:
   defense: 0
   movespeed: 0
   exp: 0
+  totalExp: 0
   gold: 0
 --- !u!136 &8552071022910263761
 CapsuleCollider:

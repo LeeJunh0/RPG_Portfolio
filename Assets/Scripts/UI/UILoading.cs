@@ -11,8 +11,10 @@ public class UILoading : UIPopup
     [SerializeField]
     string[] tipArr;
 
-    private void Awake()
+    public override void Init()
     {
+        base.Init(); 
+
         slider = Util.FindChild<Slider>(gameObject, "LoadingBar");
         tipText = Util.FindChild<Text>(gameObject, "LoadingTip");
         DontDestroyOnLoad(this.gameObject);

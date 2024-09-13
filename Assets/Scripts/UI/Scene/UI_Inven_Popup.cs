@@ -12,7 +12,8 @@ public class UI_Inven_Popup : UIScene
     {
         PopupIcon,
         PopupNameText,
-        PopupDescription
+        PopupDescription,
+        PopupButton
     }
 
 
@@ -31,5 +32,10 @@ public class UI_Inven_Popup : UIScene
         transform.Find("PopupIcon").GetComponent<Image>().sprite = Managers.UI.TextureToSprite(texture);
         GetObject((int)InvenPopupObject.PopupNameText).GetComponent<Text>().text = itemInfo.uiInfo.name;
         GetObject((int)InvenPopupObject.PopupDescription).GetComponent<Text>().text = itemInfo.uiInfo.description;
+
+        GetObject((int)InvenPopupObject.PopupButton).BindEvent((evt) =>
+        {
+
+        });
     }
 }

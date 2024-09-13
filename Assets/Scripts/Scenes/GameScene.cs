@@ -14,14 +14,18 @@ public class GameScene : BaseScene
 
         GameObject player = Managers.Game.Spawn(Define.EWorldObject.Player, "Player");
         Camera.main.gameObject.GetOrAddComponent<CameraController>().SetPlayer(player);
+        CameraController minimap = Managers.Resource.Instantiate("Minimap_Camera").GetOrAddComponent<CameraController>();
+        minimap.SetPlayer(player);
 
         GameObject go = new GameObject { name = "SpawningPool" };
         SpawningPool pool = go.GetOrAddComponent<SpawningPool>();
         pool.SetKeepMonsterCount(5);
 
         Managers.Resource.Instantiate("UI_Game");
-        Managers.Resource.Instantiate("UI_Stat");
+        Managers.UI.ShowPopupUI<UI_Stat>();
+        Managers.UI.ShowPopupUI<UI_MiniMap>();
     }
+
     public override void Clear()
     {
 

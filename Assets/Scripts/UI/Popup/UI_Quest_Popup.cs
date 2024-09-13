@@ -14,7 +14,6 @@ public class UI_Quest_Popup : UIPopup
     {
         QuestName,
         QuestDescript,
-        QuestCompleted,
         QuestRewards,
         QuestCondition
     }
@@ -46,14 +45,10 @@ public class UI_Quest_Popup : UIPopup
 
     void ConditionUpdate(int current)
     {       
-        if (GetText((int)QuestPopupObject.QuestCompleted) == null) 
-            return;
-
         if (Managers.Quest.ActiveQuests.Count < QuestIndex)
             return;
 
         string check = Managers.Quest.ActiveQuests[QuestIndex].IsComplete ? "O" : "X";      
-        GetText((int)QuestPopupObject.QuestCompleted).text = string.Format($"완료 : {check}");
         GetText((int)QuestPopupObject.QuestCondition).text = string.Format($"현재 : {Managers.Quest.ActiveQuests[QuestIndex].Task.CurrentSuccess} / {Managers.Quest.ActiveQuests[QuestIndex].SuccessCount}");
     }
 }

@@ -5,6 +5,7 @@
       "hp": 0,
       "att": 0,
       "gold": 0,
+      "type": "None",
       "uiInfo": {
         "icon": "Void",
         "name": ".",
@@ -16,11 +17,13 @@
       "id": 102,
       "hp": 0,
       "att": 10,
-      "gold": 15,
+      "gold": 250,
+      "type": "Attachment",
+      "isUse": true,
       "uiInfo": {
         "icon": "sword",
         "name": "하급 소드",
-        "description": "상점에서 파는 하급소드.",
+        "description": "상점에서 파는 하급 소드다.",
         "isStack": false
       }
     },
@@ -28,11 +31,12 @@
       "id": 103,
       "hp": 10,
       "att": 0,
-      "gold": 15,
+      "gold": 200,
+      "type": "Attachment",
       "uiInfo": {
         "icon": "armor",
         "name": "하급 갑옷",
-        "description": "상점에서 파는 하급갑옷.",
+        "description": "상점에서 파는 하급 갑옷다.",
         "isStack": false
       }
     },
@@ -40,11 +44,12 @@
       "id": 104,
       "hp": 8,
       "att": 0,
-      "gold": 15,
+      "gold": 150,
+      "type": "Attachment",
       "uiInfo": {
         "icon": "pants",
         "name": "하급 바지",
-        "description": "상점에서 파는 하급바지",
+        "description": "상점에서 파는 하급 바지다.",
         "isStack": false
       }
     },
@@ -52,11 +57,12 @@
       "id": 105,
       "hp": 0,
       "att": 0,
-      "gold": 5,
+      "gold": 15,
+      "type": "None",
       "uiInfo": {
         "icon": "apple",
         "name": "작은 사과",
-        "description": "떨어트린 사과다.",
+        "description": "기사가 떨어트린 사과다.",
         "isStack": true
       }
     },
@@ -64,11 +70,25 @@
       "id": 106,
       "hp": 20,
       "att": 0,
-      "gold": 30,
+      "gold": 120,
+      "type": "Consumable",
       "uiInfo": {
         "icon": "hp",
         "name": "하급 힐링포션",
-        "description": "상점에서 파는 하급 힐링포션이다.",
+        "description": "상점에서 파는 하급 힐링 포션이다.",
+        "isStack": true
+      }
+    },
+    {
+      "id": 107,
+      "hp": 15,
+      "att": 0,
+      "gold": 80,
+      "type": "Attachment",
+      "uiInfo": {
+        "icon": "boots",
+        "name": "하급 신발",
+        "description": "상점에서 파는 하급 신발다.",
         "isStack": true
       }
     }

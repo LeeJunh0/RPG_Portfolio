@@ -8,6 +8,10 @@ public abstract class BaseController : MonoBehaviour
     protected GameObject lockTarget = null;
 
     [SerializeField]
+    protected GameObject minimapIcon = null;
+    protected MeshRenderer meshRenderer = null;
+
+    [SerializeField]
     protected Define.EState curState = Define.EState.Idle;
 
     [SerializeField]
@@ -69,4 +73,10 @@ public abstract class BaseController : MonoBehaviour
     protected virtual void UpdateMove() { }
     protected virtual void UpdateDie() { }
     protected virtual void UpDateSkill() { }
+    protected virtual void CreateMiniMapIcon() 
+    {
+        minimapIcon = Managers.Resource.Instantiate("MiniMapIcon");
+        minimapIcon.transform.parent = gameObject.transform;
+        meshRenderer = minimapIcon.GetComponent<MeshRenderer>();
+    }
 }

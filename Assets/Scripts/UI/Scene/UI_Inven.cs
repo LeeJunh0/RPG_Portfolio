@@ -5,12 +5,11 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UI_Inven : UIScene
+public class UI_Inven : UIPopup
 {
     enum GameObjects
     {
-        Sorting,
-        Create,
+        UI_Inven_Sorting,
         UI_Inven_Popup
     }
 
@@ -21,20 +20,18 @@ public class UI_Inven : UIScene
 
     public override void Init()
     {
+        base.Init();
+
         Bind<GameObject>(typeof(GameObjects));
         InvenUI = Util.FindChild(this.gameObject, "Content", true);
         popup = GetObject((int)GameObjects.UI_Inven_Popup);
 
-        GetObject((int)GameObjects.Sorting).BindEvent((evt) =>
+        GetObject((int)GameObjects.UI_Inven_Sorting).BindEvent((evt) =>
         {
             Debug.Log("정렬버튼 on");
             Managers.Inventory.SortAll();
         });
-        GetObject((int)GameObjects.Create).BindEvent((evt) =>
-        {
-            int random = Random.Range(102, 106);
-            Managers.Inventory.AddItem(new Iteminfo(Managers.Data.ItemDict[random]));
-        });
+
         InfosInit();
         popup.SetActive(false);
     }
@@ -70,4 +67,6 @@ public class UI_Inven : UIScene
         curIndex = int.MaxValue;
         popup.SetActive(false);
     }
+
+
 }

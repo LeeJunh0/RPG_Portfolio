@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.Design.Serialization;
@@ -6,6 +7,8 @@ using UnityEngine;
 public class UIManager
 {
     int sortOrder = 10;
+
+    public Action<int> UIStatUpdate = null;
 
     Stack<UIPopup> popupStack = new Stack<UIPopup>();
     UIScene SceneUI = null;
@@ -110,21 +113,11 @@ public class UIManager
         Debug.Log($"On{typeof(T)}");
 
         if (uiType != null)
-            uiType.ClosePopupUI();
+            ClosePopupUI(uiType);
         else
             ShowPopupUI<T>();
     }
 
-    public void OnGameUIScene<T>(GameObject parent = null) where T : UIScene
-    {
-        T uiType = Util.FindChild<T>(Root);
-        Debug.Log($"On{typeof(T)}");
-
-        if (uiType == null)
-            MakeSceneUI<T>();
-        else
-            uiType.StateChange();
-    }
 
     public void ClosePopupUI()
     {

@@ -18,6 +18,8 @@ public class UI_Quest : UIPopup
 
     public override void Init()
     {
+        base.Init();
+
         Bind<GameObject>(typeof(GameObjects));
         Debug.Log("UI_Quest Binding");
 

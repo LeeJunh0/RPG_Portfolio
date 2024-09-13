@@ -20,6 +20,22 @@ public class MonsterController : BaseController
 
         if(gameObject.GetComponentInChildren<UI_HPBar>() == null)
             Managers.UI.MakeWorldSpaceUI<UI_HPBar>(transform);
+
+        CreateMiniMapIcon();
+    }
+
+    private void Update()
+    {
+        minimapIcon.transform.position = new Vector3(   transform.position.x, 
+                                                        minimapIcon.transform.position.y, 
+                                                        transform.position.z);
+    }
+
+    protected override void CreateMiniMapIcon()
+    {
+        base.CreateMiniMapIcon();
+
+        meshRenderer.material.color = Color.red;
     }
 
     protected override void UpdateIdle()

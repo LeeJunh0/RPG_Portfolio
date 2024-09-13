@@ -4,5 +4,6 @@ using UnityEngine;
 
 public class OptionManager
 {
-    public int InventoryCount = 9;
+    // 설정할 값들만 저장하는곳
+    public int InventoryCount = 16;  
 }

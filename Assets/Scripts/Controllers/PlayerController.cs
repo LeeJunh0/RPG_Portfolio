@@ -1,23 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
 
 public class PlayerController : BaseController
 {
-    int mask =  (1 << (int)Define.ELayer.Ground) | (1 << (int)Define.ELayer.Monster | (1 << (int)Define.ELayer.Giver));
+    int mask =  (1 << (int)Define.ELayer.Ground) | (1 << (int)Define.ELayer.Monster | (1 << (int)Define.ELayer.NPC));
 
     PlayerStat stat;
     bool stopSkill = false;
-    
+
     public override void Init()
     {
         WorldObjectType = Define.EWorldObject.Player;
         stat = gameObject.GetComponent<PlayerStat>();
         Managers.Input.MouseAction -= OnMouseEvent;
         Managers.Input.MouseAction += OnMouseEvent;
+        CreateMiniMapIcon();
+    }
+
+    protected override void CreateMiniMapIcon()
+    {
+        base.CreateMiniMapIcon();
+
+        meshRenderer.material.color = Color.black;   
     }
 
     protected override void UpdateMove()
@@ -32,7 +41,7 @@ public class PlayerController : BaseController
                 else
                 {
                     EState = Define.EState.Idle;
-                    lockTarget.GetOrAddComponent<QuestGiver>().GiverUIOpen();
+                    lockTarget.GetOrAddComponent<QuestGiver>().OnTypeUI();
                 }                   
                 return;
             }                        
@@ -154,13 +163,15 @@ public class PlayerController : BaseController
                     switch (hit.collider.gameObject.layer)
                     {
                         case (int)Define.ELayer.Ground:
-                            lockTarget = null;
+                            lockTarget = null;                            
                             break;
                         default:
                             lockTarget = hit.collider.gameObject;
                             break;
                     }
-                    DestPos = hit.point;
+                    DestPos = hit.point; 
+                    GameObject arrow = Managers.Resource.Instantiate("ClickMoveArrows");
+                    arrow.transform.position = DestPos;
                     EState = Define.EState.Move;
                     stopSkill = false;
                 }

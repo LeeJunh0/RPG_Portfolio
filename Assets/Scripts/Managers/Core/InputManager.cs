@@ -22,9 +22,7 @@ public class InputManager
             else if (Input.GetKeyDown(BindKey.Skill))
                 KeyAction.Invoke(BindKey.Skill);
             else if (Input.GetKeyDown(BindKey.Pause))
-                KeyAction.Invoke(BindKey.Pause);
-
-            
+                KeyAction.Invoke(BindKey.Pause);        
         }
 
         if (MouseAction != null)

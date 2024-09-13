@@ -67,6 +67,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Title
+  - m_GUID: 5b1ed8fbe89154eaf96723b6e5f0aad3
+    m_Address: Forest
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Title
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: c8c0863d2f111984fb854a8e225b02ad, type: 2}
   m_SchemaSet:

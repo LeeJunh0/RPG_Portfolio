@@ -91,13 +91,21 @@ namespace Data
     #endregion
 
     #region Item
+    public enum ItemType
+    {
+        None,
+        Consumable,
+        Attachment
+    }
+
     [Serializable]
     public class Iteminfo : ItemStack
-    {
+    {        
         public int id;
         public int hp;
         public int att;
         public int gold;
+        public ItemType type;
         public ItemUIinfo uiInfo;
 
         public Iteminfo(Iteminfo info)
@@ -106,10 +114,36 @@ namespace Data
             this.hp = info.hp;
             this.att = info.att;
             this.gold = info.gold;
+            this.type = info.type;
             this.uiInfo = info.uiInfo;
         }
 
         public string GetItemName() { return uiInfo.name; }
+
+        public void OnUsing()
+        {
+            switch (type)
+            {
+                case ItemType.None:
+                    break;
+                case ItemType.Consumable:
+                    UseConsumableItem();
+                    break;
+                case ItemType.Attachment:
+                    break;
+            }
+        }
+
+        private void UseConsumableItem()
+        {           
+            Managers.Game.GetPlayer().GetComponent<PlayerStat>().Hp += hp;
+            MyStack--; 
+        }
+
+        private void UseEquipItem()
+        {
+            
+        }
     }
 
     [Serializable]
@@ -144,6 +178,7 @@ namespace Data
     {
         public string name;
         public Rewards drops;
+        public int sliver;
     }
 
     [Serializable]
