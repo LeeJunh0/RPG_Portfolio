@@ -77,8 +77,8 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
-  - m_GUID: ed1074391f139544d941ae0870937dc0
-    m_Address: f
+  - m_GUID: 85bafec2a6869e746a9d15e589efbdab
+    m_Address: apple
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
@@ -164,6 +164,11 @@ MonoBehaviour:
     - Game
   - m_GUID: 233a77205485c7041b356d6db13d4ee4
     m_Address: pants_background
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+  - m_GUID: 380cbb2cc2e72a04fbb7013072d6c1e2
+    m_Address: void_Slot
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game

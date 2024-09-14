@@ -73,4 +73,8 @@ public abstract class UIBase : MonoBehaviour
     protected Image GetImage(int idx) { return Get<Image>(idx); }
     protected Button GetButton(int idx) { return Get<Button>(idx); }
     protected Slider GetSlider(int idx) { return Get<Slider>(idx); }
+    protected void BindImage(Type type) { Bind<Image>(type); }
+    protected void BindText(Type type) { Bind<Text>(type); }
+    protected void BindButton(Type type) { Bind<Button>(type); }
+    protected void BindObject(Type type) { Bind<GameObject>(type); }
 }

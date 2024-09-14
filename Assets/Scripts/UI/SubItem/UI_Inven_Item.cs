@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_Inven_Item : UIBase
+public class UI_Inven_Item : UI_Slot
 {
     enum GameObjects
     {
@@ -21,7 +21,7 @@ public class UI_Inven_Item : UIBase
         value = value ?? Managers.Data.ItemDict[199];
 
         Texture2D texture = Managers.Resource.Load<Texture2D>(value.uiInfo.icon);
-        transform.Find("ItemIcon").GetComponent<Image>().sprite = Managers.UI.TextureToSprite(texture);
+        GetObject((int)GameObjects.ItemIcon).GetComponent<Image>().sprite = Managers.UI.TextureToSprite(texture);
 
         if (value.uiInfo.isStack == true)
         {
