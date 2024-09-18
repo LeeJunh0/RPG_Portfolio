@@ -11,6 +11,8 @@ public class QuestGiver : NpcController
 
     public override void Init()
     {
+        base.Init();
+
         Search();
     }
 
@@ -20,7 +22,7 @@ public class QuestGiver : NpcController
             quests.Add(new QuestInfo(Managers.Data.QuestDict[i]));
     }
 
-    public override void OnTypeUI()
+    public void OnTypeUI()
     {
         if (Util.FindChild<UI_Giver>(Managers.UI.Root, "UI_Giver") != null)
             return;

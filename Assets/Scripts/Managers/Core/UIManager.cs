@@ -8,10 +8,11 @@ public class UIManager
 {
     int sortOrder = 10;
 
-    public Action<int> UIStatUpdate = null;
+    Stack<UIPopup> popupStack           = new Stack<UIPopup>();
+    UIScene SceneUI                     = null;
 
-    Stack<UIPopup> popupStack = new Stack<UIPopup>();
-    UIScene SceneUI = null;
+    public Action<int> UIStatUpdate     = null;
+
 
     public GameObject Root
     {
@@ -44,6 +45,18 @@ public class UIManager
         {
             canvas.sortingOrder = 0;
         }
+    }
+
+    public Transform SearchTopCanvas(GameObject ui)
+    {
+        Canvas parentcanvas = ui.GetComponentInParent<Canvas>();
+
+        while(parentcanvas == null && parentcanvas.transform.parent != null)
+        {
+            parentcanvas = parentcanvas.GetComponentInParent<Canvas>();
+        }
+
+        return parentcanvas.transform;
     }
 
     public T ShowPopupUI<T>(string name = null) where T : UIPopup

@@ -10,20 +10,19 @@ public class UI_Inven : UIPopup
     enum GameObjects
     {
         UI_Inven_Sorting,
-        UI_Inven_Popup
+        UI_Inven_Popup,
+        Content
     }
+    int curIndex        = int.MaxValue;
+    UI_Inven_Slot[]     iconInfos;
+    GameObject          popup;
 
-    GameObject InvenUI;
-    UI_Inven_Item[] iconInfos;
-    GameObject popup;
-    int curIndex = int.MaxValue;
 
     public override void Init()
     {
         base.Init();
 
         Bind<GameObject>(typeof(GameObjects));
-        InvenUI = Util.FindChild(this.gameObject, "Content", true);
         popup = GetObject((int)GameObjects.UI_Inven_Popup);
 
         GetObject((int)GameObjects.UI_Inven_Sorting).BindEvent((evt) =>
@@ -44,12 +43,19 @@ public class UI_Inven : UIPopup
 
     public void InfosInit()
     {
-        iconInfos = new UI_Inven_Item[Managers.Option.InventoryCount];
+        iconInfos = new UI_Inven_Slot[Managers.Option.InventoryCount];
+
+        foreach (Transform child in GetObject((int)GameObjects.Content).transform)
+            Managers.Resource.Destroy(child.gameObject);
 
         for(int i = 0; i < iconInfos.Length; i++)
         {
-            iconInfos[i] = InvenUI.transform.GetChild(i).GetOrAddComponent<UI_Inven_Item>();
+            GameObject item = Managers.Resource.Instantiate("UI_Inven_Slot");
+            item.transform.SetParent(GetObject((int)GameObjects.Content).transform);
+            item.GetComponent<RectTransform>().localScale = Vector3.one;
+            iconInfos[i] = item.GetOrAddComponent<UI_Inven_Slot>();
             iconInfos[i].SetIndex(i);
+            
         }
     }
 
@@ -67,6 +73,4 @@ public class UI_Inven : UIPopup
         curIndex = int.MaxValue;
         popup.SetActive(false);
     }
-
-
 }

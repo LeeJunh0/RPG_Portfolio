@@ -38,7 +38,7 @@ MonoBehaviour:
     m_SerializedLabels:
     - Game
   - m_GUID: d61ae44232b0eae46924eaf7f9c66c1e
-    m_Address: UI_Inven_Item
+    m_Address: UI_Inven_Slot
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
@@ -169,6 +169,11 @@ MonoBehaviour:
     - Game
   - m_GUID: 380cbb2cc2e72a04fbb7013072d6c1e2
     m_Address: void_Slot
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+  - m_GUID: 07cc3bcec1d9e554bb1f171683ab054e
+    m_Address: hp
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game

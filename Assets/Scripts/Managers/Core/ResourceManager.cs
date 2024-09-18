@@ -10,8 +10,8 @@ using Object = UnityEngine.Object;
 
 public class ResourceManager
 {
-    Dictionary<string, Object> resourceDic = new Dictionary<string, Object>();
-    Dictionary<string, AsyncOperationHandle> handleDic = new Dictionary<string, AsyncOperationHandle>();
+    Dictionary<string, Object> resourceDic              = new Dictionary<string, Object>();
+    Dictionary<string, AsyncOperationHandle> handleDic  = new Dictionary<string, AsyncOperationHandle>();
 
     public T Load<T>(string key) where T : Object
     {

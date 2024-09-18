@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 892622632695637958}
   - component: {fileID: 892622632695646898}
   - component: {fileID: 1697552999260075119}
-  - component: {fileID: 3476547873239143942}
+  - component: {fileID: 129469825109597870}
   m_Layer: 0
   m_Name: ClickMoveArrows
   m_TagString: Untagged
@@ -119,7 +119,7 @@ ParticleSystem:
   lengthInSec: 5
   simulationSpeed: 1
   stopAction: 0
-  cullingMode: 1
+  cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 0
@@ -298,7 +298,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.990566, g: 0.6720612, b: 0.2476415, a: 1}
+      maxColor: {r: 0.99215686, g: 0.9326511, b: 0.24705878, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -360,7 +360,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 4
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -4880,7 +4880,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isUsing: 1
---- !u!114 &3476547873239143942
+--- !u!114 &129469825109597870
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4889,7 +4889,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 892622632713860640}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd51a4c502a943e40ad250c63f33cc30, type: 3}
+  m_Script: {fileID: 11500000, guid: b0f6233c3c4c6e7429e8f5d13f180b33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8727281482834843360
@@ -5187,7 +5187,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 0.67801094, b: 0.30588233, a: 0.9843137}
+      maxColor: {r: 1, g: 0.9259969, b: 0.30588233, a: 0.9843137}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -5249,7 +5249,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2
+      scalar: 1
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -5284,7 +5284,7 @@ ParticleSystem:
     startSizeY:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 3
+      scalar: 2
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -5337,7 +5337,7 @@ ParticleSystem:
     startSizeZ:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.5
       minScalar: 1
       maxCurve:
         serializedVersion: 2

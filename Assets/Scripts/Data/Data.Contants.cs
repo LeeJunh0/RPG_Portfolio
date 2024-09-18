@@ -40,12 +40,12 @@ namespace Data
     [Serializable]
     public class QuestInfo
     {
-        public int id;
-        public string name;
-        public string description;
-        public int successCount;
-        public Task task;
-        public Rewards rewards;
+        public int      id;
+        public string   name;
+        public string   description;
+        public int      successCount;
+        public Task     task;
+        public Rewards  rewards;
 
         public QuestInfo(QuestInfo info)
         {
@@ -61,9 +61,9 @@ namespace Data
     [Serializable]
     public class Task
     {
-        public int type;
-        public string target;
-        public int currentSuccess;
+        public int      type;
+        public string   target;
+        public int      currentSuccess;
     }
 
     [Serializable]
@@ -101,12 +101,12 @@ namespace Data
     [Serializable]
     public class Iteminfo : ItemStack
     {        
-        public int id;
-        public int hp;
-        public int att;
-        public int gold;
-        public ItemType type;
-        public ItemUIinfo uiInfo;
+        public int          id;
+        public int          hp;
+        public int          att;
+        public int          gold;
+        public ItemType     type;
+        public ItemUIinfo   uiInfo;
 
         public Iteminfo(Iteminfo info)
         {
@@ -119,31 +119,6 @@ namespace Data
         }
 
         public string GetItemName() { return uiInfo.name; }
-
-        public void OnUsing()
-        {
-            switch (type)
-            {
-                case ItemType.None:
-                    break;
-                case ItemType.Consumable:
-                    UseConsumableItem();
-                    break;
-                case ItemType.Attachment:
-                    break;
-            }
-        }
-
-        private void UseConsumableItem()
-        {           
-            Managers.Game.GetPlayer().GetComponent<PlayerStat>().Hp += hp;
-            MyStack--; 
-        }
-
-        private void UseEquipItem()
-        {
-            
-        }
     }
 
     [Serializable]
@@ -152,7 +127,6 @@ namespace Data
         public string icon;
         public string name;
         public string description;
-        public bool isStack;
     }
     
     [Serializable]
@@ -176,9 +150,9 @@ namespace Data
     [Serializable]
     public class DropInfo
     {
-        public string name;
-        public Rewards drops;
-        public int sliver;
+        public string   name;
+        public Rewards  drops;
+        public int      sliver;
     }
 
     [Serializable]

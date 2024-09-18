@@ -5,11 +5,12 @@ using UnityEngine.UI;
 
 public class UILoading : UIPopup
 {
-    Slider slider;
-    Text tipText;
-
     [SerializeField]
-    string[] tipArr;
+    string[]    tipArr;
+
+    Slider      slider;
+    Text        tipText;
+
 
     public override void Init()
     {

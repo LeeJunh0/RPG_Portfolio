@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ItemStack
 {
+    bool    useStack = false;
+    int     myStack = 1;
+
     public bool isStack { get { return useStack; } set { useStack = value; } }
     public int MyStack 
     { 
@@ -19,8 +22,5 @@ public class ItemStack
                 Managers.Inventory.RemoveItem(Managers.Inventory.SelectIndex);
         } 
     }
-
-    bool useStack = false;
-    int myStack = 1;
 
 }

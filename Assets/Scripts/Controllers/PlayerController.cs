@@ -34,7 +34,7 @@ public class PlayerController : BaseController
         if(lockTarget != null)
         {
             float distance = (DestPos - transform.position).magnitude;
-            if (distance <= 1.5f)
+            if (distance <= attackRange)
             {
                 if (lockTarget.layer == (int)Define.ELayer.Monster)
                     EState = Define.EState.Skill;
@@ -56,7 +56,6 @@ public class PlayerController : BaseController
         }
         else
         {
-            Debug.DrawRay(transform.position, dir.normalized, Color.green);
             if (Physics.Raycast(transform.position + Vector3.up * 0.5f, dir, 1.0f, LayerMask.GetMask("Block")))
             {
                 if (Input.GetMouseButton(0) == false)

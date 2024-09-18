@@ -57,10 +57,14 @@ public class Define
 
     public enum EUiEvent
     {
+        PointerEnter,
+        PointerExit,
         Click,
         BeginDrag,
         Drag,
-        EndDrag
+        EndDrag,
+        Drop,
+        Up
     }
 
     public enum EQuestEvent

@@ -7,17 +7,19 @@ using System.Reflection;
 using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
-
+using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class InventoryManager
 {
-    Iteminfo[] invenInfos;
-    UI_Inven_Item[] invenIcons;
-    int sliver;
+    Iteminfo[]              invenInfos;
+    UI_Inven_Slot[]         invenIcons;
+    int                     sliver;
 
     public int SelectIndex { get; set; }
-    public int Sliver { get; set; }
+    public int Sliver { get { return sliver; } set { sliver = value; } }
     public Iteminfo[] InvenInfos    { get { return invenInfos; } private set { } }
+    public UI_Inven_Slot[] InvenIcons{ get { return invenIcons; } private set { } }
 
     public class ItemComparer : IComparer<Iteminfo>
     {
@@ -41,12 +43,18 @@ public class InventoryManager
         invenInfos = new Iteminfo[Managers.Option.InventoryCount];
 
         for (int i = 0; i < invenInfos.Length; i++)
-            invenInfos[i] = null;
+            invenInfos[i] = null;        
+    }
+
+    public void OnInventory()
+    {
+        if (Input.GetKeyDown(BindKey.Inventory))
+            Managers.UI.OnGameUIPopup<UI_Inven>();
     }
 
     public void UpdateSlotInfo(int index)
     {
-        if (invenIcons == null)
+        if (invenIcons[index] == null)
             return;
 
         invenIcons[index].SetInfo(invenInfos[index]);       
@@ -63,7 +71,7 @@ public class InventoryManager
         if (invenInfos.Length <= 0 || item == null)
             return;
         
-        if (item.uiInfo.isStack == true)
+        if (item.isStack == true)
         {
             for (int i = 0; i < invenInfos.Length; i++)
             {
@@ -73,7 +81,7 @@ public class InventoryManager
                 if (invenInfos[i].id == item.id)
                 {
                     invenInfos[i].MyStack++;
-                    Managers.Quest.OnGetQuestAction?.Invoke(item.uiInfo.name, GetItemCount(item.uiInfo.name));
+                    Managers.Quest.OnGetQuestAction?.Invoke(item.GetItemName(), GetItemCount(item.GetItemName()));
                     UpdateSlotInfo(i);
                     return;
                 }
@@ -99,6 +107,13 @@ public class InventoryManager
 
         invenInfos[index] = null;
         UpdateSlotInfo(index);
+    }
+
+    public void ChangeItem(int item1, int item2)
+    {
+        Iteminfo item = invenInfos[item1];
+        invenInfos[item1] = invenInfos[item2];
+        invenInfos[item2] = item;
     }
 
     public void TrimAll()
@@ -139,10 +154,7 @@ public class InventoryManager
         UpdateAllSlot();
     }
 
-    public void SetInvenReference(UI_Inven_Item[] icons)
-    {
-        invenIcons = icons;
-    }
+    public void SetInvenReference(UI_Inven_Slot[] icons) { invenIcons = icons; }
 
     public void InterLocking()
     {
@@ -166,5 +178,12 @@ public class InventoryManager
             curCount = invenInfos[i].uiInfo.name == target ? curCount + invenInfos[i].MyStack : curCount;
         }                  
         return curCount;
+    }
+
+    public void InfoLink(int item1, int item2)
+    {
+        ChangeItem(item1, item2);
+        UpdateSlotInfo(item1);
+        UpdateSlotInfo(item2);
     }
 }

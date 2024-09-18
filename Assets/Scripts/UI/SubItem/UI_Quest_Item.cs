@@ -15,8 +15,8 @@ public class UI_Quest_Item : UIPopup
         QuestIcon
     }
 
-    public string MyName { get; private set; }
-    public int MyIndex { get; private set; }
+    public string MyName    { get; private set; }
+    public int MyIndex      { get; private set; }
 
     public override void Init()
     {

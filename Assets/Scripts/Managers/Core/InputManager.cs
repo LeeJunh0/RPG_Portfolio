@@ -5,29 +5,23 @@ using UnityEngine;
 
 public class InputManager
 {
-    public Action<KeyCode> KeyAction = null;
-    public Action<Define.EMouseEvent> MouseAction = null;
+    public event Action KeyAction = null;
+    public event Action<Define.EMouseEvent> MouseAction = null;
 
     bool pressed = false;
     float pressedTime = 0f;
 
     public void OnUpdate()
     {
-        if (KeyAction != null)
-        {
-            if (Input.GetKeyDown(BindKey.Inventory))
-                KeyAction.Invoke(BindKey.Inventory);
-            else if (Input.GetKeyDown(BindKey.Quest))
-                KeyAction.Invoke(BindKey.Quest);
-            else if (Input.GetKeyDown(BindKey.Skill))
-                KeyAction.Invoke(BindKey.Skill);
-            else if (Input.GetKeyDown(BindKey.Pause))
-                KeyAction.Invoke(BindKey.Pause);        
-        }
+        if (KeyAction != null && Input.anyKey)       
+            KeyAction.Invoke();
+
+        if (Input.GetKeyDown(KeyCode.Space))
+            Managers.Inventory.AddItem(new Data.Iteminfo(Managers.Data.ItemDict[UnityEngine.Random.RandomRange(102, 107)]));
 
         if (MouseAction != null)
         {
-            if(Input.GetMouseButton(0))
+            if(Input.GetMouseButton(0) || Input.GetMouseButton(1))
             {
                 if (pressed == false) 
                 {

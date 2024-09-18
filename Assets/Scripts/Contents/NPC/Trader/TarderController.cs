@@ -12,13 +12,4 @@ public class TarderController : NpcController
         base.Init();
         
     }
-
-
-
-    public override void OnTypeUI()
-    {
-        
-    }
-
-
 }

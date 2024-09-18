@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class Quest
 {
-    string questName;
-    string description;
-    bool isComplete;
-    Task task;
-    int successCount;
-    Rewards rewards;
+    string      questName;
+    string      description;
+    bool        isComplete;
+    Task        task;
+    int         successCount;
+    Rewards     rewards;
 
     public string QuestName => questName;
     public string Description => description;

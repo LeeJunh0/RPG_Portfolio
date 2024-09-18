@@ -65,6 +65,22 @@ public abstract class UIBase : MonoBehaviour
                 evt.OnEndDragHandler -= action;
                 evt.OnEndDragHandler += action;
                 break;
+            case Define.EUiEvent.PointerEnter:
+                evt.OnEnterHandler -= action;
+                evt.OnEnterHandler += action;
+                break;
+                case Define.EUiEvent.PointerExit:
+                evt.OnExitHandler -= action;
+                evt.OnExitHandler += action;
+                break;
+            case Define.EUiEvent.Drop:
+                evt.OnDropHandler -= action;
+                evt.OnDropHandler += action;
+                break;
+            case Define.EUiEvent.Up:
+                evt.OnUpHandler -= action;
+                evt.OnUpHandler += action;
+                break;
         }
     }
 

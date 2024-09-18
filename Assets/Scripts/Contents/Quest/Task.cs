@@ -5,10 +5,13 @@ using UnityEngine;
 
 public class Task
 {
-    int type;
-    string target;
-    int currentSuccess;
     public event Action OnCurrentUpdate = null;
+    int                 type;
+    int                 currentSuccess;
+    string              target;
+
+    public int Type => type;
+    public string Target => target;
 
     public Task(int _type, string _target, int _current)
     {
@@ -17,8 +20,7 @@ public class Task
         currentSuccess = _current;
     }
 
-    public int Type => type;
-    public string Target => target;
+
     public int CurrentSuccess
     {
         get { return currentSuccess; }

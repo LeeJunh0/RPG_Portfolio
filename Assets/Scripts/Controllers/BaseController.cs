@@ -5,18 +5,17 @@ using UnityEngine;
 public abstract class BaseController : MonoBehaviour
 {
     [SerializeField]
-    protected GameObject lockTarget = null;
-
+    protected GameObject        lockTarget = null;
     [SerializeField]
-    protected GameObject minimapIcon = null;
+    protected GameObject        minimapIcon = null;
+    [SerializeField]
+    protected Define.EState     curState = Define.EState.Idle;
+    [SerializeField]
+    protected Vector3           DestPos;
+    [SerializeField]
+    protected float             attackRange = 1f;
+
     protected MeshRenderer meshRenderer = null;
-
-    [SerializeField]
-    protected Define.EState curState = Define.EState.Idle;
-
-    [SerializeField]
-    protected Vector3 DestPos;
-
     public virtual Define.EState EState
     {
         get { return curState; }

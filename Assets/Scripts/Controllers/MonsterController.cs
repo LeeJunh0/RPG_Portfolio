@@ -10,9 +10,6 @@ public class MonsterController : BaseController
     [SerializeField]
     float scanRange = 10f;
 
-    [SerializeField]
-    float attackRange = 1f;
-
     public override void Init()
     {
         WorldObjectType = Define.EWorldObject.Monster;

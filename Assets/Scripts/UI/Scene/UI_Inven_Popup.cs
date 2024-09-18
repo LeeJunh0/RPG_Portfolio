@@ -28,6 +28,11 @@ public class UI_Inven_Popup : UIScene
             return;
 
         gameObject.SetActive(true);
+        SetPopupInfo(itemInfo);
+    }
+
+    public void SetPopupInfo(Iteminfo itemInfo)
+    {
         Texture2D texture = Managers.Resource.Load<Texture2D>(itemInfo.uiInfo.icon);
         transform.Find("PopupIcon").GetComponent<Image>().sprite = Managers.UI.TextureToSprite(texture);
         GetObject((int)InvenPopupObject.PopupNameText).GetComponent<Text>().text = itemInfo.uiInfo.name;

@@ -22,8 +22,7 @@ public class GameScene : BaseScene
         pool.SetKeepMonsterCount(5);
 
         Managers.Resource.Instantiate("UI_Game");
-        Managers.UI.ShowPopupUI<UI_Stat>();
-        Managers.UI.ShowPopupUI<UI_MiniMap>();
+
     }
 
     public override void Clear()
