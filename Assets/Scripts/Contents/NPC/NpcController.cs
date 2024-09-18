@@ -8,6 +8,7 @@ public abstract class NpcController : BaseController
     public override void Init()
     {
         NpcInit();
+        CreateMiniMapIcon();
     }
 
     private void NpcInit() 
@@ -21,5 +22,12 @@ public abstract class NpcController : BaseController
             case Define.ENpc.Normal:
                 break;
         }
+    }
+
+    protected override void CreateMiniMapIcon()
+    {
+        base.CreateMiniMapIcon();
+
+        meshRenderer.material.color = Color.blue;
     }
 }

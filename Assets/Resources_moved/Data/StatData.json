@@ -3,60 +3,80 @@
     {
       "level": "1",
       "hp": "100",
+      "mp": "100",
+      "manaRecovery": "1",
       "attack": "30",
       "totalExp": "0"
     },
     {
       "level": "2",
       "hp": "150",
+      "mp": "100",
+      "manaRecovery": "1",
       "attack": "40",
       "totalExp": "38"
     },
     {
       "level": "3",
       "hp": "200",
+      "mp": "100",
+      "manaRecovery": "1",
       "attack": "50",
       "totalExp": "154"
     },
     {
       "level": "4",
       "hp": "300",
+      "mp": "100",
+      "manaRecovery": "1",
       "attack": "50",
       "totalExp": "234"
     },
     {
       "level": "5",
       "hp": "400",
+      "mp": "150",
+      "manaRecovery": "2",
       "attack": "50",
       "totalExp": "289"
     },
     {
       "level": "6",
       "hp": "500",
+      "mp": "100",
+      "manaRecovery": "1",
       "attack": "50",
       "totalExp": "346"
     },
     {
       "level": "7",
       "hp": "600",
+      "mp": "100",
+      "manaRecovery": "1",
       "attack": "50",
       "totalExp": "412"
     },
     {
       "level": "8",
       "hp": "600",
+      "mp": "100",
+      "manaRecovery": "1",
       "attack": "50",
       "totalExp": "537"
     },
     {
       "level": "9",
       "hp": "600",
+      "mp": "100",
+      "manaRecovery": "1",
       "attack": "50",
       "totalExp": "683"
     },
     {
       "level": "10",
       "hp": "600",
+      "mp": "200",
+      "manaRecovery": "3",
       "attack": "50",
       "totalExp": "795"
     }

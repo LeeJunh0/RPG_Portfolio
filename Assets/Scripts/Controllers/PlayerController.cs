@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 
 public class PlayerController : BaseController
 {
-    int mask =  (1 << (int)Define.ELayer.Ground) | (1 << (int)Define.ELayer.Monster | (1 << (int)Define.ELayer.NPC));
+    int mask =  (1 << (int)Define.ELayer.Ground) | (1 << (int)Define.ELayer.NPC);
 
     PlayerStat stat;
     bool stopSkill = false;
@@ -34,15 +34,13 @@ public class PlayerController : BaseController
         if(lockTarget != null)
         {
             float distance = (DestPos - transform.position).magnitude;
-            if (distance <= attackRange)
+            if (distance <= 1.5f)
             {
-                if (lockTarget.layer == (int)Define.ELayer.Monster)
-                    EState = Define.EState.Skill;
-                else
+                if (lockTarget.layer == (int)Define.ELayer.NPC)
                 {
                     EState = Define.EState.Idle;
                     lockTarget.GetOrAddComponent<QuestGiver>().OnTypeUI();
-                }                   
+                }                                             
                 return;
             }                        
         }
@@ -106,24 +104,24 @@ public class PlayerController : BaseController
         }      
     }
 
-    void Update()
-    {
-        switch (EState)
-        {
-            case Define.EState.Idle:
-                UpdateIdle();
-                break;
-            case Define.EState.Move:
-                UpdateMove();
-                break;
-            case Define.EState.Die:
-                UpdateDie();
-                break;
-            case Define.EState.Skill:
-                UpDateSkill();
-                break;
-        }
-    }
+    //void Update()
+    //{
+    //    switch (EState)
+    //    {
+    //        case Define.EState.Idle:
+    //            UpdateIdle();
+    //            break;
+    //        case Define.EState.Move:
+    //            UpdateMove();
+    //            break;
+    //        case Define.EState.Die:
+    //            UpdateDie();
+    //            break;
+    //        case Define.EState.Skill:
+    //            UpDateSkill();
+    //            break;
+    //    }
+    //}
 
     void OnMouseEvent(Define.EMouseEvent evt)
     {
@@ -161,11 +159,11 @@ public class PlayerController : BaseController
                 {
                     switch (hit.collider.gameObject.layer)
                     {
-                        case (int)Define.ELayer.Ground:
-                            lockTarget = null;                            
+                        case (int)Define.ELayer.NPC:
+                            lockTarget = hit.collider.gameObject;                            
                             break;
                         default:
-                            lockTarget = hit.collider.gameObject;
+                            lockTarget = null;
                             break;
                     }
                     DestPos = hit.point; 

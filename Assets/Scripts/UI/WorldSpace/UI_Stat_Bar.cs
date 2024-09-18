@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_Stat_HpBar : UIBase
+public class UI_Stat_Bar : UIBase
 {
     enum GameObjects
     {

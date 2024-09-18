@@ -21,13 +21,6 @@ public class MonsterController : BaseController
         CreateMiniMapIcon();
     }
 
-    private void Update()
-    {
-        minimapIcon.transform.position = new Vector3(   transform.position.x, 
-                                                        minimapIcon.transform.position.y, 
-                                                        transform.position.z);
-    }
-
     protected override void CreateMiniMapIcon()
     {
         base.CreateMiniMapIcon();
@@ -57,7 +50,7 @@ public class MonsterController : BaseController
             DestPos = lockTarget.transform.position;
             float distance = (DestPos - transform.position).magnitude;
 
-            if (distance <= attackRange)
+            if (distance <= 1.5f)
             {
                 NavMeshAgent agent = gameObject.GetOrAddComponent<NavMeshAgent>();
                 agent.SetDestination(transform.position);
@@ -107,7 +100,7 @@ public class MonsterController : BaseController
             if(targetStat.Hp > 0)
             {
                 float dis = (lockTarget.transform.position - transform.position).magnitude;
-                if (dis <= attackRange)
+                if (dis <= 1.5f)
                     EState = Define.EState.Skill;
                 else
                     EState = Define.EState.Move;

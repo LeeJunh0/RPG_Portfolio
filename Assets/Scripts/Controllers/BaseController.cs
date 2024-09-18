@@ -12,10 +12,8 @@ public abstract class BaseController : MonoBehaviour
     protected Define.EState     curState = Define.EState.Idle;
     [SerializeField]
     protected Vector3           DestPos;
-    [SerializeField]
-    protected float             attackRange = 1f;
-
     protected MeshRenderer meshRenderer = null;
+    [SerializeField]
     public virtual Define.EState EState
     {
         get { return curState; }
@@ -66,6 +64,9 @@ public abstract class BaseController : MonoBehaviour
                 UpDateSkill();
                 break;
         }
+
+        if(minimapIcon != null)
+            minimapIcon.transform.position = new Vector3(transform.position.x, minimapIcon.transform.position.y, transform.position.z);
     }
 
     protected virtual void UpdateIdle() { }

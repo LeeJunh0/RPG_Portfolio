@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class CursorController : MonoBehaviour
 {
-    int mask = (1 << (int)Define.ELayer.Ground) | (1 << (int)Define.ELayer.Monster) | (1 << (int)Define.ELayer.NPC);
-    Texture2D attackIcon;
+    int mask = (1 << (int)Define.ELayer.Ground) | (1 << (int)Define.ELayer.NPC);
+    Texture2D npcIcon;
     Texture2D handIcon;
     
     void Start()
     {
-        attackIcon = Managers.Resource.Load<Texture2D>("Attack");
+        npcIcon = Managers.Resource.Load<Texture2D>("loot");
         handIcon = Managers.Resource.Load<Texture2D>("Hand");
     }
 
@@ -24,8 +24,8 @@ public class CursorController : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 100.0f, mask))
         {
-            if (hit.collider.gameObject.layer == (int)Define.ELayer.Monster)
-                Cursor.SetCursor(attackIcon, new Vector2(attackIcon.width / 5, 0), CursorMode.Auto);
+            if (hit.collider.gameObject.layer == (int)Define.ELayer.NPC)
+                Cursor.SetCursor(npcIcon, new Vector2(npcIcon.width / 5, 0), CursorMode.Auto);
             else
                 Cursor.SetCursor(handIcon, new Vector2(handIcon.width / 3, 0), CursorMode.Auto);
         }

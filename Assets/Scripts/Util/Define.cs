@@ -21,7 +21,6 @@ public class Define
     public enum ELayer
     {
         Ground = 6,
-        Monster = 7,
         Block = 8,
         NPC = 9
     }

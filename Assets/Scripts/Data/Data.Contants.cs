@@ -15,6 +15,8 @@ namespace Data
     {
         public int level;
         public int hp;
+        public int mp;
+        public int manaRecovery;
         public int attack;
         public int totalExp;
     }

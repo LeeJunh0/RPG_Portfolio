@@ -7,7 +7,10 @@ public class UI_Stat : UIPopup
 {    
     enum GameObjects
     {
-        UI_Frame
+        UI_Frame, 
+        UI_Stat_HpBar, 
+        UI_Stat_MpBar, 
+        UI_Stat_ExpBar
     }
 
     Stat level;
