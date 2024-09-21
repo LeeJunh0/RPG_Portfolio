@@ -9,7 +9,7 @@ public class GameScene : BaseScene
         base.Init();
 
         SceneType = Define.EScene.Game;
-        Dictionary<int, Data.Stat> dic = Managers.Data.StatDict;
+        Managers.Skill.Init();
         gameObject.GetOrAddComponent<CursorController>();
 
         GameObject player = Managers.Game.Spawn(Define.EWorldObject.Player, "Player");

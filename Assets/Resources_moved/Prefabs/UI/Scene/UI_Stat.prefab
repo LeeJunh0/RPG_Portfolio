@@ -442,7 +442,7 @@ GameObject:
   m_Component:
   - component: {fileID: 323750494680769809}
   - component: {fileID: 432292013585378782}
-  - component: {fileID: 3602757434142793359}
+  - component: {fileID: 3336390076833896692}
   m_Layer: 5
   m_Name: UI_Stat_MpBar
   m_TagString: Untagged
@@ -525,7 +525,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &3602757434142793359
+--- !u!114 &3336390076833896692
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -534,7 +534,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2496423149698085400}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54b5127dcdb78cc4580023473bc54608, type: 3}
+  m_Script: {fileID: 11500000, guid: 4714a5fdddde1674ca6984c1c1874cc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3027692648378224303

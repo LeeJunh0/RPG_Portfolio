@@ -4,8 +4,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.Build;
+using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 namespace Data
 {
@@ -167,6 +169,76 @@ namespace Data
 
             foreach (DropInfo drop in drops)
                 dict.Add(drop.name, drop);
+
+            return dict;
+        }
+    }
+    #endregion
+
+    #region Skill
+    [Serializable]
+    public class SkillInitInfo
+    {
+        public string magicName;
+        public string hitName;
+        public string muzzleName;
+    }
+
+    [Serializable]
+    public class SkillInstantiateInfo
+    {
+        public string magicName;
+        public int count;
+        public int type;
+    }
+
+    [Serializable]
+    public class SkillMoveInfo
+    {
+        public string magicName;
+        public float speed;
+        public int type;
+    }
+
+    [Serializable]
+    public class Skill_InitData : ILoader<string, SkillInitInfo>
+    {
+        public List<SkillInitInfo> skills = new List<SkillInitInfo>();
+        public Dictionary<string, SkillInitInfo> MakeDict()
+        {
+            Dictionary<string, SkillInitInfo> dict = new Dictionary<string, SkillInitInfo>();
+
+            foreach (SkillInitInfo skill in skills)
+                dict.Add(skill.magicName, skill);
+
+            return dict;
+        }
+    }
+
+    public class Skill_InstData : ILoader<string, SkillInstantiateInfo>
+    {
+        public List<SkillInstantiateInfo> skills = new List<SkillInstantiateInfo>();
+        public Dictionary<string, SkillInstantiateInfo> MakeDict()
+        {
+            Dictionary<string, SkillInstantiateInfo> dict = new Dictionary<string, SkillInstantiateInfo>();
+
+            foreach (SkillInstantiateInfo skill in skills)
+                dict.Add(skill.magicName, skill);
+
+            return dict;
+        }
+    }
+
+    public class Skill_MoveData : ILoader<string, SkillMoveInfo>
+    {
+        public List<SkillMoveInfo> skills = new List<SkillMoveInfo>();
+
+        public Dictionary<string, SkillMoveInfo> MakeDict()
+        {
+            Dictionary<string, SkillMoveInfo> dict = new Dictionary<string, SkillMoveInfo>();
+
+            foreach (SkillMoveInfo skill in skills)
+                dict.Add(skill.magicName, skill);
 
             return dict;
         }

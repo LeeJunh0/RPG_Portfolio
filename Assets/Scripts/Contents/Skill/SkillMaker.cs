@@ -1,29 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class SkillMaker : MonoBehaviour
+public class SkillMaker
 {
-    public Skill skill;
+    public Image icon;
 
-
-    public void SkillMake()
-    {
-        
-    }
-
-    protected virtual void SkillInit()
-    {
-        
-    }
-
-    protected virtual void SkillInstantiate()
-    {
-
-    }
-
-    protected virtual void SkillProperties()
-    {
-
-    }
+    public virtual void Init() { }
+    public void SetInfo(Image _icon) { icon.sprite = _icon.sprite; }
+    public virtual void SkillInit() { }
+    public virtual void SkillInstantiate() { }
+    public virtual void SkillProperties() { }
 }

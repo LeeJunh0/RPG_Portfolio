@@ -13,11 +13,13 @@ public class Managers : MonoBehaviour
     GameManager _game           = new GameManager();
     InventoryManager _inven     = new InventoryManager();
     QuestManager _quest         = new QuestManager();
+    SkillManager _skill         = new SkillManager();
 
-    public static EquipManager Equip { get { return Instance._equip; } }
-    public static GameManager Game { get { return Instance._game; } }
-    public static InventoryManager Inventory { get { return Instance._inven; } }
-    public static QuestManager Quest { get { return Instance._quest; } }
+    public static EquipManager Equip            { get { return Instance._equip; } }
+    public static GameManager Game              { get { return Instance._game; } }
+    public static InventoryManager Inventory    { get { return Instance._inven; } }
+    public static QuestManager Quest            { get { return Instance._quest; } }
+    public static SkillManager Skill            { get {  return Instance._skill; } }
     #endregion
 
     #region Core
@@ -30,14 +32,14 @@ public class Managers : MonoBehaviour
     SoundManager _sound         = new SoundManager();
     UIManager _ui               = new UIManager();
 
-    public static DataManager Data { get { return Instance._data; } }
-    public static InputManager Input { get { return Instance._input; } }
-    public static OptionManager Option { get { return Instance._option; } }
-    public static ResourceManager Resource { get { return Instance._resource; } }
-    public static PoolManager Pool { get { return Instance._pool; } }
-    public static SceneManagerEx EScene { get { return Instance._scene; } }
-    public static SoundManager ESound { get { return Instance._sound; } }
-    public static UIManager UI { get { return Instance._ui; } }
+    public static DataManager Data              { get { return Instance._data; } }
+    public static InputManager Input            { get { return Instance._input; } }
+    public static OptionManager Option          { get { return Instance._option; } }
+    public static ResourceManager Resource      { get { return Instance._resource; } }
+    public static PoolManager Pool              { get { return Instance._pool; } }
+    public static SceneManagerEx EScene         { get { return Instance._scene; } }
+    public static SoundManager ESound           { get { return Instance._sound; } }
+    public static UIManager UI                  { get { return Instance._ui; } }
     #endregion
 
     void Update()
@@ -64,7 +66,6 @@ public class Managers : MonoBehaviour
             s_instance._pool.Init();
             s_instance._quest.Init();
             s_instance._inven.Init();
-
         }
     }
 

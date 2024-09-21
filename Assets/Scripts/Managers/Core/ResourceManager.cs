@@ -8,7 +8,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.Video;
 using Object = UnityEngine.Object;
 
-public class ResourceManager
+public class ResourceManager : MonoBehaviour
 {
     Dictionary<string, Object> resourceDic              = new Dictionary<string, Object>();
     Dictionary<string, AsyncOperationHandle> handleDic  = new Dictionary<string, AsyncOperationHandle>();
@@ -52,6 +52,21 @@ public class ResourceManager
         }
 
         Object.Destroy(Go);
+    }
+
+    public void Destroy(GameObject Go, float sec)
+    {
+        if (Go == null)
+            return;
+
+        Poolable poolable = Go.GetComponent<Poolable>();
+        if (poolable != null)
+        {
+            Managers.Pool.Push(poolable);
+            return;
+        }
+
+        Object.Destroy(Go, sec);
     }
 
     #region Addressable

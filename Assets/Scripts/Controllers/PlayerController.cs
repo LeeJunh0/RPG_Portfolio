@@ -5,13 +5,14 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
 
 public class PlayerController : BaseController
 {
     int mask =  (1 << (int)Define.ELayer.Ground) | (1 << (int)Define.ELayer.NPC);
 
-    PlayerStat stat;
-    bool stopSkill = false;
+    PlayerStat  stat;
+
 
     public override void Init()
     {
@@ -19,6 +20,8 @@ public class PlayerController : BaseController
         stat = gameObject.GetComponent<PlayerStat>();
         Managers.Input.MouseAction -= OnMouseEvent;
         Managers.Input.MouseAction += OnMouseEvent;
+        Managers.Input.KeyAction -= OnKeyEvent;
+        Managers.Input.KeyAction += OnKeyEvent;
         CreateMiniMapIcon();
     }
 
@@ -66,62 +69,10 @@ public class PlayerController : BaseController
         }
     }
 
-    protected override void UpdateIdle()
+    protected override void UpDateDodge()
     {
-
+        EState = Define.EState.Idle;
     }
-
-    protected override void UpdateDie()
-    {
-
-    }
-
-    protected override void UpDateSkill()
-    {
-        if (lockTarget != null)
-        {
-            Vector3 dir = lockTarget.transform.position - transform.position;
-            Quaternion quat = Quaternion.LookRotation(dir);
-            transform.rotation = Quaternion.Lerp(transform.rotation, quat, 20 * Time.deltaTime);
-        }
-    }
-
-    void OnHitEvent()
-    {
-        if(lockTarget != null)
-        {
-            Stat targetStat = lockTarget.GetComponent<Stat>();
-            targetStat.OnDamaged(stat);
-        }
-
-        if (stopSkill == true)
-        {
-            EState = Define.EState.Idle;
-        }
-        else
-        {
-            EState = Define.EState.Skill;
-        }      
-    }
-
-    //void Update()
-    //{
-    //    switch (EState)
-    //    {
-    //        case Define.EState.Idle:
-    //            UpdateIdle();
-    //            break;
-    //        case Define.EState.Move:
-    //            UpdateMove();
-    //            break;
-    //        case Define.EState.Die:
-    //            UpdateDie();
-    //            break;
-    //        case Define.EState.Skill:
-    //            UpDateSkill();
-    //            break;
-    //    }
-    //}
 
     void OnMouseEvent(Define.EMouseEvent evt)
     {
@@ -136,10 +87,24 @@ public class PlayerController : BaseController
             case Define.EState.Die:
                 break;
             case Define.EState.Skill:
-                if (evt == Define.EMouseEvent.PointerUp)
-                    stopSkill = true;
                 break;
         }
+    }
+    
+    void OnKeyEvent()
+    {
+        if (Input.GetKeyDown(KeyCode.Z) && Skill.skillInstance.isActive)        
+            EState = Define.EState.Skill;                        
+
+        if (Input.GetKeyDown(KeyCode.X))
+            EState = Define.EState.Dodge;
+    }
+
+    void OnSkillEvent() // 애니메이션 이벤트에 넣은 메서드
+    {
+        stat.Mp -= 10;
+        Skill.skillInstance.OnSkill();        
+        EState = Define.EState.Idle;
     }
 
     void OnMouseEvent_IdelRun(Define.EMouseEvent evt)
@@ -170,7 +135,7 @@ public class PlayerController : BaseController
                     GameObject arrow = Managers.Resource.Instantiate("ClickMoveArrows");
                     arrow.transform.position = DestPos;
                     EState = Define.EState.Move;
-                    stopSkill = false;
+
                 }
                 break;
             case Define.EMouseEvent.Press:
@@ -178,8 +143,9 @@ public class PlayerController : BaseController
                     DestPos = hit.point;
                 break;
             case Define.EMouseEvent.PointerUp:
-                stopSkill = true;
+
                 break;
         }
     }
+
 }

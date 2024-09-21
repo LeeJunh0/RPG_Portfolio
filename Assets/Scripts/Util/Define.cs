@@ -15,14 +15,23 @@ public class Define
         Die,
         Idle,
         Move,
-        Skill
+        Skill,
+        Dodge
     }
 
     public enum ELayer
     {
         Ground = 6,
+        Monster = 7,
         Block = 8,
         NPC = 9
+    }
+
+    public enum ESkill
+    {
+        Normal = 0,
+        Horizontal,
+        Circle
     }
 
     public enum ENpc

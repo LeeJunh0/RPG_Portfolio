@@ -177,6 +177,66 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
+  - m_GUID: afd3da9e401af5148bb53f6cb52f3869
+    m_Address: SlashMagicBall
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+  - m_GUID: 89f4e60948f48a34b91549027fdb7e43
+    m_Address: SlashMuzzle
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+  - m_GUID: 97f35c239786b4d448761a58aba6fb97
+    m_Address: SlashHit
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+  - m_GUID: 8f33441918495a740b9943caaccafc92
+    m_Address: IceMagicBall
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+  - m_GUID: 11e1a0df98fe48c4e806bb2d90516c1a
+    m_Address: IceHit
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+  - m_GUID: 29a6e7d2c781bba4e844f96a8e0c888c
+    m_Address: IceMuzzle
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+  - m_GUID: 362af88ea4571e84eb6f1c33e4004b3e
+    m_Address: FireMagicBall
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+  - m_GUID: b74de9f997b879140ba69a8268e82e8e
+    m_Address: FireMuzzle
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+  - m_GUID: ed39d981b7676644cbf66a3052d946c8
+    m_Address: FireHit
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+  - m_GUID: d08f35229b7c51e48b2aa65d8d6bf1d9
+    m_Address: NormalHit
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+  - m_GUID: c7ddb9d964fdc954fb1daa920b2255ef
+    m_Address: NormalMagicBall
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+  - m_GUID: e9abd3a65173fa6479b7768e157c226b
+    m_Address: NormalMuzzle
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: c8c0863d2f111984fb854a8e225b02ad, type: 2}
   m_SchemaSet:

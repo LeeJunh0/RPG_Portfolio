@@ -44,7 +44,6 @@ public class UI_DragSlot : UI_Slot
     {
         UI_SetDragSlot.instance.SetColor(0.6f);
         UI_SetDragSlot.instance.transform.position = eventData.position;
-        Debug.Log(UI_SetDragSlot.instance.isDraging);
     }
 
     protected override void OnEndDrag(PointerEventData eventData)

@@ -4673,7 +4673,7 @@ GameObject:
   - component: {fileID: 8552071022910263763}
   - component: {fileID: 8552071022910263762}
   - component: {fileID: 8552071022910263761}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -4747,6 +4747,7 @@ MonoBehaviour:
   minimapIcon: {fileID: 0}
   curState: 1
   DestPos: {x: 0, y: 0, z: 0}
+  speed: 0
 --- !u!114 &8552071022910263762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4762,6 +4763,9 @@ MonoBehaviour:
   level: 0
   hp: 100
   maxHp: 100
+  mp: 0
+  maxMp: 0
+  manaRecovery: 0
   attack: 0
   defense: 0
   movespeed: 0

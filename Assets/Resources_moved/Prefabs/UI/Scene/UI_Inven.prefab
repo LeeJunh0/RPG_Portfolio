@@ -252,9 +252,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a65ff63e84dc6b46b5c76e2f0cead36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hoverSlots: []
   dragSlot: {fileID: 0}
   slotImage: {fileID: 0}
   icon: {fileID: 0}
+  isDraging: 0
 --- !u!114 &2393130229559103965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -589,7 +591,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: eb6e63566bb4fd54887ce087e3fab573, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4b3d2095baccc2041b973b66b786b9d0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

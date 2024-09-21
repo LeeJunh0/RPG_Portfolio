@@ -14,7 +14,7 @@ public class CameraController : MonoBehaviour
     Vector3 Delta;
 
     [SerializeField]
-    GameObject Player = null;
+    GameObject Player;
 
     public void SetPlayer(GameObject player) { Player = player; }
 
@@ -28,12 +28,12 @@ public class CameraController : MonoBehaviour
             case Define.ECameraType.MiniMapCamera:
                 Delta = new Vector3(0f, 9f, 0f);
                 break;
-        }        
+        }
     }
 
     void LateUpdate()
     {
-        if(gameObject.tag == "MainCamera")
+        if (gameObject.tag == "MainCamera")
         {
             if (Mode == Define.ECameraMode.QuaterView)
             {
@@ -61,7 +61,7 @@ public class CameraController : MonoBehaviour
             transform.position = Player.transform.position + Delta;
             transform.LookAt(Player.transform);
         }
-                
+
     }
 
     public void SetQuaterView(Vector3 delta)

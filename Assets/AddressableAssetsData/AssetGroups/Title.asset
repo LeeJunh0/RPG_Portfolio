@@ -72,6 +72,21 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Title
+  - m_GUID: 46433f5e815e7dc4188003499a0fc9df
+    m_Address: SkillMoveData
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Title
+  - m_GUID: 17d2078a379530944a8381e8b7bb9af9
+    m_Address: SkillInstData
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Title
+  - m_GUID: 501d818e8973cff40bffe684a8f16a54
+    m_Address: SkillInitData
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Title
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: c8c0863d2f111984fb854a8e225b02ad, type: 2}
   m_SchemaSet:

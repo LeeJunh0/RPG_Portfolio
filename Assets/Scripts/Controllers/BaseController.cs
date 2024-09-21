@@ -63,6 +63,9 @@ public abstract class BaseController : MonoBehaviour
             case Define.EState.Skill:
                 UpDateSkill();
                 break;
+            case Define.EState.Dodge:
+                UpDateDodge();
+                break;
         }
 
         if(minimapIcon != null)
@@ -73,6 +76,7 @@ public abstract class BaseController : MonoBehaviour
     protected virtual void UpdateMove() { }
     protected virtual void UpdateDie() { }
     protected virtual void UpDateSkill() { }
+    protected virtual void UpDateDodge() { }
     protected virtual void CreateMiniMapIcon() 
     {
         minimapIcon = Managers.Resource.Instantiate("MiniMapIcon");

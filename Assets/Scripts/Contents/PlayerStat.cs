@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -53,6 +54,7 @@ public class PlayerStat : Stat
         gold = 0;
 
         SetStat(level);
+        StartCoroutine(Regenerate());
     }
 
     public void SetStat(int level)
@@ -61,11 +63,32 @@ public class PlayerStat : Stat
         Data.Stat stat = dict[level];
         hp = stat.hp;
         maxHp = stat.hp;
+        mp = stat.mp;
+        maxMp = stat.mp;
+        manaRecovery = stat.manaRecovery;
         attack = stat.attack;
         exp = 0;
 
         if(Managers.Data.StatDict.TryGetValue(level + 1, out stat) == true)
             totalExp = stat.totalExp;
+    }
+
+    IEnumerator Regenerate()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1f);
+            ManaRegen();
+        }
+    }
+
+    private void ManaRegen()
+    {
+        if (mp < maxMp)
+        {
+            mp += manaRecovery;
+            mp = Mathf.Clamp(mp, 0, maxMp);
+        }       
     }
 
     protected override void OnDead(Stat attacker)

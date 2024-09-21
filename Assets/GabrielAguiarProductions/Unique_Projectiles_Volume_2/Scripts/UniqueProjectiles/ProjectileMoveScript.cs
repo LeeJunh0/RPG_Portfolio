@@ -33,7 +33,6 @@ public class ProjectileMoveScript : MonoBehaviour {
 	public List<GameObject> trails;
 
     private Vector3 startPos;
-	private float speedRandomness;
 	private Vector3 offset;
 	private bool collided;
 	private Rigidbody rb;
@@ -44,27 +43,6 @@ public class ProjectileMoveScript : MonoBehaviour {
         startPos = transform.position;
         rb = GetComponent <Rigidbody> ();
 
-		//used to create a radius for the accuracy and have a very unique randomness
-		if (accuracy != 100) {
-			accuracy = 1 - (accuracy / 100);
-
-			for (int i = 0; i < 2; i++) {
-				var val = 1 * Random.Range (-accuracy, accuracy);
-				var index = Random.Range (0, 2);
-				if (i == 0) {
-					if (index == 0)
-						offset = new Vector3 (0, -val, 0);
-					else
-						offset = new Vector3 (0, val, 0);
-				} else {
-					if (index == 0)
-						offset = new Vector3 (0, offset.y, -val);
-					else
-						offset = new Vector3 (0, offset.y, val);
-				}
-			}
-		}
-			
 		if (muzzlePrefab != null) {
 			var muzzleVFX = Instantiate (muzzlePrefab, transform.position, Quaternion.identity);
 			muzzleVFX.transform.forward = gameObject.transform.forward + offset;
@@ -89,8 +67,8 @@ public class ProjectileMoveScript : MonoBehaviour {
 
 	void OnCollisionEnter (Collision co) {
         if (!bounce)
-        {
-            if (co.gameObject.tag != "Bullet" && !collided)
+        {            
+            if (co.gameObject.layer == (int)Define.ELayer.Monster && !collided)
             {
                 collided = true;
 

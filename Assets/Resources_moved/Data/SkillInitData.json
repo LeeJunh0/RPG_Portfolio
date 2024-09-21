@@ -1,0 +1,24 @@
+{
+  "skills": [
+    {
+      "magicName": "NormalMagicBall",
+      "hitName": "NormalHit",
+      "muzzleName": "NormalMuzzle"
+    },
+    {
+      "magicName": "FireMagicBall",
+      "hitName": "FireHit",
+      "muzzleName": "FireMuzzle"
+    },
+    {
+      "magicName": "IceMagicBall",
+      "hitName": "IceHit",
+      "muzzleName": "IceMuzzle"
+    },
+    {
+      "magicName": "SlashMagicBall",
+      "hitName": "SlashHit",
+      "muzzleName": "SlashMuzzle"
+    }
+  ]
+}

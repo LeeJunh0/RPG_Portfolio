@@ -1,0 +1,19 @@
+{
+  "skills": [
+    {
+      "magicName": "Normal",
+      "count": 1,
+      "type": "0"
+    },
+    {
+      "magicName": "Horizontal",
+      "count": 3,
+      "type": "1"
+    },
+    {
+      "magicName": "Circle",
+      "count": 5,
+      "type": "2"
+    }
+  ]
+}
