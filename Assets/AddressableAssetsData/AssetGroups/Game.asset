@@ -178,7 +178,7 @@ MonoBehaviour:
     m_SerializedLabels:
     - Game
   - m_GUID: afd3da9e401af5148bb53f6cb52f3869
-    m_Address: SlashMagicBall
+    m_Address: SlashProjectile
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
@@ -193,7 +193,7 @@ MonoBehaviour:
     m_SerializedLabels:
     - Game
   - m_GUID: 8f33441918495a740b9943caaccafc92
-    m_Address: IceMagicBall
+    m_Address: IceProjectile
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
@@ -208,7 +208,7 @@ MonoBehaviour:
     m_SerializedLabels:
     - Game
   - m_GUID: 362af88ea4571e84eb6f1c33e4004b3e
-    m_Address: FireMagicBall
+    m_Address: FireProjectile
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
@@ -228,7 +228,7 @@ MonoBehaviour:
     m_SerializedLabels:
     - Game
   - m_GUID: c7ddb9d964fdc954fb1daa920b2255ef
-    m_Address: NormalMagicBall
+    m_Address: NormalProjectile
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game

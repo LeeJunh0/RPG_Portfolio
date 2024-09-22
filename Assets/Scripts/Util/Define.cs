@@ -29,9 +29,23 @@ public class Define
 
     public enum ESkill
     {
-        Normal = 0,
+        Projectile,
+    }
+
+    public enum EProjectile
+    {
+        None,
         Horizontal,
-        Circle
+        Explosion,
+        Spin
+    }
+
+    public enum EProjectile_Elemental
+    {
+        None,
+        Fire,
+        Ice,
+        Slash
     }
 
     public enum ENpc

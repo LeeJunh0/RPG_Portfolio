@@ -6,13 +6,10 @@ using UnityEngine;
 
 public class UIManager
 {
+    public Action<int> UIStatUpdate = null;
+    Stack<UIPopup> popupStack = new Stack<UIPopup>();
+    UIScene SceneUI = null;
     int sortOrder = 10;
-
-    Stack<UIPopup> popupStack           = new Stack<UIPopup>();
-    UIScene SceneUI                     = null;
-
-    public Action<int> UIStatUpdate     = null;
-
 
     public GameObject Root
     {

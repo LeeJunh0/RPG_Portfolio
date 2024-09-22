@@ -7,14 +7,23 @@ using UnityEngine.UI;
 
 public class UI_DropSlot : UI_Slot
 {
-    private void Start()
+    public override void Init()
     {
-        icon = GetComponent<Image>();
+        base.Init();
     }
 
-    protected override void OnPointerEnter(PointerEventData eventData) { icon.color = Color.red; }
-    protected override void OnPointerExit(PointerEventData eventData) { icon.color = Color.white; }
-    protected override void OnDrop(PointerEventData eventData)
+    private void Start()
+    {
+        gameObject.BindEvent(OnHighlight, Define.EUiEvent.PointerEnter);
+        gameObject.BindEvent(OffHighlight, Define.EUiEvent.PointerExit);
+        gameObject.BindEvent(OnDrop, Define.EUiEvent.Drop);
+        icon = GetComponent<Image>();
+        
+    }
+
+    void OnHighlight(PointerEventData eventData) { icon.color = Color.red; }
+    void OffHighlight(PointerEventData eventData) { icon.color = Color.white; }
+    void OnDrop(PointerEventData eventData)
     {
         if (eventData.pointerDrag.gameObject == this.gameObject)
             return;
@@ -26,12 +35,4 @@ public class UI_DropSlot : UI_Slot
         int item2 = eventData.pointerDrag.transform.parent.GetComponent<UI_Inven_Slot>().Index;
         Managers.Inventory.InfoLink(item1, item2);
     }
-
-    //protected override void OnClick(PointerEventData eventData)
-    //{
-    //    Debug.Log($"æ∆¿Ãƒ‹ Index : {Index}");
-    //    Managers.Inventory.SelectIndex = Index;
-    //    UI_Inven inven = FindObjectOfType<UI_Inven>();
-    //    inven?.OnInvenPopup(Index);
-    //}
 }

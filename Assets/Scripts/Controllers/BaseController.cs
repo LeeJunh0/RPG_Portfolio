@@ -12,8 +12,9 @@ public abstract class BaseController : MonoBehaviour
     protected Define.EState     curState = Define.EState.Idle;
     [SerializeField]
     protected Vector3           DestPos;
-    protected MeshRenderer meshRenderer = null;
-    [SerializeField]
+
+    protected MeshRenderer      meshRenderer = null;
+
     public virtual Define.EState EState
     {
         get { return curState; }

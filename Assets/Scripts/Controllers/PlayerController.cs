@@ -93,7 +93,7 @@ public class PlayerController : BaseController
     
     void OnKeyEvent()
     {
-        if (Input.GetKeyDown(KeyCode.Z) && Skill.skillInstance.isActive)        
+        if (Input.GetKeyDown(KeyCode.Z))        
             EState = Define.EState.Skill;                        
 
         if (Input.GetKeyDown(KeyCode.X))
@@ -102,8 +102,7 @@ public class PlayerController : BaseController
 
     void OnSkillEvent() // 애니메이션 이벤트에 넣은 메서드
     {
-        stat.Mp -= 10;
-        Skill.skillInstance.OnSkill();        
+        stat.Mp -= 10;      
         EState = Define.EState.Idle;
     }
 

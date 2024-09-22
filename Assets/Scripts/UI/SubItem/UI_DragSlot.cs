@@ -8,12 +8,22 @@ using UnityEngine.UI;
 
 public class UI_DragSlot : UI_Slot
 {
+    public override void Init()
+    {
+        base.Init();        
+    }
+
     private void Start()
     {
         icon = GetComponent<Image>();
+        gameObject.BindEvent(OffRayTarget, Define.EUiEvent.PointerEnter);
+        gameObject.BindEvent(OnRayTarget,Define.EUiEvent.PointerExit);
+        gameObject.BindEvent(StartDragging,Define.EUiEvent.BeginDrag);
+        gameObject.BindEvent(Dragging,Define.EUiEvent.Drag);
+        gameObject.BindEvent(EndDragging,Define.EUiEvent.EndDrag);
     }
 
-    protected override void OnPointerEnter(PointerEventData eventData)
+    void OffRayTarget(PointerEventData eventData)
     {
         if (eventData.pointerDrag == null || !UI_SetDragSlot.instance.isDraging)
             return;
@@ -22,7 +32,7 @@ public class UI_DragSlot : UI_Slot
         UI_SetDragSlot.instance.hoverSlots.Add(icon);
     }
 
-    protected override void OnPointerExit(PointerEventData eventData)
+    void OnRayTarget(PointerEventData eventData)
     {
         if (eventData.pointerDrag == null || UI_SetDragSlot.instance.isDraging)
             return;
@@ -31,7 +41,7 @@ public class UI_DragSlot : UI_Slot
         UI_SetDragSlot.instance.hoverSlots.Remove(icon);
     }
 
-    protected override void OnBeginDrag(PointerEventData eventData)
+    void StartDragging(PointerEventData eventData)
     {
         UI_SetDragSlot.instance.dragSlot = this;
         UI_SetDragSlot.instance.DragSetIcon(icon);
@@ -40,13 +50,13 @@ public class UI_DragSlot : UI_Slot
         UI_SetDragSlot.instance.icon.raycastTarget = false;
     }
 
-    protected override void OnDrag(PointerEventData eventData)
+    void Dragging(PointerEventData eventData)
     {
         UI_SetDragSlot.instance.SetColor(0.6f);
         UI_SetDragSlot.instance.transform.position = eventData.position;
     }
 
-    protected override void OnEndDrag(PointerEventData eventData)
+    void EndDragging(PointerEventData eventData)
     {
         UI_SetDragSlot.instance.SetColor(0);
         UI_SetDragSlot.instance.isDraging = false;
@@ -57,5 +67,4 @@ public class UI_DragSlot : UI_Slot
         foreach (Image slot in UI_SetDragSlot.instance.hoverSlots)
             slot.raycastTarget = true;
     }
-
 }

@@ -13,13 +13,11 @@ public class Managers : MonoBehaviour
     GameManager _game           = new GameManager();
     InventoryManager _inven     = new InventoryManager();
     QuestManager _quest         = new QuestManager();
-    SkillManager _skill         = new SkillManager();
 
     public static EquipManager Equip            { get { return Instance._equip; } }
     public static GameManager Game              { get { return Instance._game; } }
     public static InventoryManager Inventory    { get { return Instance._inven; } }
     public static QuestManager Quest            { get { return Instance._quest; } }
-    public static SkillManager Skill            { get {  return Instance._skill; } }
     #endregion
 
     #region Core
