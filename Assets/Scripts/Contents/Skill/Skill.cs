@@ -2,28 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Skill : MonoBehaviour
+public interface ISkill
 {
-    protected SkillData     skillData;
-    protected bool          isActive = true;
+    void Execute();
+}
 
-    // 스킬 발동메서드
-    protected virtual void Activation()
-    {
-        SkillInitialize();
-        SkillRealization();
-    }
+public abstract class Skill : ISkill
+{
+    public SkillData skillData;
 
-    // 스킬 구현메서드
+    public ISkill initialize;
+    public ISkill creating;
+    public ISkill embodiment;
+    public ISkill movement;
 
-    protected abstract void SkillInitialize();
-    protected abstract void SkillRealization();
-    protected IEnumerator SkillCoolDown()
-    {
-        isActive = false;
-
-        yield return new WaitForSeconds(skillData.CoolTime);
-
-        isActive = true;
-    }
+    public virtual void Execute() { }
+    public void SetInitialize(ProjectileSkill skill, ISkill motify) { skill.initialize = motify; }
+    public void SetCreating(ProjectileSkill skill, ISkill motify) { skill.creating = motify; }
+    public void SetEmbodiment(ProjectileSkill skill, ISkill motify) { skill.embodiment = motify; }
+    public void SetMovement(ProjectileSkill skill, ISkill motify) { skill.movement = motify; }
 }

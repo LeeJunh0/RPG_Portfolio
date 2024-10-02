@@ -5,15 +5,22 @@ using UnityEngine;
 public static class BindKey
 {
     public static KeyCode Inventory { get; private set; }
+    public static KeyCode Equipment { get; private set; }
     public static KeyCode Quest { get; private set; }
     public static KeyCode Skill { get; private set; }
     public static KeyCode Pause { get; private set; }
-
+    public static KeyCode SkillSlot_1 { get; private set; }
+    public static KeyCode SkillSlot_2 { get; private set; }
+    public static KeyCode SkillSlot_3 { get; private set; }
     public static void Init()
     {
         Inventory = KeyCode.Tab;
-        Quest = KeyCode.Q;
+        Equipment = KeyCode.E;
+        Quest = KeyCode.L;
         Skill = KeyCode.K;
-        Pause = KeyCode.T;
+        Pause = KeyCode.Escape;
+        SkillSlot_1 = KeyCode.A;
+        SkillSlot_2 = KeyCode.S;
+        SkillSlot_3 = KeyCode.D;
     }
 }

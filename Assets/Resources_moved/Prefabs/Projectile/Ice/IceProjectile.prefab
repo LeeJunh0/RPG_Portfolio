@@ -14767,7 +14767,7 @@ GameObject:
   - component: {fileID: 4455691342367260}
   - component: {fileID: 65697945944289014}
   - component: {fileID: 54764192699525614}
-  - component: {fileID: -5194745262634656769}
+  - component: {fileID: -5980028452396256720}
   m_Layer: 11
   m_Name: IceProjectile
   m_TagString: Untagged
@@ -14825,7 +14825,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-5194745262634656769
+--- !u!114 &-5980028452396256720
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14834,12 +14834,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1908781827404660}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 706c69c5ea8076246a673367d8013593, type: 3}
+  m_Script: {fileID: 11500000, guid: e5c1e1a1818b5da4aa0507b652be3e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  hitVFX: {fileID: 1805005964355744, guid: 11e1a0df98fe48c4e806bb2d90516c1a, type: 3}
-  muzzleVFX: {fileID: 1805005964355744, guid: 29a6e7d2c781bba4e844f96a8e0c888c, type: 3}
+  hitVFX: {fileID: 0}
+  muzzleVFX: {fileID: 0}
 --- !u!1 &1922478342155812
 GameObject:
   m_ObjectHideFlags: 0

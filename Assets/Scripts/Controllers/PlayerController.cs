@@ -13,7 +13,6 @@ public class PlayerController : BaseController
 
     PlayerStat  stat;
 
-
     public override void Init()
     {
         WorldObjectType = Define.EWorldObject.Player;

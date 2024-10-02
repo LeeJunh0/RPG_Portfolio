@@ -38,6 +38,12 @@ public class QuestManager
         OnLevelQuestAction += UpdateLevel;
     }
 
+    public void OnQuest()
+    {
+        if (Input.GetKeyDown(BindKey.Quest))
+            Managers.UI.OnGameUIPopup<UI_Quest>();
+    }
+
     public void AddQuest(QuestInfo questInfo) 
     {     
         Quest quest = new Quest(questInfo);

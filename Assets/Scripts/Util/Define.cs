@@ -36,7 +36,6 @@ public class Define
     {
         None,
         Horizontal,
-        Explosion,
         Spin
     }
 

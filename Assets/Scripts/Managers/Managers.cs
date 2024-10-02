@@ -9,26 +9,28 @@ public class Managers : MonoBehaviour
     static Managers Instance { get { Init(); return s_instance; } }
 
     #region Contents
-    EquipManager _equip         = new EquipManager();
-    GameManager _game           = new GameManager();
-    InventoryManager _inven     = new InventoryManager();
-    QuestManager _quest         = new QuestManager();
+    EquipManager        _equip = new EquipManager();
+    GameManager         _game = new GameManager();
+    InventoryManager    _inven = new InventoryManager();
+    QuestManager        _quest = new QuestManager();
+    SkillManager        _skill = new SkillManager();
 
-    public static EquipManager Equip            { get { return Instance._equip; } }
-    public static GameManager Game              { get { return Instance._game; } }
-    public static InventoryManager Inventory    { get { return Instance._inven; } }
-    public static QuestManager Quest            { get { return Instance._quest; } }
+    public static EquipManager          Equip { get { return Instance._equip; } }
+    public static GameManager           Game { get { return Instance._game; } }
+    public static InventoryManager      Inventory { get { return Instance._inven; } }
+    public static QuestManager          Quest { get { return Instance._quest; } }
+    public static SkillManager          Skill { get {  return Instance._skill; } }
     #endregion
 
     #region Core
-    DataManager _data           = new DataManager();
-    InputManager _input         = new InputManager();
-    OptionManager _option       = new OptionManager();
-    ResourceManager _resource   = new ResourceManager();
-    PoolManager _pool           = new PoolManager();
-    SceneManagerEx _scene       = new SceneManagerEx();
-    SoundManager _sound         = new SoundManager();
-    UIManager _ui               = new UIManager();
+    DataManager         _data = new DataManager();
+    InputManager        _input = new InputManager();
+    OptionManager       _option = new OptionManager();
+    ResourceManager     _resource = new ResourceManager();
+    PoolManager         _pool = new PoolManager();
+    SceneManagerEx      _scene = new SceneManagerEx();
+    SoundManager        _sound = new SoundManager();
+    UIManager           _ui = new UIManager();
 
     public static DataManager Data              { get { return Instance._data; } }
     public static InputManager Input            { get { return Instance._input; } }

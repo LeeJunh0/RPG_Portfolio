@@ -24294,7 +24294,7 @@ GameObject:
   - component: {fileID: 65286545629801362}
   - component: {fileID: 54934828112821232}
   - component: {fileID: 114560823799739938}
-  - component: {fileID: 5214784409645074772}
+  - component: {fileID: 189713161275657978}
   m_Layer: 11
   m_Name: FireProjectile
   m_TagString: Untagged
@@ -24392,7 +24392,7 @@ MonoBehaviour:
   - {fileID: 1938143950716446}
   - {fileID: 1886907973617516}
   ActiveParticleSystems: 0101010101010101010101
---- !u!114 &5214784409645074772
+--- !u!114 &189713161275657978
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -24401,12 +24401,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1480069451246100}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 706c69c5ea8076246a673367d8013593, type: 3}
+  m_Script: {fileID: 11500000, guid: e5c1e1a1818b5da4aa0507b652be3e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  hitVFX: {fileID: 1090680790622714, guid: ed39d981b7676644cbf66a3052d946c8, type: 3}
-  muzzleVFX: {fileID: 1787985205539338, guid: b74de9f997b879140ba69a8268e82e8e, type: 3}
+  hitVFX: {fileID: 0}
+  muzzleVFX: {fileID: 0}
 --- !u!1 &1615777242882382
 GameObject:
   m_ObjectHideFlags: 0

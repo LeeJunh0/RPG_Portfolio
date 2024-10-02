@@ -10,6 +10,24 @@ public class UI_GameScene : UIBase
         Managers.UI.ShowPopupUI<UI_MiniMap>();
 
         Managers.Input.KeyAction -= Managers.Inventory.OnInventory;
-        Managers.Input.KeyAction += Managers.Inventory.OnInventory;
+        Managers.Input.KeyAction += Managers.Inventory.OnInventory; 
+        Managers.Input.KeyAction -= Managers.Quest.OnQuest;
+        Managers.Input.KeyAction += Managers.Quest.OnQuest;
+        Managers.Input.KeyAction -= OnPause;
+        Managers.Input.KeyAction += OnPause;
+        Managers.Input.KeyAction -= OnSkill;
+        Managers.Input.KeyAction += OnSkill;
+    }
+
+    public void OnPause()
+    {
+        if (Input.GetKeyDown(BindKey.Pause))
+            Managers.UI.OnGameUIPopup<UI_Pause>();
+    }
+
+    public void OnSkill()
+    {
+        if (Input.GetKeyDown(BindKey.Skill))
+            Managers.UI.OnGameUIPopup<UI_Skill>();
     }
 }
