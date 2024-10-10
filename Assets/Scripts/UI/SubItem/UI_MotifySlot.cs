@@ -1,3 +1,4 @@
+using Data;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,27 +7,29 @@ using UnityEngine.UI;
 
 public class UI_MotifySlot : UI_Slot
 {
-    public Motify motify;
+    MotifyInfo motifyInfo;
     RectTransform rect;
     bool isClick = false;
 
     public override void Init()
     {
-        base.Init(); 
-        
+        base.Init();
+
         icon = GetComponent<Image>();
         rect = GetComponent<RectTransform>();
-        gameObject.BindEvent(OnClickHighLight, Define.EUiEvent.Click);
+        gameObject.BindEvent(OnClickEvent, Define.EUiEvent.Click);
         gameObject.BindEvent(EnterSlotEvent, Define.EUiEvent.PointerEnter);
         gameObject.BindEvent(ExitSlotEvent, Define.EUiEvent.PointerExit);
 
-        Texture2D texture = Managers.Resource.Load<Texture2D>(motify.info.icon);
-        GetImage((int)Images.SlotIcon).sprite = Managers.UI.TextureToSprite(texture);
+        //Texture2D texture = Managers.Resource.Load<Texture2D>(motify.info.icon);
+        //GetImage((int)Images.SlotIcon).sprite = Managers.UI.TextureToSprite(texture);
     }
 
-    void OnClickHighLight(PointerEventData eventData)
+    public void SetInfo(MotifyInfo info) { motifyInfo = info; }
+
+    void OnClickEvent(PointerEventData eventData)
     {
-        if(isClick == true)
+        if (isClick == true)
         {
             isClick = false;
             icon.color = Color.white;
@@ -39,7 +42,7 @@ public class UI_MotifySlot : UI_Slot
 
     void EnterSlotEvent(PointerEventData eventData)
     {
-        UI_MotifylTip.Instance.SetToolTip(motify);
+        UI_MotifylTip.Instance.SetToolTip(motifyInfo);
         UI_MotifylTip.Instance.SetColor(1f);
 
         RectTransform tooltipRect = UI_MotifylTip.Instance.GetComponent<RectTransform>();

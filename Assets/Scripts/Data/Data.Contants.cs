@@ -221,17 +221,30 @@ namespace Data
     #endregion
     #region Motify
 
+    public enum MotifyType
+    {
+        Initialize = 0,
+        Embodiment,
+        Movement
+    }
+
     [Serializable]
     public class MotifyInfo
     {
-        public int      mana; 
-        public string   name;
-        public string   icon;
-        public string   function;
-        public string   description;
+        public int          id;
+        public string       skillName;
+        public MotifyType   type;
+        public int          mana; 
+        public string       name;
+        public string       icon;
+        public string       function;
+        public string       description;
 
         public MotifyInfo(MotifyInfo info)
         {
+            id = info.id;
+            skillName = info.skillName;
+            type = info.type;
             mana = info.mana;
             name = info.name;
             icon = info.icon;
@@ -241,15 +254,15 @@ namespace Data
     }
 
     [Serializable]
-    public class MotifyData : ILoader<string, MotifyInfo>
+    public class MotifyData : ILoader<int, MotifyInfo>
     {
         List<MotifyInfo> motifys = new List<MotifyInfo>();
 
-        public Dictionary<string, MotifyInfo> MakeDict()
+        public Dictionary<int, MotifyInfo> MakeDict()
         {
-            Dictionary<string,MotifyInfo> dict = new Dictionary<string,MotifyInfo>();
+            Dictionary<int, MotifyInfo> dict = new Dictionary<int, MotifyInfo>();
             foreach (MotifyInfo motify in motifys)
-                dict.Add(motify.name, motify);
+                dict.Add(motify.id, motify);
 
             return dict;
         }

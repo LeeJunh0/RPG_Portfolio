@@ -1,3 +1,4 @@
+using Data;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -23,15 +24,15 @@ public class UI_MotifylTip : MonoBehaviour
         group = GetComponent<CanvasGroup>();
     }
 
-    public void SetToolTip(Motify motify)
+    public void SetToolTip(MotifyInfo motifyInfo)
     {
-        Texture2D texture = Managers.Resource.Load<Texture2D>(motify.info.icon);
+        Texture2D texture = Managers.Resource.Load<Texture2D>(motifyInfo.icon);
         motifyIcon.sprite = Managers.UI.TextureToSprite(texture);
 
-        motifyName.text =        string.Format($"{motify.info.name}");
-        motifyStat.text =        string.Format($"{motify.info.mana}");
-        motifyFuction.text =     string.Format($"{motify.info.function}");
-        motifyDescription.text = string.Format($"{motify.info.description}");        
+        motifyName.text =        string.Format($"{motifyInfo.name}");
+        motifyStat.text =        string.Format($"{motifyInfo.mana}");
+        motifyFuction.text =     string.Format($"{motifyInfo.function}");
+        motifyDescription.text = string.Format($"{motifyInfo.description}");        
     }
 
     public void SetColor(float alpha) { group.alpha = alpha; }

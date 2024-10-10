@@ -32,4 +32,5 @@ public class UI_SkillTip : MonoBehaviour
         skillFuction.text = string.Format($"{skill.skillData.function}");
         skillDescription.text = string.Format($"{skill.skillData.description}");
     }
+    public void SetColor(float alpha) { group.alpha = alpha; }
 }

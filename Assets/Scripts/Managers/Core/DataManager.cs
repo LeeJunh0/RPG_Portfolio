@@ -17,7 +17,7 @@ public class DataManager
     public Dictionary<int, Iteminfo> ItemDict { get; private set; } = new Dictionary<int, Iteminfo>();
     public Dictionary<string, DropInfo> DropDict { get; private set; } = new Dictionary<string, DropInfo>();
     public Dictionary<string, SkillInfo> SkillDict { get; private set; } = new Dictionary<string, SkillInfo>();
-    public Dictionary<string, MotifyInfo> MotifyDict { get; private set; } = new Dictionary<string, MotifyInfo>();
+    public Dictionary<int, MotifyInfo> MotifyDict { get; private set; } = new Dictionary<int, MotifyInfo>();
 
     public void Init()
     {
@@ -26,7 +26,7 @@ public class DataManager
         ItemDict = LoadJson<ItemData, int, Iteminfo>("ItemsData").MakeDict();
         DropDict = LoadJson<DropData, string, DropInfo>("DropData").MakeDict();
         SkillDict = LoadJson<SkillData, string, SkillInfo>("SkillData").MakeDict();
-        MotifyDict = LoadJson<MotifyData, string, MotifyInfo>("MotifyData").MakeDict();
+        MotifyDict = LoadJson<MotifyData, int, MotifyInfo>("MotifyData").MakeDict();
     }
 
     T LoadJson<T, Key, Value>(string path) where T : ILoader<Key, Value>

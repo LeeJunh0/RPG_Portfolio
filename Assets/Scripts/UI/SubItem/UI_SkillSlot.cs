@@ -14,17 +14,19 @@ public class UI_SkillSlot : UI_Slot
         base.Init();
 
         rect = GetComponent<RectTransform>();
+        gameObject.BindEvent(EnterSlotEvent, Define.EUiEvent.PointerEnter);
+        gameObject.BindEvent(ExitSlotEvent, Define.EUiEvent.PointerExit);
     }
 
     void EnterSlotEvent(PointerEventData eventData)
     {
-        UI_MotifylTip.Instance.SetColor(1f);
+        UI_SkillTip.Instance.SetColor(1f);
 
-        RectTransform tooltipRect = UI_MotifylTip.Instance.GetComponent<RectTransform>();
+        RectTransform tooltipRect = UI_SkillTip.Instance.GetComponent<RectTransform>();
         tooltipRect.pivot = new Vector2(0, 1);
         tooltipRect.position = rect.position;
 
-        float y = Mathf.Clamp(tooltipRect.anchoredPosition.y, -UI_MotifylTip.Instance.parentRect.position.y + tooltipRect.rect.size.y, UI_MotifylTip.Instance.parentRect.position.y);
+        float y = Mathf.Clamp(tooltipRect.anchoredPosition.y, -UI_SkillTip.Instance.parentRect.position.y + tooltipRect.rect.size.y, UI_SkillTip.Instance.parentRect.position.y);
 
         tooltipRect.anchoredPosition = new Vector2(tooltipRect.anchoredPosition.x, y);
 
@@ -33,7 +35,7 @@ public class UI_SkillSlot : UI_Slot
 
     void ExitSlotEvent(PointerEventData eventData)
     {
-        UI_MotifylTip.Instance.SetColor(0f);
+        UI_SkillTip.Instance.SetColor(0f);
 
         Cursor.visible = true;
     }

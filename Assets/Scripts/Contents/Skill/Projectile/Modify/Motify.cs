@@ -8,7 +8,6 @@ public abstract class Motify : ISkill
     protected   ProjectileSkill     skill;
     protected   List<GameObject>    projectiles;
     protected   int                 mana;
-    public      MotifyInfo          info;
 
 
     public Motify(ProjectileSkill refSkill) 
@@ -16,6 +15,7 @@ public abstract class Motify : ISkill
         this.skill = refSkill;
         projectiles = skill.projectiles;
     }
+
 
     public virtual void SetMana() { }
     public virtual void Execute() { }
