@@ -30,6 +30,8 @@ public class Define
     public enum ESkill
     {
         Projectile,
+        AreaOfEffect,
+
     }
 
     public enum EProjectile

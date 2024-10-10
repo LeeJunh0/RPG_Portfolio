@@ -1,0 +1,88 @@
+﻿{
+  "motifys": [
+    {
+      "mana": 3,
+      "name": "속성 : 없음",
+      "icon": "Normal",
+      "function": "속성변경 : 디폴트",
+      "description": "손에 마력을 모아 구 형태로 만든다."
+    },
+    {
+      "mana": 3,
+      "name": "속성 : 얼음",
+      "icon": "Ice",
+      "function": "속성변경 : 얼음",
+      "description": "마력을 날카로운 얼음으로 만든다."
+    },
+    {
+      "mana": 3,
+      "name": "속성 : 화염",
+      "icon": "Fire",
+      "function": "속성변경 : 화염",
+      "description": "마력을 뜨거운 화염으로 만든다."
+    },
+    {
+      "mana": 3,
+      "name": "참격",
+      "icon": "Slash",
+      "function": "속성변경 : 물리",
+      "description": "마치 칼날처럼 마력을 날카롭게 만든다."
+    },
+    {
+      "mana": 3,
+      "name": "전개",
+      "icon": "Deployment",
+      "function": "전개 : 전방 1개",
+      "description": "시전자 앞에 발사체를 전개한다."
+    },
+    {
+      "mana": 5,
+      "name": "수평 전개",
+      "icon": "Horizontal",
+      "function": "전개 : 전방 3개",
+      "description": "시전자 앞에 3개의 발사체 수평전개 된다."
+    },
+    {
+      "mana": 5,
+      "name": "방어 전개",
+      "icon": "Shield",
+      "function": "전개 : 주변 5개",
+      "description": "시전자를 중심으로 5개의 발사체가 감싸듯 전개 된다."
+    },
+    {
+      "mana": 6,
+      "name": "응축",
+      "icon": "Condensed",
+      "function": "전개 : 전방 1개",
+      "description": "시전자 앞에 마력을 집중해 만든 강력한 한 발이 전개 된다."
+    },
+    {
+      "mana": 3,
+      "name": "사출",
+      "icon": "Inject",
+      "function": "사출 : 전방",
+      "description": "전개된 발사체가 시전자의 앞으로 쏘아진다."
+    },
+    {
+      "mana": 8,
+      "name": "회전",
+      "icon": "Rotation",
+      "function": "사출 : 전방 회전",
+      "description": "전개된 발사체가 중심을 기준으로 회전한다."
+    },
+    {
+      "mana": 4,
+      "name": "록온",
+      "icon": "LockOn",
+      "function": "사출 : 전방 딜레이",
+      "description": "전개된 발사체가 지점을 향해 미사일처럼 쏘아진다."
+    },
+    {
+      "mana": 10,
+      "name": "폭발",
+      "icon": "Explosion",
+      "function": "사출 : 전방 폭발",
+      "description": "전개된 발사체가 폭발하며 전방에 작은 발사체들을 뿌린다."
+    }
+  ]
+}

@@ -1,12 +1,15 @@
+using Data;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Motify : ISkill
 {
-    protected ProjectileSkill   skill; 
-    protected List<GameObject>  projectiles;
-    protected int               mana;
+    protected   ProjectileSkill     skill;
+    protected   List<GameObject>    projectiles;
+    protected   int                 mana;
+    public      MotifyInfo          info;
+
 
     public Motify(ProjectileSkill refSkill) 
     { 
@@ -15,5 +18,5 @@ public abstract class Motify : ISkill
     }
 
     public virtual void SetMana() { }
-    public virtual void Execute() { skill.Execute(); }
+    public virtual void Execute() { }
 }

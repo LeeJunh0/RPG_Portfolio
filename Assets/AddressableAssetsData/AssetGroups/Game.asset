@@ -22,221 +22,271 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9d41527b08898d8409e764f13153514c
     m_Address: Knight
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fc5a61295caaf8844b48d7fd500df811
     m_Address: UI_HPBar
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a1a54c5479259ec48802aea30c170090
     m_Address: UI_Inven
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d61ae44232b0eae46924eaf7f9c66c1e
     m_Address: UI_Inven_Slot
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 58dfbf39eee62f74aa8ab1183b776b2c
     m_Address: loot
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 24d21e256b498a944a00e2527ed7618c
     m_Address: Attack
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0f45821c9378469498c0044ff9068ea2
     m_Address: Hand
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3fde1823a6d579549aadbe9e3b28a676
     m_Address: UI_Game
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1b13c17c2c358894096d128ad4d64e8f
     m_Address: UI_Quest
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3ddbe3a2c217bc74b8afec66230537df
     m_Address: UI_Pause
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: caef00d5531c60b479057c371d3c1c79
     m_Address: UI_Skill
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 85bafec2a6869e746a9d15e589efbdab
     m_Address: apple
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 267184bf1eb44b145b62cc5db78a4f6b
     m_Address: UI_Quest_Item
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f3b79ec7bf1c9a446b9229f946e38b2f
     m_Address: UI_Giver_Item
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f56de1fb183209547b755d98a3e96845
     m_Address: UI_Giver
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 60acd552359d0944886eb3660ba2af99
     m_Address: UI_Stat
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1abef9e0aed83ae43bcc695adfb4dd9f
     m_Address: Minimap_RT
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 40d6a8a1c60dcc74cb5280b981e18f3c
     m_Address: UI_MiniMap
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b0ee30cc5fb75f449a2fb86ca64db6c4
     m_Address: Minimap_Camera
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 993035a55caab5a439d8c40689c9f6d1
     m_Address: MiniMapIcon
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 34ba00aead6526c479f4eeed81994ebe
     m_Address: ClickMoveArrows
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a6a89319110f1f946b7c2f8cea9906a0
     m_Address: armor
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 422ce2ba344177449a97fe0f91d36fe7
     m_Address: sword
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c5c40b2e98ae02b4aa1267a5be0d70fb
     m_Address: boots
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ee4889b4c0dfa3340af884b75725b6d1
     m_Address: pants
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f8a54a8c47e8af744bdb702d2bba08cd
     m_Address: chest_background
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ff8444197b8825b4e94c3ffc4c98f31a
     m_Address: melee_background
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ee71e85eb53f88b428deb24d87246a10
     m_Address: boots_background
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 233a77205485c7041b356d6db13d4ee4
     m_Address: pants_background
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 380cbb2cc2e72a04fbb7013072d6c1e2
     m_Address: void_Slot
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 07cc3bcec1d9e554bb1f171683ab054e
     m_Address: hp
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
-  - m_GUID: afd3da9e401af5148bb53f6cb52f3869
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 00a4ddc61a2102c42a81034f7dbd8402
     m_Address: SlashProjectile
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
-  - m_GUID: 89f4e60948f48a34b91549027fdb7e43
-    m_Address: SlashMuzzle
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Game
-  - m_GUID: 97f35c239786b4d448761a58aba6fb97
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ab71399ae2486664db76eeae255a662d
     m_Address: SlashHit
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
-  - m_GUID: 8f33441918495a740b9943caaccafc92
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5a95c94919848024b94bac54a94f207d
+    m_Address: SlashMuzzle
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4fb22bf94ff53b743b4fe92b82501e85
     m_Address: IceProjectile
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
-  - m_GUID: 11e1a0df98fe48c4e806bb2d90516c1a
-    m_Address: IceHit
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Game
-  - m_GUID: 29a6e7d2c781bba4e844f96a8e0c888c
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b85e73b3822d8a74694b6fc83d755acb
     m_Address: IceMuzzle
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
-  - m_GUID: 362af88ea4571e84eb6f1c33e4004b3e
-    m_Address: FireProjectile
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 00fbe62cd9178f44f8cb51f188f823ca
+    m_Address: IceHit
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
-  - m_GUID: b74de9f997b879140ba69a8268e82e8e
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0253f99e08c0f1b4b826d7a400c0752a
     m_Address: FireMuzzle
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
-  - m_GUID: ed39d981b7676644cbf66a3052d946c8
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9f0e4b41a274ad04d8fef21b9f4e6030
+    m_Address: FireProjectile
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 76ba1e91fea186346bb2eff50c83fd05
     m_Address: FireHit
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
-  - m_GUID: d08f35229b7c51e48b2aa65d8d6bf1d9
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6225eb3558e891443a80232b18635a69
     m_Address: NormalHit
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
-  - m_GUID: c7ddb9d964fdc954fb1daa920b2255ef
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 336abf8284550d048b04fa94423e06c5
     m_Address: NormalProjectile
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
-  - m_GUID: e9abd3a65173fa6479b7768e157c226b
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 12dcc997f0e67a04ab2980acb5ccdcf3
     m_Address: NormalMuzzle
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fe9250190de697c41a07ac6113b0ed83
+    m_Address: ProjectileSkill
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: c8c0863d2f111984fb854a8e225b02ad, type: 2}
   m_SchemaSet:

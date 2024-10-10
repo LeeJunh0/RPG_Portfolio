@@ -9,23 +9,23 @@ public class CircleMove : MoveMotify
 
     public CircleMove(ProjectileSkill refSkill) : base(refSkill) { }
 
-    public override void Movement()
+    public override IEnumerator Movement()
     {
+        yield return new WaitForFixedUpdate();
         angle += speed * Time.deltaTime;
 
         for (int i = 0; i < projectiles.Count; i++)
         {
+            float radian = Mathf.Deg2Rad * (angle + (i * (360 / projectiles.Count)));
             float x = Mathf.Cos(Mathf.Deg2Rad * angle) * radius;
             float z = Mathf.Sin(Mathf.Deg2Rad * angle) * radius;
 
-            projectiles[i].transform.position += new Vector3(x, 1f, z);
+            projectiles[i].transform.position = new Vector3(x, 1f, z);
         }
     }
 
     public override void Execute()
     {
-        base.Execute();
-
-        Movement();
+        CoroutineRunner.Instance.RunCoroutine(Movement());
     }
 }

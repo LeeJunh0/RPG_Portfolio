@@ -1,34 +1,28 @@
+using Data;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static Define;
 
 public class MoveMotify : Motify
 {
-    protected float speed = 20f;
+    protected float speed = 40f;
     public MoveMotify(ProjectileSkill refSkill) : base(refSkill) { }
 
-    public void Shooting()
+    public virtual IEnumerator Movement()
     {
+        yield return null;
         for (int i = 0; i < projectiles.Count; i++)
         {
             Rigidbody rigid = projectiles[i].GetComponent<Rigidbody>();
-            rigid.AddForce(projectiles[i].transform.forward * speed * Time.deltaTime, ForceMode.Impulse);
+            rigid.AddForce(projectiles[i].transform.forward * speed, ForceMode.Impulse);
         }
     }
 
-    public virtual void Movement()
-    {
-        Shooting();
-    }
-
-    public override void Execute()
-    {
-        base.Execute();
-
-        Movement();
-    }
-
-    public override void SetMana() { skill.skillData.Mana += 10; }
+   
+    public override void Execute()  { CoroutineRunner.Instance.StartCoroutine(Movement()); }
+    public void StopRun() { CoroutineRunner.Instance.StopCoroutine(Movement()); }
+    public override void SetMana()  { skill.skillData.mana += 10; }
 }

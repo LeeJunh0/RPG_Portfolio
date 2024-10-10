@@ -41,6 +41,6 @@ public class InitializeMotify : Motify
 
     public override void Execute()
     {
-        base.Execute();
+        SetProjectile();
     }
 }

@@ -22,71 +22,79 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Title
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7518c764a92eafd43b4b4758896159cf
     m_Address: StatData
     m_ReadOnly: 0
     m_SerializedLabels:
     - Title
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 36b189f20f7dad941816f0add8261596
     m_Address: UI_LoadingScreen
     m_ReadOnly: 0
     m_SerializedLabels:
     - Title
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3d1e848eda795dc4db083be83319cd07
     m_Address: EventSystem
     m_ReadOnly: 0
     m_SerializedLabels:
     - Title
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9dec84dd627c5774c82cc8f0ee0302be
     m_Address: UI_Option
     m_ReadOnly: 0
     m_SerializedLabels:
     - Title
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bea93a38b71b64b598109b3a3b1a0048
     m_Address: Happy
     m_ReadOnly: 0
     m_SerializedLabels:
     - Title
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: dd52dc132b0224c4fa58756e288671c5
     m_Address: UI_ExitScreen
     m_ReadOnly: 0
     m_SerializedLabels:
     - Title
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4a0ab2391931468498b361230a352d45
     m_Address: QuestData
     m_ReadOnly: 0
     m_SerializedLabels:
     - Title
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5e44c7480e5eb464886c8c2d482d488c
     m_Address: ItemsData
     m_ReadOnly: 0
     m_SerializedLabels:
     - Title
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 257045d1a0547ca42a27fa21be83f1e7
     m_Address: DropData
     m_ReadOnly: 0
     m_SerializedLabels:
     - Title
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5b1ed8fbe89154eaf96723b6e5f0aad3
     m_Address: Forest
     m_ReadOnly: 0
     m_SerializedLabels:
     - Title
-  - m_GUID: 46433f5e815e7dc4188003499a0fc9df
-    m_Address: SkillMoveData
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f44b566802a469841a09932feccedcf9
+    m_Address: SkillData
     m_ReadOnly: 0
     m_SerializedLabels:
     - Title
-  - m_GUID: 17d2078a379530944a8381e8b7bb9af9
-    m_Address: SkillInstData
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a59f12206ca080d4d9f38595829ccdab
+    m_Address: MotifyData
     m_ReadOnly: 0
     m_SerializedLabels:
     - Title
-  - m_GUID: 501d818e8973cff40bffe684a8f16a54
-    m_Address: SkillInitData
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Title
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: c8c0863d2f111984fb854a8e225b02ad, type: 2}
   m_SchemaSet:

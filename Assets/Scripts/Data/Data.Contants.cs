@@ -6,6 +6,7 @@ using System.Linq;
 using UnityEditor.Build;
 using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
+using UnityEngine.Localization.SmartFormat.Utilities;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 
@@ -177,68 +178,78 @@ namespace Data
 
     #region Skill
     [Serializable]
-    public class SkillInitInfo
+    public class SkillInfo
     {
-        public string magicName;
-        public string hitName;
-        public string muzzleName;
-    }
+        public string name;
+        public float damage;
+        public float mana;
+        public float coolTime;
+        public bool isActive = true;
+        public Define.ESkill type;
+        public string icon;
+        public string function;
+        public string description;
 
-    [Serializable]
-    public class SkillInstantiateInfo
-    {
-        public string magicName;
-        public int count;
-        public int type;
-    }
-
-    [Serializable]
-    public class SkillMoveInfo
-    {
-        public string magicName;
-        public float speed;
-        public int type;
-    }
-
-    [Serializable]
-    public class Skill_InitData : ILoader<string, SkillInitInfo>
-    {
-        public List<SkillInitInfo> skills = new List<SkillInitInfo>();
-        public Dictionary<string, SkillInitInfo> MakeDict()
+        public SkillInfo(SkillInfo refInfo)
         {
-            Dictionary<string, SkillInitInfo> dict = new Dictionary<string, SkillInitInfo>();
+            name = refInfo.name;
+            damage = refInfo.damage;
+            mana = refInfo.mana;
+            coolTime = refInfo.coolTime;
+            isActive = refInfo.isActive;
+            type = refInfo.type;
+            icon = refInfo.icon;
+            function = refInfo.function;
+            description = refInfo.description;
+        }
+    }
 
-            foreach (SkillInitInfo skill in skills)
-                dict.Add(skill.magicName, skill);
+    [Serializable]
+    public class SkillData : ILoader<string, SkillInfo>
+    {
+        public List<SkillInfo> skills = new List<SkillInfo>();
+        public Dictionary<string, SkillInfo> MakeDict()
+        {
+            Dictionary<string, SkillInfo> dict = new Dictionary<string, SkillInfo>();
+
+            foreach (SkillInfo skill in skills)
+                dict.Add(skill.name, skill);
 
             return dict;
         }
     }
+    #endregion
+    #region Motify
 
-    public class Skill_InstData : ILoader<string, SkillInstantiateInfo>
+    [Serializable]
+    public class MotifyInfo
     {
-        public List<SkillInstantiateInfo> skills = new List<SkillInstantiateInfo>();
-        public Dictionary<string, SkillInstantiateInfo> MakeDict()
+        public int      mana; 
+        public string   name;
+        public string   icon;
+        public string   function;
+        public string   description;
+
+        public MotifyInfo(MotifyInfo info)
         {
-            Dictionary<string, SkillInstantiateInfo> dict = new Dictionary<string, SkillInstantiateInfo>();
-
-            foreach (SkillInstantiateInfo skill in skills)
-                dict.Add(skill.magicName, skill);
-
-            return dict;
+            mana = info.mana;
+            name = info.name;
+            icon = info.icon;
+            function = info.function;
+            description = info.description;
         }
     }
 
-    public class Skill_MoveData : ILoader<string, SkillMoveInfo>
+    [Serializable]
+    public class MotifyData : ILoader<string, MotifyInfo>
     {
-        public List<SkillMoveInfo> skills = new List<SkillMoveInfo>();
+        List<MotifyInfo> motifys = new List<MotifyInfo>();
 
-        public Dictionary<string, SkillMoveInfo> MakeDict()
+        public Dictionary<string, MotifyInfo> MakeDict()
         {
-            Dictionary<string, SkillMoveInfo> dict = new Dictionary<string, SkillMoveInfo>();
-
-            foreach (SkillMoveInfo skill in skills)
-                dict.Add(skill.magicName, skill);
+            Dictionary<string,MotifyInfo> dict = new Dictionary<string,MotifyInfo>();
+            foreach (MotifyInfo motify in motifys)
+                dict.Add(motify.name, motify);
 
             return dict;
         }

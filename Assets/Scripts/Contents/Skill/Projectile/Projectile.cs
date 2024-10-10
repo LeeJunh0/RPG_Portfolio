@@ -12,20 +12,19 @@ public class Projectile : MonoBehaviour
 
     void Start()
     {
-        if(muzzleVFX == null)
-        {
-            Debug.Log("Faild Load muzzleVFX");
-            return;
-        }
+        if (muzzleVFX == null) return;
 
-        var particle = muzzleVFX.GetComponent<ParticleSystem>();
+        GameObject muzzlePrefab = Managers.Resource.Instantiate(muzzleVFX);
+        muzzlePrefab.transform.position = Managers.Game.GetPlayer().transform.position;
+
+        var particle = muzzlePrefab.GetComponent<ParticleSystem>();
         if (particle == null)
         {
-            var child = particle.gameObject.transform.GetChild(0).GetComponent<ParticleSystem>();
-            StartCoroutine(DurationDestroy(muzzleVFX, child.main.duration));
+            var child = muzzlePrefab.gameObject.transform.GetChild(0).GetComponent<ParticleSystem>();
+            Destroy(muzzlePrefab, child.main.duration);
         }
         else
-            StartCoroutine(DurationDestroy(muzzleVFX, particle.main.duration));
+            Destroy(muzzlePrefab, particle.main.duration);
     }
 
     private void OnCollisionEnter(Collision co)
@@ -33,22 +32,20 @@ public class Projectile : MonoBehaviour
         if (co.gameObject.layer != (int)Define.ELayer.Monster && co.gameObject.layer != (int)Define.ELayer.Block)
             return;
 
-        if (hitVFX == null)
-        {
-            Debug.Log("Faild Load hitVFX");
-            return;
-        }
+        if (hitVFX == null) return;
 
-        var particle = hitVFX.GetComponent<ParticleSystem>();
+        GameObject hitPrefab = Managers.Resource.Instantiate(hitVFX);
+        hitPrefab.transform.position = co.transform.position;
+        var particle = hitPrefab.GetComponent<ParticleSystem>();
         if (particle == null)
         {
-            var child = hitVFX.transform.GetChild(0).GetComponent<ParticleSystem>();
-            Destroy(hitVFX, child.main.duration);
+            var child = hitPrefab.transform.GetChild(0).GetComponent<ParticleSystem>();
+            Destroy(hitPrefab, child.main.duration);
         }
         else
-            Destroy(hitVFX, particle.main.duration);
+            Destroy(hitPrefab, particle.main.duration);
 
-        StartCoroutine(ParticleDestroy(0.2f));
+        StartCoroutine(ParticleDestroy(0f));
     }
 
     IEnumerator DurationDestroy(GameObject go, float sec)

@@ -18,6 +18,4 @@ public abstract class UI_Slot : UIBase
     {
         BindImage(typeof(Images));
     }
-
-    public void SetIcon(Sprite _icon) { icon.sprite = _icon; }
 }

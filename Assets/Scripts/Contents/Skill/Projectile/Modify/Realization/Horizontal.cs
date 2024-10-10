@@ -8,18 +8,24 @@ public class Horizontal : EmbodimentMotify
 
     public override void Embodiment(Transform pos)
     {
-        int half = projectiles.Count / 2;
+        //int half = skill.count / 2;
+        int half = 3 / 2;
         for (int i = -half; i <= half; i++)
         {
-            projectiles[i].transform.position = new Vector3(pos.position.x, 1f, pos.position.z) + pos.right * (i * 3f);
-            projectiles[i].transform.forward = pos.forward;
+            GameObject go = Managers.Resource.Instantiate(skill.projectile);
+            go.transform.position = new Vector3(pos.position.x, 1f, pos.position.z) + pos.right * (i * 3f);
+            go.transform.forward = pos.forward;
+
+            Projectile projectile = go.GetComponent<Projectile>();
+            projectile.hitVFX = skill.hitVFX;
+            projectile.muzzleVFX = skill.muzzleVFX;
+     
+            projectiles.Add(go);
         }
     }
 
     public override void Execute()
     {
-        base.Execute();
-
-
+        Embodiment(Managers.Game.GetPlayer().transform);
     }
 }

@@ -14,11 +14,10 @@ public class UI_DropSlot : UI_Slot
 
     private void Start()
     {
+        icon = GetComponent<Image>();
         gameObject.BindEvent(OnHighlight, Define.EUiEvent.PointerEnter);
         gameObject.BindEvent(OffHighlight, Define.EUiEvent.PointerExit);
-        gameObject.BindEvent(OnDrop, Define.EUiEvent.Drop);
-        icon = GetComponent<Image>();
-        
+        gameObject.BindEvent(OnDrop, Define.EUiEvent.Drop);              
     }
 
     void OnHighlight(PointerEventData eventData) { icon.color = Color.red; }

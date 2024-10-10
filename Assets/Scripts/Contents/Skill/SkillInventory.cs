@@ -1,36 +1,42 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SkillInventory : MonoBehaviour
 {
-    public Skill[] skills;
-
-    private void Start()
-    {
-        skills = new Skill[3];
-    }
+    public List<Skill> skillInven;
+    public List<Skill> mySkills;
 
     private void Update()
     {
-        if (Input.GetKeyDown(BindKey.SkillSlot_1))
-        {
-            skills[0].Execute(); 
-        }
+        if (Input.GetKeyDown(BindKey.SkillSlot_1))        
+            StartCoroutine(SkillActivation(mySkills[0]));
+        if (Input.GetKeyDown(BindKey.SkillSlot_2))
+            StartCoroutine(SkillActivation(mySkills[1])); 
+        if (Input.GetKeyDown(BindKey.SkillSlot_3))
+            StartCoroutine(SkillActivation(mySkills[2]));
     }
 
-    public void SkillCheck()
+    public void AddSkill(Skill skill) { mySkills.Add(skill); }
+    public void RemoveSkill(Skill skill) { mySkills.Remove(skill); }
+
+    protected IEnumerator SkillActivation(Skill skill)
     {
+        if (skill == null) 
+            yield break;
+        //if (skill.skillData.isActive == false) // ½ºÅ³ ÄðÅ¸ÀÓ
+        //    yield break;
 
+        GameObject skillPrefab = Managers.Resource.Instantiate(skill.gameObject.name);
+        skillPrefab.transform.position = new Vector3(Managers.Game.GetPlayer().transform.position.x, 1f, Managers.Game.GetPlayer().transform.position.z);
+        
+        Skill instanceSkill = skillPrefab.GetComponent<Skill>();
+        instanceSkill.Execute();
+        instanceSkill.skillData.isActive = false;
+        yield return new WaitForSeconds(skill.skillData.coolTime);
+
+        instanceSkill.skillData.isActive = true;
     }
-
-    protected IEnumerator SkillCoolDown(int index)
-    {
-        skills[index].skillData.IsActive = false;
-
-        yield return new WaitForSeconds(skills[index].skillData.CoolTime);
-
-        skills[index].skillData.IsActive = true;
-    }
-
 }

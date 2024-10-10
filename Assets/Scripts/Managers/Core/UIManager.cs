@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.Design.Serialization;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager
 {
@@ -33,6 +34,7 @@ public class UIManager
         Canvas canvas = Util.GetOrAddComponent<Canvas>(go);
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
         canvas.overrideSorting = true;
+
         if (sort)
         {
             canvas.sortingOrder = sortOrder;

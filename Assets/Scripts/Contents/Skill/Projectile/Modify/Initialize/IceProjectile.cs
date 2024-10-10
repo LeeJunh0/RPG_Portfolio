@@ -13,10 +13,5 @@ public class IceProjectile : InitializeMotify
         base.SetProjectile();
     }
 
-    public override void Execute()
-    {
-        base.Execute();
-
-        SetProjectile();
-    }
+    public override void Execute() { SetProjectile(); }
 }

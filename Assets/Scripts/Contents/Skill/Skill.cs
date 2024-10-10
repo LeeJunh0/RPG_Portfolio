@@ -1,3 +1,4 @@
+using Data;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,18 +8,17 @@ public interface ISkill
     void Execute();
 }
 
-public abstract class Skill : ISkill
+public class Skill : MonoBehaviour
 {
-    public SkillData skillData;
+    public SkillInfo skillData;
 
-    public ISkill initialize;
-    public ISkill creating;
-    public ISkill embodiment;
-    public ISkill movement;
+    public InitializeMotify initialize;
+    public EmbodimentMotify embodiment;
+    public MoveMotify movement;
 
     public virtual void Execute() { }
-    public void SetInitialize(ProjectileSkill skill, ISkill motify) { skill.initialize = motify; }
-    public void SetCreating(ProjectileSkill skill, ISkill motify) { skill.creating = motify; }
-    public void SetEmbodiment(ProjectileSkill skill, ISkill motify) { skill.embodiment = motify; }
-    public void SetMovement(ProjectileSkill skill, ISkill motify) { skill.movement = motify; }
+
+    public void SetInitializeMotify(InitializeMotify motify)    { initialize = motify; }
+    public void SetEmbodimentMotify(EmbodimentMotify motify)    { embodiment = motify; }
+    public void SetMovementMotify(MoveMotify motify)            { movement = motify; }
 }
