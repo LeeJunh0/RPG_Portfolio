@@ -293,6 +293,90 @@ MonoBehaviour:
     m_SerializedLabels:
     - Game
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2762221fccdcdbb4e9ba7ca5a284a0a0
+    m_Address: Ice
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b8f702607b9e7464a9cac83ba10e5c47
+    m_Address: Condensed
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7a79a4bd2ee01c046b144b1a4fe83d10
+    m_Address: Deployment
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d30073d696436944aaa7aedb7fca0aff
+    m_Address: Explosion
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f1c120afe6a54064e95c3a61085dcb4a
+    m_Address: Fire
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2a29c20ea7b0d20459d5175b66bfa397
+    m_Address: Horizontal
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9406ed04204231a42b39c8ec22844390
+    m_Address: Inject
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 51ab4dd7eb43254459606fb4c68bdd46
+    m_Address: Normal
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9d2200a6f76dbc444a0d80d8cecbde6d
+    m_Address: Defence
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c378b3233d8effd448c32cd3f2539795
+    m_Address: Slash
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 110e14c2d23805f4cbee7472b57b7cf4
+    m_Address: LockOn
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bc574bbfbe60121489c62859f0f2544e
+    m_Address: Rotation
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7d9eb0c649f48c04c86d50bdd4a7e5e1
+    m_Address: SkillProjectile
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: aa1ab0fee4c16964da851162b90f8a60
+    m_Address: SkillExplosion
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: c8c0863d2f111984fb854a8e225b02ad, type: 2}
   m_SchemaSet:

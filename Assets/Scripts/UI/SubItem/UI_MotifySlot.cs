@@ -7,25 +7,30 @@ using UnityEngine.UI;
 
 public class UI_MotifySlot : UI_Slot
 {
-    MotifyInfo motifyInfo;
-    RectTransform rect;
-    bool isClick = false;
+    public bool         isClick = false;
+    public MotifyInfo   motifyInfo;
+    RectTransform       rect;
+
 
     public override void Init()
-    {
-        base.Init();
-
+    {       
         icon = GetComponent<Image>();
         rect = GetComponent<RectTransform>();
         gameObject.BindEvent(OnClickEvent, Define.EUiEvent.Click);
         gameObject.BindEvent(EnterSlotEvent, Define.EUiEvent.PointerEnter);
         gameObject.BindEvent(ExitSlotEvent, Define.EUiEvent.PointerExit);
-
-        //Texture2D texture = Managers.Resource.Load<Texture2D>(motify.info.icon);
-        //GetImage((int)Images.SlotIcon).sprite = Managers.UI.TextureToSprite(texture);
     }
 
-    public void SetInfo(MotifyInfo info) { motifyInfo = info; }
+    public void SetInfo(MotifyInfo info) 
+    {
+        base.Init();
+
+        motifyInfo = info;
+
+        Texture2D texture = Managers.Resource.Load<Texture2D>(motifyInfo.icon);
+        Image slotIcon = GetImage((int)Images.SlotIcon);
+        slotIcon.sprite = Managers.UI.TextureToSprite(texture);
+    }
 
     void OnClickEvent(PointerEventData eventData)
     {
@@ -35,6 +40,9 @@ public class UI_MotifySlot : UI_Slot
             icon.color = Color.white;
             return;
         }
+
+        UI_MotifyGround parent = transform.parent.GetComponent<UI_MotifyGround>();
+        parent.CheckSlots();
 
         isClick = true;
         icon.color = Color.red;

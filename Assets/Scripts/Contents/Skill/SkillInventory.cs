@@ -9,6 +9,11 @@ public class SkillInventory : MonoBehaviour
     public List<Skill> skillInven;
     public List<Skill> mySkills;
 
+    private void Start()
+    {
+        mySkills.Add(skillInven[0]);    
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(BindKey.SkillSlot_1))        

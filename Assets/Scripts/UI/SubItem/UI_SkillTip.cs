@@ -1,3 +1,5 @@
+using Data;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,8 +15,12 @@ public class UI_SkillTip : MonoBehaviour
     public Text             skillFuction;
     public Text             skillStat;
     public Text             skillDescription;
+    public Text             initMotify;
+    public Text             embodiMotify;
+    public Text             moveMotify;
+
     public static UI_SkillTip Instance => instance;
-    
+
     void Start()
     {
         instance = this;
@@ -22,15 +28,16 @@ public class UI_SkillTip : MonoBehaviour
         parentRect = transform.parent.GetComponent<RectTransform>();
     }
 
-    public void SetToolTip(Skill skill)
+    public void SetToolTip(SkillInfo info)
     {
-        Texture2D texture = Managers.Resource.Load<Texture2D>(skill.skillData.icon);
+        Texture2D texture = Managers.Resource.Load<Texture2D>(info.icon);
         icon.sprite = Managers.UI.TextureToSprite(texture);
 
-        skillName.text = string.Format($"{skill.skillData.name}");
-        skillStat.text = string.Format($"{skill.skillData.mana}");
-        skillFuction.text = string.Format($"{skill.skillData.function}");
-        skillDescription.text = string.Format($"{skill.skillData.description}");
+        skillName.text = string.Format($"{info.name}");
+        skillStat.text = string.Format($"¸¶³ª : {info.mana}");
+        skillFuction.text = string.Format($"{info.function}");
+        skillDescription.text = string.Format($"{info.description}");
     }
+
     public void SetColor(float alpha) { group.alpha = alpha; }
 }

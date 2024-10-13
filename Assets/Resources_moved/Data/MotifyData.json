@@ -1,7 +1,7 @@
 ﻿{
   "motifys": [
     {
-      "id" :  100,
+      "id": 100,
       "skillName": "InitializeMotify",
       "type": 0,
       "mana": 3,
@@ -55,7 +55,7 @@
       "skillName": "HorozontalDeployment",
       "type": 1,
       "mana": 5,
-      "name": "수평 전개",
+      "name": "전개 : 수평",
       "icon": "Horizontal",
       "function": "전개 : 전방 3개",
       "description": "시전자 앞에 3개의 발사체 수평전개 된다."
@@ -65,7 +65,7 @@
       "skillName": "DefenceDeployment",
       "type": 1,
       "mana": 5,
-      "name": "방어 전개",
+      "name": "전개 : 방어",
       "icon": "Defence",
       "function": "전개 : 주변 5개",
       "description": "시전자를 중심으로 5개의 발사체가 감싸듯 전개 된다."
@@ -75,7 +75,7 @@
       "skillName": "CondensedDeployment",
       "type": 1,
       "mana": 6,
-      "name": "응축",
+      "name": "전개 : 응축",
       "icon": "Condensed",
       "function": "전개 : 전방 1개",
       "description": "시전자 앞에 마력을 집중해 만든 강력한 한 발이 전개 된다."
@@ -95,7 +95,7 @@
       "skillName": "CircleMove",
       "type": 2,
       "mana": 8,
-      "name": "회전",
+      "name": "사출 : 회전",
       "icon": "Rotation",
       "function": "사출 : 전방 회전",
       "description": "전개된 발사체가 중심을 기준으로 회전한다."
@@ -105,7 +105,7 @@
       "skillName": "LockonMove",
       "type": 2,
       "mana": 4,
-      "name": "록온",
+      "name": "사출 : 록온",
       "icon": "LockOn",
       "function": "사출 : 전방 딜레이",
       "description": "전개된 발사체가 지점을 향해 미사일처럼 쏘아진다."
@@ -115,7 +115,7 @@
       "skillName": "ExplosionMove",
       "type": 2,
       "mana": 10,
-      "name": "폭발",
+      "name": "사출 : 폭발",
       "icon": "Explosion",
       "function": "사출 : 전방 폭발",
       "description": "전개된 발사체가 폭발하며 전방에 작은 발사체들을 뿌린다."

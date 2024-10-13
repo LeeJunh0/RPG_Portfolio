@@ -31,7 +31,6 @@ public class Define
     {
         Projectile,
         AreaOfEffect,
-
     }
 
     public enum EProjectile
@@ -47,6 +46,12 @@ public class Define
         Fire,
         Ice,
         Slash
+    }
+    public enum EMotifyType
+    {
+        Initialize,
+        Embodiment,
+        Movement
     }
 
     public enum ENpc

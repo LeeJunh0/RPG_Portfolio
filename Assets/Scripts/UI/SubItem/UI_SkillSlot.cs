@@ -1,3 +1,4 @@
+using Data;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,21 +7,31 @@ using UnityEngine.UI;
 
 public class UI_SkillSlot : UI_Slot
 {
-    public Skill skill;
+    public SkillInfo skillInfo;
     RectTransform rect;
 
     public override void Init()
     {
-        base.Init();
-
         rect = GetComponent<RectTransform>();
         gameObject.BindEvent(EnterSlotEvent, Define.EUiEvent.PointerEnter);
         gameObject.BindEvent(ExitSlotEvent, Define.EUiEvent.PointerExit);
     }
 
+    public void SetInfo(SkillInfo info)
+    {
+        base.Init();
+
+        skillInfo = info;
+
+        Texture2D texture = Managers.Resource.Load<Texture2D>(skillInfo.icon);
+        Image slotIcon = GetImage((int)Images.SlotIcon);
+        slotIcon.sprite = Managers.UI.TextureToSprite(texture);
+    }
+
     void EnterSlotEvent(PointerEventData eventData)
     {
         UI_SkillTip.Instance.SetColor(1f);
+        UI_SkillTip.Instance.SetToolTip(skillInfo);
 
         RectTransform tooltipRect = UI_SkillTip.Instance.GetComponent<RectTransform>();
         tooltipRect.pivot = new Vector2(0, 1);

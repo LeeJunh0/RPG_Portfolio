@@ -9,6 +9,7 @@ using UnityEngine;
 using UnityEngine.Localization.SmartFormat.Utilities;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using static Define;
 
 namespace Data
 {
@@ -98,7 +99,7 @@ namespace Data
     #region Item
     public enum ItemType
     {
-        None,
+        None = 0,
         Consumable,
         Attachment
     }
@@ -221,42 +222,35 @@ namespace Data
     #endregion
     #region Motify
 
-    public enum MotifyType
-    {
-        Initialize = 0,
-        Embodiment,
-        Movement
-    }
-
     [Serializable]
     public class MotifyInfo
     {
         public int          id;
         public string       skillName;
-        public MotifyType   type;
+        public EMotifyType  type;
         public int          mana; 
         public string       name;
         public string       icon;
         public string       function;
         public string       description;
 
-        public MotifyInfo(MotifyInfo info)
+        public MotifyInfo(MotifyInfo refinfo)
         {
-            id = info.id;
-            skillName = info.skillName;
-            type = info.type;
-            mana = info.mana;
-            name = info.name;
-            icon = info.icon;
-            function = info.function;
-            description = info.description;
+            id = refinfo.id;
+            skillName = refinfo.skillName;
+            type = refinfo.type;
+            mana = refinfo.mana;
+            name = refinfo.name;
+            icon = refinfo.icon;
+            function = refinfo.function;
+            description = refinfo.description;
         }
     }
 
     [Serializable]
     public class MotifyData : ILoader<int, MotifyInfo>
     {
-        List<MotifyInfo> motifys = new List<MotifyInfo>();
+        public List<MotifyInfo> motifys = new List<MotifyInfo>();
 
         public Dictionary<int, MotifyInfo> MakeDict()
         {

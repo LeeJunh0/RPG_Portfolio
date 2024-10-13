@@ -30,7 +30,7 @@ public class UI_MotifylTip : MonoBehaviour
         motifyIcon.sprite = Managers.UI.TextureToSprite(texture);
 
         motifyName.text =        string.Format($"{motifyInfo.name}");
-        motifyStat.text =        string.Format($"{motifyInfo.mana}");
+        motifyStat.text =        string.Format($"¸¶³ª : {motifyInfo.mana}");
         motifyFuction.text =     string.Format($"{motifyInfo.function}");
         motifyDescription.text = string.Format($"{motifyInfo.description}");        
     }
