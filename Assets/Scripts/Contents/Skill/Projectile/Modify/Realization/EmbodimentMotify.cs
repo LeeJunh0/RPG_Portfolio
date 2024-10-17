@@ -18,6 +18,7 @@ public class EmbodimentMotify : Motify
             projectile.hitVFX = skill.hitVFX;
             projectile.muzzleVFX = skill.muzzleVFX;
 
+            go.transform.SetParent(skill.transform);
             skill.projectiles.Add(go);
         }
     }

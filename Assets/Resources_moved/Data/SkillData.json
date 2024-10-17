@@ -2,25 +2,42 @@
   "skills": [
     {
       "name": "Projectile",
+      "useObject": 1,
+      "type": 0,
       "damage": 2,
       "mana": 1,
+      "speed": 40,
       "coolTime": 1,
       "isActive": true,
-      "type": 0,
       "icon": "SkillProjectile",
       "function": "발동 : 발사체 사출",
       "description": "손에 모은 마력을 앞으로 사출하는 마법이다."
     },
     {
       "name": "Explosion",
+      "useObject": 1,
+      "type": 1,
       "damage": 2,
       "mana": 1,
+      "speed": 40,
       "coolTime": 1,
       "isActive": true,
-      "type": 1,
       "icon": "SkillExplosion",
       "function": "발동 : 지점 폭발",
       "description": "지점에 마력을 응축 후 폭발시키는 마법이다.."
+    },
+    {
+      "name": "Assault",
+      "useObject": 2,
+      "type": 2,
+      "damage": 2,
+      "mana": 0,
+      "speed": 40,
+      "coolTime": 3,
+      "isActive": true,
+      "icon": "",
+      "function": "몬스터 : 돌진",
+      "description": "타겟을 락온하고 돌진한다."
     }
   ]
 }

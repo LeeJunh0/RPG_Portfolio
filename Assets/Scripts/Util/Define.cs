@@ -6,7 +6,7 @@ public class Define
 {
     public enum EWorldObject
     {
-        Unknown,
+        Unknown = 0,
         Player,
         Monster
     }
@@ -31,6 +31,7 @@ public class Define
     {
         Projectile,
         AreaOfEffect,
+        Assault
     }
 
     public enum EProjectile

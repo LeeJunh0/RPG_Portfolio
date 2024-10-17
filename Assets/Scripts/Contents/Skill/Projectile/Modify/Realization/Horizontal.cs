@@ -8,7 +8,6 @@ public class Horizontal : EmbodimentMotify
 
     public override void Embodiment(Transform pos)
     {
-        //int half = skill.count / 2;
         int half = 3 / 2;
         for (int i = -half; i <= half; i++)
         {
@@ -19,7 +18,8 @@ public class Horizontal : EmbodimentMotify
             Projectile projectile = go.GetComponent<Projectile>();
             projectile.hitVFX = skill.hitVFX;
             projectile.muzzleVFX = skill.muzzleVFX;
-     
+
+            go.transform.SetParent(skill.transform);
             projectiles.Add(go);
         }
     }

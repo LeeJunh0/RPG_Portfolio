@@ -11,7 +11,6 @@ public class UI_MotifySlot : UI_Slot
     public MotifyInfo   motifyInfo;
     RectTransform       rect;
 
-
     public override void Init()
     {       
         icon = GetComponent<Image>();
@@ -32,32 +31,27 @@ public class UI_MotifySlot : UI_Slot
         slotIcon.sprite = Managers.UI.TextureToSprite(texture);
     }
 
+    public void SetColor()
+    {
+        icon.color = isClick == true ? Color.red : Color.white;
+    }
+
     void OnClickEvent(PointerEventData eventData)
     {
-        if (isClick == true)
-        {
-            isClick = false;
-            icon.color = Color.white;
-            return;
-        }
-
         UI_MotifyGround parent = transform.parent.GetComponent<UI_MotifyGround>();
-        parent.CheckSlots();
-
-        isClick = true;
-        icon.color = Color.red;
+        parent.CheckSlots(this);
     }
 
     void EnterSlotEvent(PointerEventData eventData)
     {
-        UI_MotifylTip.Instance.SetToolTip(motifyInfo);
-        UI_MotifylTip.Instance.SetColor(1f);
+        UI_MotifyTip.Instance.SetToolTip(motifyInfo);
+        UI_MotifyTip.Instance.SetColor(1f);
 
-        RectTransform tooltipRect = UI_MotifylTip.Instance.GetComponent<RectTransform>();
+        RectTransform tooltipRect = UI_MotifyTip.Instance.GetComponent<RectTransform>();
         tooltipRect.pivot = new Vector2(0, 1);
         tooltipRect.position = rect.position;
 
-        float y = Mathf.Clamp(tooltipRect.anchoredPosition.y, -UI_MotifylTip.Instance.parentRect.position.y + tooltipRect.rect.size.y, UI_MotifylTip.Instance.parentRect.position.y);
+        float y = Mathf.Clamp(tooltipRect.anchoredPosition.y, -UI_MotifyTip.Instance.parentRect.position.y + tooltipRect.rect.size.y, UI_MotifyTip.Instance.parentRect.position.y);
 
         tooltipRect.anchoredPosition = new Vector2(tooltipRect.anchoredPosition.x, y);
 
@@ -66,7 +60,7 @@ public class UI_MotifySlot : UI_Slot
 
     void ExitSlotEvent(PointerEventData eventData)
     {
-        UI_MotifylTip.Instance.SetColor(0f);
+        UI_MotifyTip.Instance.SetColor(0f);
 
         Cursor.visible = true;
     }

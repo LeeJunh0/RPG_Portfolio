@@ -21,7 +21,6 @@ public class MoveMotify : Motify
         }
     }
 
-   
     public override void Execute()  { CoroutineRunner.Instance.StartCoroutine(Movement()); }
     public void StopRun() { CoroutineRunner.Instance.StopCoroutine(Movement()); }
     public override void SetMana()  { skill.skillData.mana += 10; }

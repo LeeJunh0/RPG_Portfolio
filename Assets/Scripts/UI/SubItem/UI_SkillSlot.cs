@@ -1,14 +1,16 @@
 using Data;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+
 public class UI_SkillSlot : UI_Slot
 {
-    public SkillInfo skillInfo;
-    RectTransform rect;
+    SkillInfo       skillInfo;
+    RectTransform   rect;
 
     public override void Init()
     {

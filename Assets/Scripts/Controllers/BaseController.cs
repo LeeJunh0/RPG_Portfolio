@@ -14,7 +14,7 @@ public abstract class BaseController : MonoBehaviour
     protected Vector3           DestPos;
 
     protected MeshRenderer      meshRenderer = null;
-
+    public Define.EWorldObject  WorldObjectType { get; protected set; } = Define.EWorldObject.Unknown;
     public virtual Define.EState EState
     {
         get { return curState; }
@@ -40,7 +40,7 @@ public abstract class BaseController : MonoBehaviour
         }
     }
 
-    public Define.EWorldObject WorldObjectType { get; protected set; } = Define.EWorldObject.Unknown;
+    
     public abstract void Init();
 
     private void Start()

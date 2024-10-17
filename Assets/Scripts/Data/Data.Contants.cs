@@ -181,24 +181,28 @@ namespace Data
     [Serializable]
     public class SkillInfo
     {
-        public string name;
-        public float damage;
-        public float mana;
-        public float coolTime;
-        public bool isActive = true;
-        public Define.ESkill type;
-        public string icon;
-        public string function;
-        public string description;
+        public string        name;
+        public EWorldObject  useObject; 
+        public ESkill        type;
+        public float         damage;
+        public float         mana;
+        public float         speed;
+        public float         coolTime;
+        public bool          isActive = true;     
+        public string        icon;
+        public string        function;
+        public string        description;
 
         public SkillInfo(SkillInfo refInfo)
         {
             name = refInfo.name;
+            useObject = refInfo.useObject; 
+            type = refInfo.type;
             damage = refInfo.damage;
             mana = refInfo.mana;
+            speed = refInfo.speed;
             coolTime = refInfo.coolTime;
-            isActive = refInfo.isActive;
-            type = refInfo.type;
+            isActive = refInfo.isActive;    
             icon = refInfo.icon;
             function = refInfo.function;
             description = refInfo.description;

@@ -113,6 +113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad7a1a4b82fbf4445b84151cc9b31b0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slots: []
 --- !u!1 &488418339004747587
 GameObject:
   m_ObjectHideFlags: 0
@@ -380,6 +381,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad7a1a4b82fbf4445b84151cc9b31b0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slots: []
 --- !u!1 &1883472408294168466
 GameObject:
   m_ObjectHideFlags: 0
@@ -559,6 +561,33 @@ MonoBehaviour:
     icon: 
     function: 
     description: 
+  initInfo:
+    id: 0
+    skillName: 
+    type: 0
+    mana: 0
+    name: 
+    icon: 
+    function: 
+    description: 
+  EmbodiInfo:
+    id: 0
+    skillName: 
+    type: 0
+    mana: 0
+    name: 
+    icon: 
+    function: 
+    description: 
+  moveInfo:
+    id: 0
+    skillName: 
+    type: 0
+    mana: 0
+    name: 
+    icon: 
+    function: 
+    description: 
 --- !u!1 &2254688834271403332
 GameObject:
   m_ObjectHideFlags: 0
@@ -617,7 +646,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.40899786, g: 0.4506988, b: 0.9528302, a: 1}
+  m_Color: {r: 0.9529412, g: 0.65040195, b: 0.4078431, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -637,7 +666,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uB9C8\uB098 : +5"
+  m_Text: '?'
 --- !u!1 &2471005227026375279
 GameObject:
   m_ObjectHideFlags: 0
@@ -751,6 +780,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad7a1a4b82fbf4445b84151cc9b31b0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slots: []
 --- !u!1 &2718615487891425328
 GameObject:
   m_ObjectHideFlags: 0
@@ -1879,10 +1909,10 @@ RectTransform:
   - {fileID: 2993719289389271728}
   - {fileID: 6331327898822937833}
   - {fileID: 2346691480546816825}
+  - {fileID: 2638683701636117437}
   - {fileID: 5335523346672796641}
   - {fileID: 2458469619039519724}
   - {fileID: 1003479189788101828}
-  - {fileID: 2638683701636117437}
   m_Father: {fileID: 6304485316924661907}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1936,7 +1966,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6709475898532707410}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -1959,9 +1989,9 @@ MonoBehaviour:
   skillFuction: {fileID: 439783252502774631}
   skillStat: {fileID: 545061668939820291}
   skillDescription: {fileID: 3193445976184035294}
-  initMotify: {fileID: 0}
-  embodiMotify: {fileID: 0}
-  moveMotify: {fileID: 0}
+  initMotify: {fileID: 6397854862754831530}
+  embodiMotify: {fileID: 2027353944627790944}
+  moveMotify: {fileID: 6427054495421234380}
 --- !u!1 &7623424718038932975
 GameObject:
   m_ObjectHideFlags: 0
@@ -2247,7 +2277,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.40899786, g: 0.4506988, b: 0.9528302, a: 1}
+  m_Color: {r: 0.9529412, g: 0.43135372, b: 0.4078431, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2267,7 +2297,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uB9C8\uB098 : +5"
+  m_Text: '?'
 --- !u!1 &8270236062958613653
 GameObject:
   m_ObjectHideFlags: 0
@@ -2401,7 +2431,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.40899786, g: 0.4506988, b: 0.9528302, a: 1}
+  m_Color: {r: 0.9310082, g: 0.9529412, b: 0.4078431, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2421,7 +2451,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uB9C8\uB098 : +5"
+  m_Text: '?'
 --- !u!1 &9083625463515910626
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,27 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.Intrinsics;
 using UnityEngine;
 
 public class CircleMove : MoveMotify
 {
     float angle;
-    float radius = 2f;
+    float radius = 1.5f;
 
     public CircleMove(ProjectileSkill refSkill) : base(refSkill) { }
 
     public override IEnumerator Movement()
     {
-        yield return new WaitForFixedUpdate();
-        angle += speed * Time.deltaTime;
+        speed = 300f;
 
-        for (int i = 0; i < projectiles.Count; i++)
+        while (true) 
         {
-            float radian = Mathf.Deg2Rad * (angle + (i * (360 / projectiles.Count)));
-            float x = Mathf.Cos(Mathf.Deg2Rad * angle) * radius;
-            float z = Mathf.Sin(Mathf.Deg2Rad * angle) * radius;
+            yield return new WaitForFixedUpdate();
+            angle += speed * Time.deltaTime;
 
-            projectiles[i].transform.position = new Vector3(x, 1f, z);
-        }
+            for (int i = 0; i < projectiles.Count; i++)
+            {
+                float radian = Mathf.Deg2Rad * (angle + (360 / projectiles.Count) * i);
+                float x = Mathf.Cos(radian) * radius;
+                float z = Mathf.Sin(radian) * radius;
+
+                if(projectiles[i] != null)
+                    projectiles[i].transform.position = new Vector3(skill.transform.position.x + x, 1f, skill.transform.position.z + z);
+            }
+        }    
     }
 
     public override void Execute()
