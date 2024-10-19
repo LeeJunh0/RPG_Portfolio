@@ -31,8 +31,8 @@ public class ProjectileSkill : Skill
     public override void Execute()
     {
         if (initialize == null) { initialize = new InitializeMotify(this); }
-        if (embodiment == null) { embodiment = new Horizontal(this); }
-        if (movement == null) { movement = new CircleMove(this); }
+        if (embodiment == null) { embodiment = new EmbodimentMotify(this); }
+        if (movement == null) { movement = new MoveMotify(this); }
 
         this.initialize.Execute();
         this.embodiment.Execute();

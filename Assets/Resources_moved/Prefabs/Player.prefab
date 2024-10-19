@@ -4375,8 +4375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af44a0d4a3880df4ca75df3a74bca6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillInven:
-  - {fileID: 4544059204420556979, guid: fe9250190de697c41a07ac6113b0ed83, type: 3}
+  skillInven: []
   mySkills: []
 --- !u!1 &1664697504238427684
 GameObject:

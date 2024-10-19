@@ -15,7 +15,8 @@ public class Projectile : MonoBehaviour
         if (muzzleVFX == null) return;
 
         GameObject muzzlePrefab = Managers.Resource.Instantiate(muzzleVFX);
-        muzzlePrefab.transform.position = Managers.Game.GetPlayer().transform.position;
+        Transform pos = Managers.Game.GetPlayer().transform;
+        muzzlePrefab.transform.position = new Vector3(pos.position.x, 1f, pos.position.z) + pos.forward;
 
         var particle = muzzlePrefab.GetComponent<ParticleSystem>();
         if (particle == null)

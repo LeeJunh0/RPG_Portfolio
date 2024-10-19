@@ -12,7 +12,7 @@ public class SkillInventory : MonoBehaviour
 
     private void Start()
     {
-        mySkills.Add(skillInven[0]);    
+        InitSkills(); 
     }
     
     private void Update()
@@ -25,14 +25,21 @@ public class SkillInventory : MonoBehaviour
             StartCoroutine(SkillActivation(mySkills[2]));
     }
 
-    public void SetSkill()
+    public void InitSkills()
     {
         BaseController owner = GetComponent<BaseController>();
+        Stat ownerStat = owner.GetComponent<Stat>();
 
-        foreach(SkillInfo skill in Managers.Data.SkillDict.Values)
+        foreach (SkillInfo skillinfo in Managers.Data.SkillDict.Values)
         {
-            //if (skill.useObject == owner.WorldObjectType)
-            //    skillInven.Add();
+            if (skillinfo.useObject == owner.WorldObjectType)
+            {
+                Skill skill = Managers.Resource.Load<GameObject>(skillinfo.name).GetComponent<Skill>();
+                skillInven.Add(skill);
+
+                if (ownerStat.Level >= skillinfo.level)
+                    AddSkill(skill);
+            }
         }
     }
 

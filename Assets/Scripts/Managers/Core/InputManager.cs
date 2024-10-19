@@ -16,9 +16,6 @@ public class InputManager
         if (KeyAction != null && Input.anyKey)       
             KeyAction.Invoke();
 
-        if (Input.GetKeyDown(KeyCode.Space))
-            Managers.Inventory.AddItem(new Data.Iteminfo(Managers.Data.ItemDict[UnityEngine.Random.RandomRange(102, 107)]));
-
         if (MouseAction != null)
         {
             if(Input.GetMouseButton(0) || Input.GetMouseButton(1))

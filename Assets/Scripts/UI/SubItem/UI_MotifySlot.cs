@@ -1,4 +1,5 @@
 using Data;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ using UnityEngine.UI;
 public class UI_MotifySlot : UI_Slot
 {
     public bool         isClick = false;
+    public Motify       motify;
     public MotifyInfo   motifyInfo;
     RectTransform       rect;
 
@@ -40,6 +42,8 @@ public class UI_MotifySlot : UI_Slot
     {
         UI_MotifyGround parent = transform.parent.GetComponent<UI_MotifyGround>();
         parent.CheckSlots(this);
+
+        Managers.Skill.SetMotify(motifyInfo.name);
     }
 
     void EnterSlotEvent(PointerEventData eventData)

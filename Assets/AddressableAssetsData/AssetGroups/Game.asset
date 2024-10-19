@@ -282,7 +282,7 @@ MonoBehaviour:
     - Game
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fe9250190de697c41a07ac6113b0ed83
-    m_Address: ProjectileSkill
+    m_Address: Projectile
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game

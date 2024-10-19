@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Horizontal : EmbodimentMotify
+public class HorizontalDeployment : EmbodimentMotify
 {
-    public Horizontal(ProjectileSkill refSkill) : base(refSkill) { }
+    public HorizontalDeployment(ProjectileSkill refSkill) : base(refSkill) { }
 
     public override void Embodiment(Transform pos)
     {

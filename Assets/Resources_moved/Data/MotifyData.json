@@ -52,7 +52,7 @@
     },
     {
       "id": 151,
-      "skillName": "HorozontalDeployment",
+      "skillName": "HorizontalDeployment",
       "type": 1,
       "mana": 5,
       "name": "전개 : 수평",

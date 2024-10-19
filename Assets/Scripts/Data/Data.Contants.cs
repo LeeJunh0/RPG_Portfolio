@@ -184,6 +184,7 @@ namespace Data
         public string        name;
         public EWorldObject  useObject; 
         public ESkill        type;
+        public int           level;
         public float         damage;
         public float         mana;
         public float         speed;
