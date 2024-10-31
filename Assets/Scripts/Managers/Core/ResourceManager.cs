@@ -50,7 +50,9 @@ public class ResourceManager : MonoBehaviour
         if (prefab.GetComponent<Poolable>() != null)
             return Managers.Pool.Pop(prefab, parent).gameObject;
 
-        GameObject go = Object.Instantiate(prefab, parent);
+        GameObject go = Object.Instantiate(prefab);
+        go.transform.SetParent(parent);
+
         go.name = prefab.name;
 
         return go;
@@ -84,6 +86,22 @@ public class ResourceManager : MonoBehaviour
         }
 
         Object.Destroy(Go, sec);
+    }
+
+    public void AddComponentByName(string name, GameObject go)
+    {
+        if (go == null)
+        {
+            Debug.Log($"GameObject is NullReferenceException");
+            return;
+        }
+
+        Type type = Type.GetType(name);
+
+        if (type != null && type.IsSubclassOf(typeof(MonoBehaviour)) == true)
+            go.AddComponent(type);
+        else
+            Debug.Log($"존재 하지않는 클래스 이거나 MonoBehaviour를 상속받지 않는 클래스입니다.");
     }
 
     #region Addressable

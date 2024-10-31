@@ -22,7 +22,7 @@ public class CoroutineRunner : MonoBehaviour
     }
 
     public Coroutine RunCoroutine(IEnumerator coroutine) { return StartCoroutine(coroutine); }
-    public void StopRunCoroutine(IEnumerator coroutine)
+    public void StopRunCoroutine(IEnumerator coroutine, string name)
     {
         if (coroutine == null)
         {
@@ -30,6 +30,7 @@ public class CoroutineRunner : MonoBehaviour
             return;
         }
 
+        Debug.Log($"{name} : 코루틴 종료");
         StopCoroutine(coroutine);
     }
 }

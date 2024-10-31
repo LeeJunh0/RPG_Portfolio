@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,23 +14,30 @@ public class SkillManager
     {
         switch (name)
         {
-            case "IceProjectile":
-                return new IceProjectile(playerInventory.mySkills[0] as ProjectileSkill);
-            case "SlashProjectile":
-                return new SlashProjectile(playerInventory.mySkills[0] as ProjectileSkill);
-            case "FireProjectile":
-                return new FireProjectile(playerInventory.mySkills[0] as ProjectileSkill);
+            case "IceElemental":
+                return new IceElemental();
+            case "WindElemental": 
+                return new WindElemental();
+            case "FireElemental":
+                return new FireElemental();
             case "EmbodimentMotify":
-                return new EmbodimentMotify(playerInventory.mySkills[0] as ProjectileSkill);
+                return new EmbodimentMotify();
             case "HorizontalDeployment":
-                return new HorizontalDeployment(playerInventory.mySkills[0] as ProjectileSkill);
+                return new HorizontalDeployment();
             case "DefenceDeployment":
                 break;
             case "MoveMotify":
-                return new MoveMotify(playerInventory.mySkills[0] as ProjectileSkill);
+                return new MoveMotify();
             case "CircleMove":
-                return new CircleMove(playerInventory.mySkills[0] as ProjectileSkill);
+                return new CircleMove();
         }
+
         return null;
+    }
+
+    public GameObject SetIndicator(Define.EIndicator type)
+    {
+        string typeName = Enum.GetName(typeof(Define.EIndicator), type);
+        return Managers.Resource.Instantiate(typeName);
     }
 }

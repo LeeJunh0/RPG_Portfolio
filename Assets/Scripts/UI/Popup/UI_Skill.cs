@@ -38,7 +38,7 @@ public class UI_Skill : UIPopup
         switch (SkillType)
         {
             case Define.ESkill.Projectile:
-                slot.SetInfo(Managers.Data.SkillDict["Projectile"]);
+                slot.SetInfo(Managers.Data.SkillDict["ProjectileSkill"]);
                 break;
             case Define.ESkill.AreaOfEffect:
                 slot.SetInfo(Managers.Data.SkillDict["Explosion"]);

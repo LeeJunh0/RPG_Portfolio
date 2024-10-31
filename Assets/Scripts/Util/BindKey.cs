@@ -9,9 +9,9 @@ public static class BindKey
     public static KeyCode Quest { get; private set; }
     public static KeyCode Skill { get; private set; }
     public static KeyCode Pause { get; private set; }
-    public static KeyCode SkillSlot_1 { get; private set; }
-    public static KeyCode SkillSlot_2 { get; private set; }
-    public static KeyCode SkillSlot_3 { get; private set; }
+    public static KeyCode SkillSlot_1 { get; set; }
+    public static KeyCode SkillSlot_2 { get; set; }
+    public static KeyCode SkillSlot_3 { get; set; }
     public static void Init()
     {
         Inventory = KeyCode.Tab;

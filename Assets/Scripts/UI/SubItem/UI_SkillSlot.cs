@@ -9,11 +9,13 @@ using UnityEngine.UI;
 
 public class UI_SkillSlot : UI_Slot
 {
-    SkillInfo       skillInfo;
+    public static UI_SkillSlot instance;
+    public SkillInfo skillInfo;
     RectTransform   rect;
 
     public override void Init()
     {
+        instance = this;
         rect = GetComponent<RectTransform>();
         gameObject.BindEvent(EnterSlotEvent, Define.EUiEvent.PointerEnter);
         gameObject.BindEvent(ExitSlotEvent, Define.EUiEvent.PointerExit);

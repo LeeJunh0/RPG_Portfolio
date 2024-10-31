@@ -3,6 +3,7 @@
     {
       "id": 100,
       "skillName": "InitializeMotify",
+      "owner": 0,
       "type": 0,
       "mana": 3,
       "name": "속성 : 없음",
@@ -12,7 +13,8 @@
     },
     {
       "id": 101,
-      "skillName": "IceProjectile",
+      "skillName": "IceElemental",
+      "owner": 0,
       "type": 0,
       "mana": 3,
       "name": "속성 : 얼음",
@@ -22,7 +24,8 @@
     },
     {
       "id": 102,
-      "skillName": "FireProjectile",
+      "skillName": "FireElemental",
+      "owner": 0,
       "type": 0,
       "mana": 3,
       "name": "속성 : 화염",
@@ -32,17 +35,19 @@
     },
     {
       "id": 103,
-      "skillName": "SlashProjectile",
+      "skillName": "WindElemental",
+      "owner": 0,
       "type": 0,
       "mana": 3,
-      "name": "참격",
-      "icon": "Slash",
-      "function": "속성변경 : 물리",
-      "description": "마치 칼날처럼 마력을 날카롭게 만든다."
+      "name": "속성 : 바람",
+      "icon": "Wind",
+      "function": "속성변경 : 바람",
+      "description": "마력을 칼날처럼 마력을 날카롭게 만든다."
     },
     {
       "id": 150,
       "skillName": "EmbodimentMotify",
+      "owner": 0,
       "type": 1,
       "mana": 3,
       "name": "전개",
@@ -53,6 +58,7 @@
     {
       "id": 151,
       "skillName": "HorizontalDeployment",
+      "owner": 0,
       "type": 1,
       "mana": 5,
       "name": "전개 : 수평",
@@ -63,6 +69,7 @@
     {
       "id": 152,
       "skillName": "DefenceDeployment",
+      "owner": 0,
       "type": 1,
       "mana": 5,
       "name": "전개 : 방어",
@@ -73,6 +80,7 @@
     {
       "id": 153,
       "skillName": "CondensedDeployment",
+      "owner": 0,
       "type": 1,
       "mana": 6,
       "name": "전개 : 응축",
@@ -83,6 +91,7 @@
     {
       "id": 200,
       "skillName": "MoveMotify",
+      "owner": 0,
       "type": 2,
       "mana": 3,
       "name": "사출",
@@ -93,6 +102,7 @@
     {
       "id": 201,
       "skillName": "CircleMove",
+      "owner": 0,
       "type": 2,
       "mana": 8,
       "name": "사출 : 회전",
@@ -103,6 +113,7 @@
     {
       "id": 202,
       "skillName": "LockonMove",
+      "owner": 0,
       "type": 2,
       "mana": 4,
       "name": "사출 : 록온",
@@ -113,6 +124,7 @@
     {
       "id": 203,
       "skillName": "ExplosionMove",
+      "owner": 0,
       "type": 2,
       "mana": 10,
       "name": "사출 : 폭발",

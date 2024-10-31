@@ -210,7 +210,7 @@ MonoBehaviour:
     - Game
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 00a4ddc61a2102c42a81034f7dbd8402
-    m_Address: SlashProjectile
+    m_Address: WindProjectile
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
@@ -282,7 +282,7 @@ MonoBehaviour:
     - Game
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fe9250190de697c41a07ac6113b0ed83
-    m_Address: Projectile
+    m_Address: ProjectileSkill
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
@@ -348,7 +348,7 @@ MonoBehaviour:
     - Game
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c378b3233d8effd448c32cd3f2539795
-    m_Address: Slash
+    m_Address: Wind
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
@@ -373,6 +373,48 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: aa1ab0fee4c16964da851162b90f8a60
     m_Address: SkillExplosion
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ed012faeeab108a4b95c3665e172378c
+    m_Address: CircleIndicator
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: aed84c40eacf3df438b76fd7b9208a38
+    m_Address: ArrowIndicator
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a7b8748a03a84e941b395fa8b3d7926a
+    m_Address: RangeIndicator
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ce8df96950d6f244293f6dd1d4bc55bd
+    m_Address: IceArea
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b58f372b92ac5404d9629c6cf473a908
+    m_Address: FireArea
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d6d17e8501fcb474386fd3b792dc2a62
+    m_Address: NormalArea
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 438c9625dbca4b44c9ac1539df655f5a
+    m_Address: WindArea
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game

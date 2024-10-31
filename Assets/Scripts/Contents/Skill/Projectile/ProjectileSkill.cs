@@ -11,39 +11,45 @@ using static Define;
 
 public class ProjectileSkill : Skill
 {
-    public List<GameObject> projectiles;
-    public GameObject       projectile;
     public GameObject       hitVFX;
     public GameObject       muzzleVFX;
-    public int              count;
+    public int              count = 1;
 
     Rigidbody rigid;
     
-    private void Start()
-    { 
-        projectiles = new List<GameObject>();
-        rigid = GetComponent<Rigidbody>();
-        skillData = new SkillInfo(Managers.Data.SkillDict["Projectile"]);
-
-        rigid.AddForce(transform.forward * 20f, ForceMode.Impulse);
+    private void Awake()
+    {       
+        rigid = Util.GetOrAddComponent<Rigidbody>(gameObject);
+        skillData = new SkillInfo(Managers.Data.SkillDict["ProjectileSkill"]);        
     }
 
     public override void Execute()
     {
-        if (initialize == null) { initialize = new InitializeMotify(this); }
-        if (embodiment == null) { embodiment = new EmbodimentMotify(this); }
-        if (movement == null) { movement = new MoveMotify(this); }
+        base.Execute();
 
-        this.initialize.Execute();
-        this.embodiment.Execute();
-        this.movement.Execute(); 
-        StartCoroutine(DestroySkill());
+        DefaultShoot();
+
+        if (initialize == null) { initialize = new InitializeMotify(); }
+        if (embodiment == null) { embodiment = new EmbodimentMotify(); }
+        if (movement == null)   { movement = new MoveMotify(); }
+
+        initialize.Execute(this);
+        embodiment.Execute(this);
+        movement.Execute(this);
     }
 
-    IEnumerator DestroySkill()
+    private void DefaultShoot()
     {
-        yield return new WaitForSeconds(2f);
-        movement?.StopRun();
-        Destroy(this.gameObject);
+        transform.position = new Vector3(Managers.Game.GetPlayer().transform.position.x, 1f, Managers.Game.GetPlayer().transform.position.z);       
+        transform.forward = GetDirection();
+        rigid.AddForce(transform.forward * 20f, ForceMode.Impulse);
+    }
+
+    public Vector3 GetDirection() 
+    {
+        Vector3 direction = (targetPos - Managers.Game.GetPlayer().transform.position).normalized;
+        direction.y = 0f;
+
+        return direction;
     }
 }

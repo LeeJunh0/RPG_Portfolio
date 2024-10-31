@@ -9,7 +9,6 @@ using UnityEngine.UI;
 public class UI_MotifySlot : UI_Slot
 {
     public bool         isClick = false;
-    public Motify       motify;
     public MotifyInfo   motifyInfo;
     RectTransform       rect;
 
@@ -37,13 +36,14 @@ public class UI_MotifySlot : UI_Slot
     {
         icon.color = isClick == true ? Color.red : Color.white;
     }
-
+    
     void OnClickEvent(PointerEventData eventData)
     {
         UI_MotifyGround parent = transform.parent.GetComponent<UI_MotifyGround>();
         parent.CheckSlots(this);
 
-        Managers.Skill.SetMotify(motifyInfo.name);
+        Motify motify = Managers.Skill.SetMotify(motifyInfo.skillName);
+        Managers.Skill.playerInventory.AddMotify(motifyInfo);
     }
 
     void EnterSlotEvent(PointerEventData eventData)
@@ -66,6 +66,11 @@ public class UI_MotifySlot : UI_Slot
     {
         UI_MotifyTip.Instance.SetColor(0f);
 
+        Cursor.visible = true;
+    }
+
+    private void OnDestroy()
+    {
         Cursor.visible = true;
     }
 }

@@ -27,27 +27,28 @@ public class Define
         NPC = 9
     }
 
+    public enum EIndicator
+    {
+        RangeIndicator = 0,
+        CircleIndicator,
+        ArrowIndicator,
+    }
+
     public enum ESkill
     {
-        Projectile,
+        Projectile = 0,
         AreaOfEffect,
         Assault
     }
 
-    public enum EProjectile
-    {
-        None,
-        Horizontal,
-        Spin
-    }
-
-    public enum EProjectile_Elemental
+    public enum ESkill_Elemental
     {
         None,
         Fire,
         Ice,
-        Slash
+        Wind
     }
+
     public enum EMotifyType
     {
         Initialize,
