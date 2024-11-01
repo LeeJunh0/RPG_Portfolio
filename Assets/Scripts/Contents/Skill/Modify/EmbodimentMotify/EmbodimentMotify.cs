@@ -26,7 +26,7 @@ public class EmbodimentMotify : Motify
         {
             ExplosionSkill explosionSkill = skill as ExplosionSkill;
             GameObject go = Managers.Resource.Instantiate(explosionSkill.prefab);
-            go.transform.position = pos.position;
+            go.transform.position = skill.targetPos;
 
             go.transform.SetParent(skill.transform);
             objects.Add(go);
