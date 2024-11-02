@@ -94,6 +94,7 @@ public class PlayerStat : Stat
     protected override void OnDead(Stat attacker)
     {
         Debug.Log("Player Dead!");
+        StopCoroutine(Regenerate());
     }
 
     public int GetTotalExp() { return totalExp; }

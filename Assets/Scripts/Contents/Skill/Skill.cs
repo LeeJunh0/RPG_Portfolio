@@ -25,6 +25,14 @@ public class Skill : MonoBehaviour
     {
         SetMotifies();
         StartCoroutine(DestroySkill());
+
+        if (initialize == null) { initialize = new InitializeMotify(); }
+        if (embodiment == null) { embodiment = new EmbodimentMotify(); }
+        if (movement == null) { movement = new MoveMotify(); }
+
+        initialize.Execute(this);
+        embodiment.Execute(this);
+        movement.Execute(this);
     }
 
     public void SetMotifies()
@@ -51,8 +59,20 @@ public class Skill : MonoBehaviour
         Destroy(this.gameObject);
     }
 
+    protected virtual IEnumerator OnDamaged()
+    {
+        int layer = 1 << (int)Define.ELayer.Monster;
+
+        yield return new WaitForSeconds(0.5f);
+
+        Collider[] monsters = Physics.OverlapSphere(targetPos, skillData.radius / 2, layer);
+        for(int i = 0; i < monsters.Length; i++)
+            Debug.Log($"ÀÌ¸§ : {monsters[i]}");
+    }
+
     private void OnDestroy()
     {
         movement.StopRun();
+        StopCoroutine(OnDamaged());
     }
 }

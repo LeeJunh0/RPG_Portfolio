@@ -32,7 +32,6 @@ public class CircleIndicator : Indicator
         }
 
         transform.position = new Vector3(inputPos.x, transform.position.y, inputPos.z);
-        Debug.Log(transform.position);
     }
 
     private void OnDestroy()

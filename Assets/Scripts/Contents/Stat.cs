@@ -54,6 +54,10 @@ public class Stat : MonoBehaviour
     {
         int damage = Mathf.Max(0, attacker.Attack - Defense);
         Hp -= damage;
+        GameObject text = Managers.Resource.Instantiate("DamageText");
+        text.GetComponent<UI_DamageText>().SetDamage(damage);
+        text.transform.position = new Vector3(transform.position.x,text.transform.position.y,transform.position.z);
+
         if(Hp <= 0)
         {
             Hp = 0;

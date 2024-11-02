@@ -49148,6 +49148,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7717300150882805929}
   - component: {fileID: 746830103653789152}
+  - component: {fileID: 1347501527486447904}
   m_Layer: 0
   m_Name: WindArea
   m_TagString: Untagged
@@ -49186,6 +49187,18 @@ MonoBehaviour:
   _particleSystem: {fileID: 0}
   _lifeTime: 0
   _destroyDelay: 1
+--- !u!114 &1347501527486447904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7717300150882805934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce002fdddbdb81c4288d165955959b5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7717300150989641360
 GameObject:
   m_ObjectHideFlags: 0

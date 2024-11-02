@@ -18,13 +18,13 @@ public class SkillInventory : MonoBehaviour
         skillMotifies = new Dictionary<SkillInfo, List<MotifyInfo>>();
         InitSkills();
     }
-    
+
     private void Update()
     {
-        if (Input.GetKeyDown(BindKey.SkillSlot_1))        
+        if (Input.GetKeyDown(BindKey.SkillSlot_1))
             StartCoroutine(SkillActivation(mySkills[0]));
         if (Input.GetKeyDown(BindKey.SkillSlot_2))
-            StartCoroutine(SkillActivation(mySkills[1])); 
+            StartCoroutine(SkillActivation(mySkills[1]));
     }
 
     public void InitSkills()
@@ -47,25 +47,22 @@ public class SkillInventory : MonoBehaviour
         }
     }
 
-    public void AddSkill(SkillInfo skillinfo) { mySkills.Add(skillinfo); }
-    public void RemoveSkill(SkillInfo skillinfo) { mySkills.Remove(skillinfo); }
+    public void AddSkill(SkillInfo skillInfo) { mySkills.Add(skillInfo); }
+    public void RemoveSkill(SkillInfo skillInfo) { mySkills.Remove(skillInfo); }
 
     public void AddMotify(MotifyInfo info)
     {
-        // infoø° ∏¬¥¬ ≈∏¿‘¿« Ω∫≈≥¿Ã ¿÷¥¬¡ˆ
         SkillInfo skill = skillMotifies.FirstOrDefault(x => x.Key.type == info.owner).Key;
 
-        if (skill == null)  
-            return; 
-        
-        // ¿Ã∏ß¿∏∑Œ ¡ﬂ∫π»Æ¿Œ
+        if (skill == null)
+            return;
+
         if (skillMotifies[skill].Any(motify => motify.skillName == info.skillName) == true)
         {
-            Debug.Log("¡ﬂ∫πµ» Ω∫≈≥¿∫ ¿˚øÎµ«¡ˆ æ Ω¿¥œ¥Ÿ..");
+            Debug.Log("Ï§ëÎ≥µÎêú Ïä§ÌÇ¨ ÏûÖÎãàÎã§.");
             return;
         }
 
-        // «ˆ¿Á ≥÷æÓ≥ı¿∫ motify¡ﬂ infoøÕ ∞∞¿∫ ≈∏¿‘¿Ã ¿÷¥¬¡ˆ »Æ¿Œ «œ∞Ì ¿÷¥¯∞≈ ªË¡¶ »ƒ ªı∑Œ ª¿‘ 
         MotifyInfo removeValue = skillMotifies[skill].FirstOrDefault(x => x.type == info.type);
         if (removeValue != null)
             RemoveMotify(skill, removeValue);
@@ -73,33 +70,40 @@ public class SkillInventory : MonoBehaviour
         skillMotifies[skill].Add(info);
     }
 
-    public void RemoveMotify(SkillInfo skill, MotifyInfo info) { skillMotifies[skill].Remove(info); }
-    private bool CoolTimeCheck(SkillInfo skill) { return skill.isActive; }
+    public void RemoveMotify(SkillInfo skill, MotifyInfo info)
+    {
+        skillMotifies[skill].Remove(info);
+    }
+
+    private bool CoolTimeCheck(SkillInfo skill)
+    {
+        return skill.isActive;
+    }
 
     private IEnumerator SetIndicator(SkillInfo skill)
     {
-        GameObject prefab = Managers.Skill.SetIndicator(skill.indicator);        
+        GameObject prefab = Managers.Skill.SetIndicator(skill.indicator);
         Indicator indicator = prefab.GetComponent<Indicator>();
         indicator.SetInfo(skill.indicator, skill.length, skill.radius);
 
-        if(skill.indicator == EIndicator.CircleIndicator)
+        if (skill.indicator == EIndicator.CircleIndicator)
         {
             GameObject range = Managers.Skill.SetIndicator(EIndicator.RangeIndicator);
             CircleIndicator circle = indicator.GetComponent<CircleIndicator>();
             circle.SetRange(range);
         }
 
-        while(Input.GetKey(BindKey.SkillSlot_1) || Input.GetKey(BindKey.SkillSlot_2))
+        while (Input.GetKey(BindKey.SkillSlot_1) || Input.GetKey(BindKey.SkillSlot_2))
         {
             Vector3 mousePos = Input.mousePosition;
-            mousePos.z = Camera.main.WorldToScreenPoint(indicator.transform.position).z; // «ˆ¿Á ø¿∫Í¡ß∆Æ¿« ±Ì¿Ãø° ∏¬√„
+            mousePos.z = Camera.main.WorldToScreenPoint(indicator.transform.position).z; 
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
 
             indicator.UpdatePosition(worldPos);
 
             yield return null;
         }
-        
+
         PlyaerSkillExecute(skill, indicator.transform.position);
         Managers.Resource.Destroy(indicator.gameObject);
     }
@@ -129,7 +133,7 @@ public class SkillInventory : MonoBehaviour
             default:
                 break;
         }
-        
+
         skill.isActive = false;
         yield return new WaitForSeconds(skill.coolTime);
         skill.isActive = true;

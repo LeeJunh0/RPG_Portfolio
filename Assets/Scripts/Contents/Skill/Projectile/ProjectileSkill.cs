@@ -25,17 +25,8 @@ public class ProjectileSkill : Skill
 
     public override void Execute()
     {
-        base.Execute();
-
         DefaultShoot();
-
-        if (initialize == null) { initialize = new InitializeMotify(); }
-        if (embodiment == null) { embodiment = new EmbodimentMotify(); }
-        if (movement == null)   { movement = new MoveMotify(); }
-
-        initialize.Execute(this);
-        embodiment.Execute(this);
-        movement.Execute(this);
+        base.Execute();
     }
 
     private void DefaultShoot()

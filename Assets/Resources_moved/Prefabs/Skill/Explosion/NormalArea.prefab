@@ -4938,6 +4938,7 @@ GameObject:
   - component: {fileID: 1428319942470067038}
   - component: {fileID: 1428319942470067036}
   - component: {fileID: 1428319942470067037}
+  - component: {fileID: 6201295213704345578}
   m_Layer: 0
   m_Name: 'Ring_01 '
   m_TagString: Untagged
@@ -9883,6 +9884,27 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!135 &6201295213704345578
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1428319942470067039}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 3
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1428319942616997903
 GameObject:
   m_ObjectHideFlags: 0
@@ -15021,7 +15043,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 16
+      scalar: 8
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -39267,6 +39289,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1428319943634286450}
   - component: {fileID: 3572303965999773331}
+  - component: {fileID: -175421756868774703}
+  - component: {fileID: 3774191997228059784}
   m_Layer: 0
   m_Name: NormalArea
   m_TagString: Untagged
@@ -39305,6 +39329,39 @@ MonoBehaviour:
   _particleSystem: {fileID: 0}
   _lifeTime: 0
   _destroyDelay: 1
+--- !u!114 &-175421756868774703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1428319943634286451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce002fdddbdb81c4288d165955959b5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!135 &3774191997228059784
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1428319943634286451}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 3
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1428319943656981239
 GameObject:
   m_ObjectHideFlags: 0
@@ -54418,7 +54475,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 16
+      scalar: 8
       minScalar: 1
       maxCurve:
         serializedVersion: 2

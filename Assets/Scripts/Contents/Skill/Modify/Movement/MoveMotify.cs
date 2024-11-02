@@ -24,9 +24,15 @@ public class MoveMotify : Motify
     public override void Execute(Skill _skill) 
     { 
         base.Execute(_skill);
-        
-        if(skill.skillData.type == ESkill.Projectile)
-            CoroutineRunner.Instance.StartCoroutine(Movement());
+
+        switch (skill.skillData.type)
+        {
+            case ESkill.Projectile:
+                CoroutineRunner.Instance.StartCoroutine(Movement());
+                break;
+            default:
+                break;
+        }
     }
 
     public override void StopRun() { CoroutineRunner.Instance.StopRunCoroutine(Movement(), GetType().Name); }

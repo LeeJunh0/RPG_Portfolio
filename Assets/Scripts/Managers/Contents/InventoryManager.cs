@@ -54,7 +54,7 @@ public class InventoryManager
 
     public void UpdateSlotInfo(int index)
     {
-        if (invenIcons[index] == null)
+        if (Util.FindChild<UI_Inven>(Managers.UI.Root) == false)
             return;
 
         invenIcons[index].SetInfo(invenInfos[index]);       

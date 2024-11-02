@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using static UnityEditor.PlayerSettings;
 
-public class Projectile : MonoBehaviour
+public class Projectile : Attack
 {
     public GameObject hitVFX;
     public GameObject muzzleVFX;
@@ -30,23 +30,11 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision co)
     {
-        if (co.gameObject.layer != (int)Define.ELayer.Monster && co.gameObject.layer != (int)Define.ELayer.Block)
+        int layer = 1 << (int)Define.ELayer.Monster | 1 << (int)Define.ELayer.Block;
+        if (co.gameObject.layer != layer)
             return;
 
-        if (hitVFX == null) return;
-
-        GameObject hitPrefab = Managers.Resource.Instantiate(hitVFX);
-        hitPrefab.transform.position = co.transform.position;
-        var particle = hitPrefab.GetComponent<ParticleSystem>();
-        if (particle == null)
-        {
-            var child = hitPrefab.transform.GetChild(0).GetComponent<ParticleSystem>();
-            Destroy(hitPrefab, child.main.duration);
-        }
-        else
-            Destroy(hitPrefab, particle.main.duration);
-
-        StartCoroutine(ParticleDestroy(0f));
+        StartCoroutine(OnDamaged());
     }
 
     IEnumerator DurationDestroy(GameObject go, float sec)
@@ -77,6 +65,29 @@ public class Projectile : MonoBehaviour
             }
         }
         yield return new WaitForSeconds(sec);
+    }
+
+    protected override IEnumerator OnDamaged()
+    {
+        if (hitVFX == null) yield break;
+
+        GameObject hitPrefab = Managers.Resource.Instantiate(hitVFX);
+        hitPrefab.transform.position = transform.position;
+        var particle = hitPrefab.GetComponent<ParticleSystem>();
+        if (particle == null)
+        {
+            var child = hitPrefab.transform.GetChild(0).GetComponent<ParticleSystem>();
+            Destroy(hitPrefab, child.main.duration);
+        }
+        else
+            Destroy(hitPrefab, particle.main.duration);
+
+        StartCoroutine(ParticleDestroy(0f));
+
+        yield return null;
+
+        StopCoroutine(ParticleDestroy(0f));
         Managers.Resource.Destroy(this.gameObject);
     }
+
 }
