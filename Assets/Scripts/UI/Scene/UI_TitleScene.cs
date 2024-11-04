@@ -39,30 +39,5 @@ public class UI_TitleScene : UIBase
             Debug.Log("Game Off");
             Managers.UI.ShowPopupUI<UI_Exit>("UI_ExitScreen");
         });
-
-        startButton.SetActive(false);
-        optionButton.SetActive(false);
-        exitButton.SetActive(false);
-
-        StartLoad();        
-    }
-
-    void StartLoad()
-    {
-        Debug.Log($"Title Loading!");
-        Managers.Resource.LoadAllAsync<Object>("Title", (key, count, total) =>
-        {
-            Debug.Log($"{key} {count}/{total}");
-            if(count >= total)
-            {
-                Managers.Data.Init();
-
-                startButton.SetActive(true);
-                optionButton.SetActive(true);
-                exitButton.SetActive(true);
-
-                Managers.ESound.Play("Happy", Define.ESound.Bgm);
-            }
-        });
     }
 }

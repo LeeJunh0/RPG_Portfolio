@@ -36,6 +36,12 @@ public abstract class BaseController : MonoBehaviour
                 case Define.EState.Skill:
                     anim.CrossFade("ATTACK", 0.1f, -1, 0);
                     break;
+                case Define.EState.HardAttack:
+                    anim.CrossFade("SKILL1", 0.1f);
+                    break;
+                case Define.EState.GroundAttack:
+                    anim.CrossFade("SkILL2", 0.1f);
+                    break;
             }
         }
     }
@@ -61,11 +67,11 @@ public abstract class BaseController : MonoBehaviour
             case Define.EState.Die:
                 UpdateDie();
                 break;
-            case Define.EState.Skill:
-                UpDateSkill();
-                break;
             case Define.EState.Dodge:
                 UpDateDodge();
+                break;
+            default:
+                UpDateSkill();
                 break;
         }
 
@@ -78,6 +84,8 @@ public abstract class BaseController : MonoBehaviour
     protected virtual void UpdateDie() { }
     protected virtual void UpDateSkill() { }
     protected virtual void UpDateDodge() { }
+    protected virtual void UpDateHardAttack() { }
+    protected virtual void UpDateGroundAttack() { }
     protected virtual void CreateMiniMapIcon() 
     {
         minimapIcon = Managers.Resource.Instantiate("MiniMapIcon");

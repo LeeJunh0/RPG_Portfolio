@@ -9,14 +9,19 @@ using static Define;
 
 public class SkillInventory : MonoBehaviour
 {
+    public Dictionary<SkillInfo, List<MotifyInfo>> skillMotifies;
     public List<SkillInfo> skillInven;
     public List<SkillInfo> mySkills;
-    public Dictionary<SkillInfo, List<MotifyInfo>> skillMotifies;
+    
+    BaseController owner;
 
     private void Start()
     {
         skillMotifies = new Dictionary<SkillInfo, List<MotifyInfo>>();
         InitSkills();
+
+        if (owner.WorldObjectType == EWorldObject.Monster)
+            StartCoroutine(BossActivation());
     }
 
     private void Update()
@@ -29,7 +34,7 @@ public class SkillInventory : MonoBehaviour
 
     public void InitSkills()
     {
-        BaseController owner = GetComponent<BaseController>();
+        owner = GetComponent<BaseController>();
         Stat ownerStat = owner.GetComponent<Stat>();
 
         foreach (SkillInfo skillinfo in Managers.Data.SkillDict.Values)
@@ -70,17 +75,11 @@ public class SkillInventory : MonoBehaviour
         skillMotifies[skill].Add(info);
     }
 
-    public void RemoveMotify(SkillInfo skill, MotifyInfo info)
-    {
-        skillMotifies[skill].Remove(info);
-    }
+    public void RemoveMotify(SkillInfo skill, MotifyInfo info) { skillMotifies[skill].Remove(info); }
 
-    private bool CoolTimeCheck(SkillInfo skill)
-    {
-        return skill.isActive;
-    }
+    private bool CoolTimeCheck(SkillInfo skill) { return skill.isActive; }
 
-    private IEnumerator SetIndicator(SkillInfo skill)
+    private IEnumerator PlayerSetIndicator(SkillInfo skill)
     {
         GameObject prefab = Managers.Skill.SetIndicator(skill.indicator);
         Indicator indicator = prefab.GetComponent<Indicator>();
@@ -104,11 +103,26 @@ public class SkillInventory : MonoBehaviour
             yield return null;
         }
 
-        PlyaerSkillExecute(skill, indicator.transform.position);
+        SkillExecute(skill, indicator.transform.position);
         Managers.Resource.Destroy(indicator.gameObject);
     }
 
-    public void PlyaerSkillExecute(SkillInfo skill, Vector3 pos)
+    private IEnumerator MonsterSetindicator(SkillInfo skill)
+    {
+        GameObject prefab = Managers.Skill.SetIndicator(skill.indicator);
+        Indicator indicator = prefab.GetComponent<Indicator>();
+        indicator.SetInfo(skill.indicator, skill.length, skill.radius);
+
+        while (true)
+        {
+            yield return null;
+        }
+
+        SkillExecute(skill, indicator.transform.position);
+        Managers.Resource.Destroy(indicator.gameObject);
+    }
+
+    public void SkillExecute(SkillInfo skill, Vector3 pos)
     {
         GameObject skillPrefab = new GameObject(name: "SkillObject");
         Managers.Resource.AddComponentByName(skill.name, skillPrefab);
@@ -116,6 +130,27 @@ public class SkillInventory : MonoBehaviour
         instanceSkill.motifies = skillMotifies[skill].ToArray();
         instanceSkill.targetPos = pos;
         instanceSkill.Execute();
+    }
+
+    private IEnumerator BossActivation()
+    {
+        float curSec = 0f;
+        float waitSec = 3f;
+
+        int index = 0;
+        while (true)
+        {
+            curSec++;
+
+            yield return new WaitForSeconds(1f);
+
+            if (waitSec <= curSec)
+            {
+                StartCoroutine(MonsterSetindicator(mySkills[index]));
+                index++;
+                curSec = 0;
+            }     
+        }  
     }
 
     private IEnumerator SkillActivation(SkillInfo skill)
@@ -126,9 +161,10 @@ public class SkillInventory : MonoBehaviour
         switch (skill.useObject)
         {
             case EWorldObject.Player:
-                StartCoroutine(SetIndicator(skill));
+                StartCoroutine(PlayerSetIndicator(skill));
                 break;
             case EWorldObject.Monster:
+                StartCoroutine(MonsterSetindicator(skill));
                 break;
             default:
                 break;
@@ -137,5 +173,13 @@ public class SkillInventory : MonoBehaviour
         skill.isActive = false;
         yield return new WaitForSeconds(skill.coolTime);
         skill.isActive = true;
+    }
+
+    private void OnDisable()
+    {
+        if (owner.WorldObjectType != EWorldObject.Monster)
+            return;
+
+        StopAllCoroutines();
     }
 }

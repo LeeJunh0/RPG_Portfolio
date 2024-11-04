@@ -11,7 +11,6 @@ public class UILoading : UIPopup
     Slider      slider;
     Text        tipText;
 
-
     public override void Init()
     {
         base.Init(); 
@@ -59,8 +58,8 @@ public class UILoading : UIPopup
 
     IEnumerator SceneAsyncLoad(Define.EScene type)
     {
-        yield return new WaitForSeconds(1.5f); // 디버그용 하드코딩
         Managers.EScene.LoadScene(type);
+        yield return new WaitForSeconds(1f); // 디버그용 하드코딩
         Managers.Pool.Push(gameObject.GetOrAddComponent<Poolable>());
     }
 }

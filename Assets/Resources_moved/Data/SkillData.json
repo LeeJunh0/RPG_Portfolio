@@ -40,16 +40,33 @@
       "useObject": 2,
       "type": 2,
       "level;": 1,
-      "damage": 2,
+      "damage": 30,
       "mana": 0,
       "speed": 40,
       "length": 2,
       "radius": 0,
-      "coolTime": 3,
+      "coolTime": 15,
       "isActive": true,
       "icon": "",
       "function": "몬스터 : 돌진",
       "description": "타겟을 락온하고 돌진한다."
+    },
+    {
+      "name": "GroundBreak",
+      "indicator": 2,
+      "useObject": 2,
+      "type": 2,
+      "level;": 1,
+      "damage": 40,
+      "mana": 0,
+      "speed": 40,
+      "length": 2,
+      "radius": 0,
+      "coolTime": 10,
+      "isActive": true,
+      "icon": "",
+      "function": "몬스터 : 파괴",
+      "description": "정면을 박살낸다."
     }
   ]
 }

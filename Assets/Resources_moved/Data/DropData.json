@@ -9,10 +9,10 @@
       "sliver": 20
     },
     {
-      "name": "ShieldMan",
+      "name": "OrkBerserk",
       "drops": {
         "experience": 15,
-        "items": [ "Shield" ],
+        "items": [ "Iron Axe" ],
         "sliver": 500
       }
     }

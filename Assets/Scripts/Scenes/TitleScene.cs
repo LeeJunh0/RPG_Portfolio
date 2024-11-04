@@ -8,11 +8,27 @@ public class TitleScene : BaseScene
     {
         base.Init();
 
-        Managers.Resource.Instantiate("UI_Title");
+        StartLoad();       
     }
 
     public override void Clear()
     {
         Debug.Log("TitleScene Clear!");
+    }
+
+    void StartLoad()
+    {
+        Debug.Log($"Title Loading!");
+        Managers.Resource.LoadAllAsync<Object>("Title", (key, count, total) =>
+        {
+            Debug.Log($"{key} {count}/{total}");
+            if (count >= total)
+            {
+                Managers.Data.Init();
+                Managers.ESound.Play("Happy", Define.ESound.Bgm); 
+                Managers.Resource.Instantiate("UI_Title");
+            }
+        });
+        
     }
 }

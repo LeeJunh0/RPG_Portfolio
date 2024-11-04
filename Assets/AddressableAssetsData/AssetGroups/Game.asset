@@ -425,6 +425,18 @@ MonoBehaviour:
     m_SerializedLabels:
     - Game
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1398fcbee7e0bf34fa433efdffe21141
+    m_Address: OrcBerserk
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 60a667269df87d94e9fa2b551f0f5a89
+    m_Address: ArcIndicator
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: c8c0863d2f111984fb854a8e225b02ad, type: 2}
   m_SchemaSet:

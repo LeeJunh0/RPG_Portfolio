@@ -5,10 +5,10 @@ using UnityEngine.AI;
 
 public class MonsterController : BaseController
 {
-    Stat stat;
+    protected Stat stat;
 
     [SerializeField]
-    float scanRange = 10f;
+    protected float scanRange = 10f;
 
     public override void Init()
     {
@@ -82,15 +82,15 @@ public class MonsterController : BaseController
 
     protected override void UpDateSkill()
     {
-        if (lockTarget != null)
-        {
-            Vector3 dir = lockTarget.transform.position - transform.position;
-            Quaternion quat = Quaternion.LookRotation(dir);
-            transform.rotation = Quaternion.Lerp(transform.rotation, quat, 20 * Time.deltaTime);
-        }
+        if (lockTarget == null)
+            return;
+
+        Vector3 dir = lockTarget.transform.position - transform.position;
+        Quaternion quat = Quaternion.LookRotation(dir);
+        transform.rotation = Quaternion.Lerp(transform.rotation, quat, 10 * Time.deltaTime);
     }
 
-    void OnHitEvent()
+    protected virtual void OnHitEvent()
     {
         if (lockTarget != null)
         {

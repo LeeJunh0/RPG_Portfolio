@@ -15,8 +15,10 @@ public class Define
         Die,
         Idle,
         Move,
-        Skill,
-        Dodge
+        Skill,    
+        Dodge,
+        HardAttack,
+        GroundAttack
     }
 
     public enum ELayer

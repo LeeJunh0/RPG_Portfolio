@@ -14,7 +14,7 @@ public class SpawningPool : MonoBehaviour
     [SerializeField]
     Vector3 spawnPos;
     [SerializeField]
-    float spawnRadius = 15.0f;
+    float spawnRadius = 30f;
     [SerializeField]
     float spawnTime = 5.0f;
 
