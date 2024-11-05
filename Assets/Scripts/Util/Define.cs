@@ -34,6 +34,9 @@ public class Define
         RangeIndicator = 0,
         CircleIndicator,
         ArrowIndicator,
+        EnemyArcIndicator,
+        EnemyBoxIndicator,
+        EnemyCircleIndicator
     }
 
     public enum ESkill
