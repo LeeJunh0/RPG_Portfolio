@@ -16,7 +16,8 @@ public class EmbodimentMotify : Motify
             case Define.ESkill.AreaOfEffect:
                 AreaEmbodiment(pos);
                 break;
-
+            default:
+                break;
         }
     }
 

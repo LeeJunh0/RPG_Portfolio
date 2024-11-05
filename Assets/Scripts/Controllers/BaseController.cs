@@ -40,13 +40,12 @@ public abstract class BaseController : MonoBehaviour
                     anim.CrossFade("SKILL1", 0.1f);
                     break;
                 case Define.EState.GroundAttack:
-                    anim.CrossFade("SkILL2", 0.1f);
+                    anim.CrossFade("SKILL2", 0.1f);
                     break;
             }
         }
     }
 
-    
     public abstract void Init();
 
     private void Start()

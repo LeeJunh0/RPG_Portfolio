@@ -55,6 +55,8 @@ public class InitializeMotify : Motify
                     explosionSkill.prefab = Managers.Resource.Load<GameObject>(areaDict[elemental]);
                 }
                 break;
+            default:
+                break;
         }
     }
 

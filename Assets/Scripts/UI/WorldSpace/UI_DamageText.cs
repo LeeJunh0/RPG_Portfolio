@@ -7,6 +7,15 @@ using UnityEngine.UIElements;
 
 public class UI_DamageText : MonoBehaviour
 {
+    MeshRenderer renderer;
+
+    private void Start()
+    {
+        renderer = GetComponent<MeshRenderer>();
+
+        renderer.sortingOrder = 10;
+    }
+
     private void Update()
     {
         transform.rotation = Camera.main.transform.rotation;

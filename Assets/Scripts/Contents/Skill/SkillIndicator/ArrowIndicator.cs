@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.Jobs;
 
 public class ArrowIndicator : Indicator
-{
-    
+{   
     public override void UpdatePosition(Vector3 inputPos)
     {
         base.UpdatePosition(inputPos);

@@ -47,7 +47,7 @@ public class Stat : MonoBehaviour
         manaRecovery = 1;
         attack = 6;
         defense = 5;
-        movespeed = 5.0f;
+        movespeed = 4.0f;
     }
 
     public virtual void OnDamaged(Stat attacker)

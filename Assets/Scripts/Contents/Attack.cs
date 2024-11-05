@@ -12,7 +12,16 @@ public class Attack : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        AreaDamage(radius, layer);
+        float curSec = 0f;
+        while(true)
+        {
+            if (curSec > 1f)
+                break;
+
+            AreaDamage(radius, layer);
+            yield return new WaitForSeconds(0.2f);
+            curSec += 0.2f;
+        }
     }
 
     protected void AreaDamage(float radius, int layer)

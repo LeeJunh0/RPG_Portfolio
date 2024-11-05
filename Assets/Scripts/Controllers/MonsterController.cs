@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class MonsterController : BaseController
 {
     protected Stat stat;
+    protected NavMeshAgent agent;
 
     [SerializeField]
     protected float scanRange = 10f;
@@ -14,6 +15,7 @@ public class MonsterController : BaseController
     {
         WorldObjectType = Define.EWorldObject.Monster;
         stat = GetComponent<Stat>();
+        agent = gameObject.GetOrAddComponent<NavMeshAgent>();
 
         if(gameObject.GetComponentInChildren<UI_HPBar>() == null)
             Managers.UI.MakeWorldSpaceUI<UI_HPBar>(transform);
@@ -45,6 +47,8 @@ public class MonsterController : BaseController
 
     protected override void UpdateMove()
     {
+        agent.SetDestination(transform.position);
+
         if (lockTarget != null)
         {
             DestPos = lockTarget.transform.position;
@@ -52,9 +56,6 @@ public class MonsterController : BaseController
 
             if (distance <= 1.5f)
             {
-                NavMeshAgent agent = gameObject.GetOrAddComponent<NavMeshAgent>();
-                agent.SetDestination(transform.position);
-
                 EState = Define.EState.Skill;
                 return;
             }
@@ -67,7 +68,6 @@ public class MonsterController : BaseController
         }
         else
         {
-            NavMeshAgent agent = gameObject.GetOrAddComponent<NavMeshAgent>();
             agent.SetDestination(DestPos);
             agent.speed = stat.Movespeed;
 
@@ -92,27 +92,26 @@ public class MonsterController : BaseController
 
     protected virtual void OnHitEvent()
     {
-        if (lockTarget != null)
-        {
-            Stat targetStat = lockTarget.GetComponent<Stat>();
-            targetStat.OnDamaged(stat);
-
-            if(targetStat.Hp > 0)
-            {
-                float dis = (lockTarget.transform.position - transform.position).magnitude;
-                if (dis <= 1.5f)
-                    EState = Define.EState.Skill;
-                else
-                    EState = Define.EState.Move;
-            }
-            else
-            {
-                EState = Define.EState.Idle;
-            }
-        }
-        else
+        if(lockTarget == null)
         {
             EState = Define.EState.Idle;
+            return;
         }
+
+        Stat targetStat = lockTarget.GetComponent<Stat>();
+        targetStat.OnDamaged(stat);
+
+        if (targetStat.Hp < 0)
+        {
+            EState = Define.EState.Idle;
+            return;
+        }
+
+        float dis = (lockTarget.transform.position - transform.position).magnitude;
+        if (dis <= 1.5f)
+            EState = Define.EState.Skill;
+        else
+            EState = Define.EState.Move;
+
     }
 }

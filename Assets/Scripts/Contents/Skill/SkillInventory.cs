@@ -19,9 +19,6 @@ public class SkillInventory : MonoBehaviour
     {
         skillMotifies = new Dictionary<SkillInfo, List<MotifyInfo>>();
         InitSkills();
-
-        if (owner.WorldObjectType == EWorldObject.Monster)
-            StartCoroutine(BossActivation());
     }
 
     private void Update()
@@ -107,21 +104,6 @@ public class SkillInventory : MonoBehaviour
         Managers.Resource.Destroy(indicator.gameObject);
     }
 
-    private IEnumerator MonsterSetindicator(SkillInfo skill)
-    {
-        GameObject prefab = Managers.Skill.SetIndicator(skill.indicator);
-        Indicator indicator = prefab.GetComponent<Indicator>();
-        indicator.SetInfo(skill.indicator, skill.length, skill.radius);
-
-        while (true)
-        {
-            yield return null;
-        }
-
-        SkillExecute(skill, indicator.transform.position);
-        Managers.Resource.Destroy(indicator.gameObject);
-    }
-
     public void SkillExecute(SkillInfo skill, Vector3 pos)
     {
         GameObject skillPrefab = new GameObject(name: "SkillObject");
@@ -132,43 +114,12 @@ public class SkillInventory : MonoBehaviour
         instanceSkill.Execute();
     }
 
-    private IEnumerator BossActivation()
-    {
-        float curSec = 0f;
-        float waitSec = 3f;
-
-        int index = 0;
-        while (true)
-        {
-            curSec++;
-
-            yield return new WaitForSeconds(1f);
-
-            if (waitSec <= curSec)
-            {
-                StartCoroutine(MonsterSetindicator(mySkills[index]));
-                index++;
-                curSec = 0;
-            }     
-        }  
-    }
-
     private IEnumerator SkillActivation(SkillInfo skill)
     {
         if (CoolTimeCheck(skill) == false)
             yield break;
 
-        switch (skill.useObject)
-        {
-            case EWorldObject.Player:
-                StartCoroutine(PlayerSetIndicator(skill));
-                break;
-            case EWorldObject.Monster:
-                StartCoroutine(MonsterSetindicator(skill));
-                break;
-            default:
-                break;
-        }
+        StartCoroutine(PlayerSetIndicator(skill));
 
         skill.isActive = false;
         yield return new WaitForSeconds(skill.coolTime);

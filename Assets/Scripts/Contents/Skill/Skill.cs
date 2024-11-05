@@ -66,8 +66,6 @@ public class Skill : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         Collider[] monsters = Physics.OverlapSphere(targetPos, skillData.radius / 2, layer);
-        for(int i = 0; i < monsters.Length; i++)
-            Debug.Log($"ÀÌ¸§ : {monsters[i]}");
     }
 
     private void OnDestroy()
