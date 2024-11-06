@@ -97,6 +97,7 @@ MonoBehaviour:
   curState: 1
   DestPos: {x: 0, y: 0, z: 0}
   scanRange: 10
+  curSec: 0
 --- !u!114 &3986586719770131823
 MonoBehaviour:
   m_ObjectHideFlags: 0

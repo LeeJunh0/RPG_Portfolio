@@ -46,4 +46,8 @@ public class Indicator : MonoBehaviour
         if (info.type != Define.EIndicator.CircleIndicator)
             return;
     }
+    public virtual void UpdateRotate(Vector3 direction)
+    {
+
+    }
 }

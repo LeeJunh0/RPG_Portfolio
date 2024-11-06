@@ -99,7 +99,7 @@ public class SkillInventory : MonoBehaviour
 
             yield return null;
         }
-
+        Debug.Log("??");
         SkillExecute(skill, indicator.transform.position);
         Managers.Resource.Destroy(indicator.gameObject);
     }
