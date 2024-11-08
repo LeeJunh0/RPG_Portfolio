@@ -9,7 +9,7 @@ public class EnemyCircleIndicator : Indicator
 
     }
 
-    public override void UpdateRotate(Vector3 direction)
+    public override void UpdateRotate(Vector3 direction, float speed)
     {
 
     }

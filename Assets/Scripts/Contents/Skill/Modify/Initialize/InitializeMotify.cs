@@ -1,9 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using static Define;
-using static UnityEditor.Rendering.FilterWindow;
 
 public class InitializeMotify : Motify
 {

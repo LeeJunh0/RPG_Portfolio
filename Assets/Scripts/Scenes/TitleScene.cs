@@ -26,7 +26,7 @@ public class TitleScene : BaseScene
             {
                 Managers.Data.Init();
                 Managers.ESound.Play("Happy", Define.ESound.Bgm); 
-                Managers.Resource.Instantiate("UI_Title");
+                Managers.UI.ShowPopupUI<UI_TitleScene>();
             }
         });
         

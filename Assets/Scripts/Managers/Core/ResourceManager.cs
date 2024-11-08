@@ -116,8 +116,11 @@ public class ResourceManager : MonoBehaviour
         var asyncOperation = Addressables.LoadAssetAsync<T>(key);
         asyncOperation.Completed += (op) =>
         {
-            resourceDic.Add(key, op.Result);
-            handleDic.Add(key, asyncOperation);
+            if (resourceDic.ContainsKey(key) == false)
+            {
+                resourceDic.Add(key, op.Result);
+                handleDic.Add(key, asyncOperation);
+            }
             callback.Invoke(op.Result);
         };
     }

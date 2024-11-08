@@ -2,32 +2,15 @@ using Data;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Timeline;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class BossController : MonsterController
 {
     [SerializeField]
     float curSec = 0f;
-
-    public override Define.EState EState
-    {
-        get { return curState; }
-        set
-        {           
-            switch (curState)
-            {
-                case Define.EState.HardAttack:
-                    break;
-                case Define.EState.GroundAttack:
-                    break;
-            }
-
-            base.EState = value;
-        }
-    }
 
     public override void Init()
     {
@@ -45,25 +28,61 @@ public class BossController : MonsterController
 
     public IEnumerator OnHardAttack()
     {
+        OnSkill();
         Indicator indicator = IndicatorExecute(Define.EState.HardAttack);
 
-        curSec = 0f;
-        float distance = 0;
-
-        while(curSec <= 3f)
+        float sec = 0f;
+        while(sec <= 5f)
         {
-            curSec += Time.deltaTime;
+            sec += Time.deltaTime;
             indicator.UpdatePosition(transform.position);
-            indicator.UpdateRotate((lockTarget.transform.position - transform.position).normalized);
+            indicator.UpdateRotate((lockTarget.transform.position - transform.position).normalized, 10f);
 
-            float lerpX = Mathf.Lerp(0.1f, 5f, curSec / 3f);
+            float lerpX = Mathf.Lerp(0.1f, 5f, sec / 3f);
             indicator.transform.localScale = new Vector3(lerpX, 1, 1);
-            yield return null;
+
+            Vector3 direction = (lockTarget.transform.position - transform.position).normalized;
+            Quaternion targetRotate = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotate, 10f * Time.deltaTime);
+
+            yield return null;          
+        }
+        Managers.Resource.Destroy(indicator.gameObject);
+
+        StartCoroutine(HardAttack());
+    }
+
+    private IEnumerator HardAttack()
+    {
+        EState = Define.EState.HardAttack;
+        Vector3 prevPos = transform.position;
+        Vector3 prevForward = transform.forward;
+        float speed = stat.Movespeed * 1.5f;
+        float sec = 0f;
+
+        while (true)
+        {
+            sec += Time.deltaTime;
+            float moveLength = Vector3.Distance(prevPos, transform.position);
+            if (AttackChecking(prevPos) == true)
+            {
+                Stat targetStat = lockTarget.GetComponent<Stat>();
+                targetStat.OnDamaged(stat);
+                break;
+            }
+            else if(moveLength >= 40f || sec >= 5f)
+                break;
+                          
+            transform.position += prevForward * Time.deltaTime * speed;
+            yield return new WaitForFixedUpdate();
         }
 
-        Stat targetStat = lockTarget.GetComponent<Stat>();
-        targetStat.OnDamaged(stat); 
-        OffSkill(indicator.gameObject);
+        OffSkill();
+    }
+    private bool AttackChecking(Vector3 prevPos)
+    {
+        float distance = Vector3.Distance(lockTarget.transform.position, transform.position);
+        return distance <= 2f;
     }
 
     public IEnumerator OnGroundAttack()
@@ -71,27 +90,28 @@ public class BossController : MonsterController
         OnSkill();
         Indicator indicator = IndicatorExecute(Define.EState.GroundAttack);
 
-        curSec = 0f;
-        while (curSec >= 3f)
+        float sec = 0f;
+        while (sec >= 5f)
         {
-            curSec += Time.deltaTime;
+            sec += Time.deltaTime;
             indicator.UpdatePosition(transform.position);
-            indicator.UpdateRotate(lockTarget.transform.position - transform.position);
+            indicator.UpdateRotate(lockTarget.transform.position - transform.position,10f);
 
+            float lerpX = Mathf.Lerp(0.1f, 5f, sec / 3f);
+            indicator.transform.localScale = new Vector3(lerpX, 1, 1);
             yield return null;
         }
 
         Stat targetStat = lockTarget.GetComponent<Stat>();
         targetStat.OnDamaged(stat);
-        OffSkill(indicator.gameObject);
+        Managers.Resource.Destroy(indicator.gameObject);
+        OffSkill();
     }
 
     public void GroundAttack()
     {
-        Vector3 direction = lockTarget.transform.position - transform.position; 
-        
+        Vector3 direction = lockTarget.transform.position - transform.position;        
         float distance = direction.magnitude;
-
         float angle = Vector3.Angle(transform.forward, direction.normalized);
 
         if(120f >= angle / 2 && distance <= 5f)
@@ -103,13 +123,17 @@ public class BossController : MonsterController
         
     public void OnSkill() 
     {
-        agent.isStopped = true; 
+        agent.isStopped = true;
+        agent.updateRotation = false;
+        Animator anim = GetComponent<Animator>();
+        anim.CrossFade("WAIT", 0.1f);
     }
-    public void OffSkill(GameObject go)
+
+    public void OffSkill()
     {
         agent.isStopped = false;
+        agent.updateRotation = true;
         EState = Define.EState.Idle;
-        Managers.Resource.Destroy(go);
     }
 
     private Indicator IndicatorExecute(Define.EState type)
@@ -139,9 +163,9 @@ public class BossController : MonsterController
             if (lockTarget != null && (EState != Define.EState.HardAttack && EState != Define.EState.GroundAttack))            
                 curSec++;
 
-            if (curSec > Random.Range(3f, 6f))
+            if (curSec > 3f)//Random.Range(3f, 6f))
             {
-                cur = Define.EState.HardAttack;
+                cur = Define.EState.GroundAttack;
                 //cur = (cur == Define.EState.GroundAttack) ? Define.EState.HardAttack : Define.EState.GroundAttack;                  
                 curSec = 0f; 
 
@@ -155,7 +179,6 @@ public class BossController : MonsterController
                         break;
                 }                
             }
-
             yield return new WaitForSeconds(1f);
         }
     }

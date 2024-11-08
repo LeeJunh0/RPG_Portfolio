@@ -9,7 +9,7 @@ public class EnemyArcIndicator : Indicator
         transform.position = new Vector3(inputPos.x, transform.position.y, inputPos.z);
     }
 
-    public override void UpdateRotate(Vector3 direction)
+    public override void UpdateRotate(Vector3 direction, float speed)
     {
         
     }

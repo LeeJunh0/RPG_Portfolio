@@ -18,7 +18,7 @@ MonoBehaviour:
   m_GUID: 14370262682ba3646b8fdfe4fbcdb1da
   m_SerializeEntries:
   - m_GUID: 423ce65c865677246a51c82a53c9c8cf
-    m_Address: UI_Title
+    m_Address: UI_TitleScene
     m_ReadOnly: 0
     m_SerializedLabels:
     - Title
@@ -91,6 +91,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a59f12206ca080d4d9f38595829ccdab
     m_Address: MotifyData
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Title
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bd366c03248d25c4d98040ea1772c210
+    m_Address: "SF\uD568\uBC15\uB208TTF"
     m_ReadOnly: 0
     m_SerializedLabels:
     - Title

@@ -36,6 +36,12 @@ public abstract class BaseController : MonoBehaviour
                 case Define.EState.Skill:
                     anim.CrossFade("ATTACK", 0.1f, -1, 0);
                     break;
+                case Define.EState.HardAttack:
+                    anim.CrossFade("SKILL1", 0.1f);
+                    break;
+                case Define.EState.GroundAttack:
+                    anim.CrossFade("SKILL2", 0.1f);
+                    break;
             }
         }
     }
@@ -63,7 +69,7 @@ public abstract class BaseController : MonoBehaviour
             case Define.EState.Dodge:
                 UpDateDodge();
                 break;
-            default:
+            case Define.EState.Skill:
                 UpDateSkill();
                 break;
         }
