@@ -1,5 +1,5 @@
 # 3D RPG Mini
-만든 FrameWork를 바탕으로 제작한 RPG형식 게임입니다.
+Unity3D의 RPG형식 게임입니다.
 
 # 개발환경
 - Visual Studio 2022
@@ -11,16 +11,369 @@
 
 ## 컨텐츠 기능 구성
 - 스킬
+- 스킬파츠 3가지
+    - 속성(Elemental)
+    - 구성
+    - 움직임
+
 - 인벤토리
 - 퀘스트 관리
 - 퀘스트 NPC
+  각종 작은기능들
 
 ## 컨텐츠 기능 구성
 
 ### 1. 스킬
+베이스가 되는 스킬과 파츠로 나뉘어진 기능들이 합쳐져 만들어지는 스킬을 구현하였습니다.
 
-### 2. 인벤토리
-기본적인 아이템 추가, 삭제, 정렬기능을 구현했고 아이템 데이터를 관리하는 Manager 와 화면에 나타날 UI를 관리할 UI_Inven으로 구분 지어 커플링을 줄이며 디버깅에 용이하도록 설계했습니다.
+<details Open>
+<summary>스킬 인벤토리 Code Open</summary>
+
+```C#
+public class SkillInventory : MonoBehaviour
+{
+    public Dictionary<SkillInfo, List<MotifyInfo>> skillMotifies;
+    public List<SkillInfo> skillInven;
+    public List<SkillInfo> mySkills;
+    
+    BaseController owner;
+
+    public void InitSkills() {...}
+    public void AddSkill(SkillInfo skillInfo) {...}
+    public void RemoveSkill(SkillInfo skillInfo) {...}
+    public void AddMotify(MotifyInfo info) {...}
+    public void RemoveMotify(SkillInfo skill, MotifyInfo info) {...}
+    public void SkillExecute(SkillInfo skill, Vector3 pos) {...}
+
+    private bool CoolTimeCheck(SkillInfo skill) {...}
+    private IEnumerator PlayerSetIndicator(SkillInfo skill) {...}
+    private IEnumerator SkillActivation(SkillInfo skill) {...}
+```
+</details>
+
+<details>
+<summary> 스킬 클래스 Code Open </summary>
+
+```C#
+public interface ISkill { void Execute(Skill _skill); }
+
+public class Skill : MonoBehaviour
+{
+    public SkillInfo skillData;
+    public Vector3 targetPos;
+
+    public List<GameObject> objects = new List<GameObject>();
+    public MotifyInfo[]     motifies = new MotifyInfo[3];
+    public GameObject       prefab;
+
+    public Motify           initialize;
+    public Motify           embodiment;
+    public Motify           movement;
+
+    public virtual void Execute() {...}
+    public void SetMotifies() {...}
+    public void SetInitializeMotify(Motify motify)  {...}
+    public void SetEmbodimentMotify(Motify motify)  {...}
+    public void SetMovementMotify(Motify motify)    {...}
+    protected IEnumerator DestroySkill() {...}
+    protected virtual IEnumerator OnDamaged() {...}
+    private void OnDestroy() {...}
+}
+```
+
+</details>
+
+<details>
+<summary> 발사체 스킬 Code Open </summary>
+    
+```C#
+    public class ProjectileSkill : Skill
+{
+    public GameObject       hitVFX;
+    public GameObject       muzzleVFX;
+    public int              count = 1;
+
+    private Rigidbody rigid;
+    
+    private void Awake()
+    {       
+        rigid = Util.GetOrAddComponent<Rigidbody>(gameObject);
+        skillData = new SkillInfo(Managers.Data.SkillDict["ProjectileSkill"]);        
+    }
+
+    public override void Execute() {...}
+    private void DefaultShoot() {...}
+    public Vector3 GetDirection() {...}
+}
+```
+</details>
+
+<details>
+<summary> 범위 지정스킬 Code Open</summary>
+
+```C#
+public class ExplosionSkill : Skill
+{
+    private void Awake()
+    {
+        skillData = new Data.SkillInfo(Managers.Data.SkillDict["ExplosionSkill"]);
+    }
+
+    public override void Execute()
+    {
+        base.Execute(); // 발사체와 다르게 애니메이션과 충돌 체크로만 구현
+    }
+}
+```
+</details>
+
+### 2. 스킬 구성 3가지
+#### - 속성(Elemental)
+스킬의 속성마다 고유한 시각적 효과와 기능들을 가질수 있도록 구현하였습니다.
+
+<details Open>
+<summary> 속성 Code </summary>
+
+```C#
+public class InitializeMotify : Motify
+{
+    public ESkill_Elemental    elemental = ESkill_Elemental.None;
+
+    // 스킬속성에 맞는 프리팹의 이름을 저장
+    protected Dictionary<ESkill_Elemental, string> projectileDict = new Dictionary<ESkill_Elemental, string>() {...}
+    protected Dictionary<ESkill_Elemental, string> hitVFXDict = new Dictionary<ESkill_Elemental, string>() {...}
+    protected Dictionary<ESkill_Elemental, string> muzzleVFXDict = new Dictionary<ESkill_Elemental, string>() {...}
+    protected Dictionary<ESkill_Elemental, string> areaDict = new Dictionary<ESkill_Elemental, string>() {...}
+
+    public virtual void SetElemental() {...}
+    public override void Execute(Skill _skill) {...}
+}
+```
+</details>
+
+<details>
+<summary> 속성 Full Code Open </summary>
+
+```C#
+public class InitializeMotify : Motify
+{
+    public ESkill_Elemental    elemental = ESkill_Elemental.None;
+
+    protected Dictionary<ESkill_Elemental, string> projectileDict = new Dictionary<ESkill_Elemental, string>()
+    {
+        { ESkill_Elemental.None,   "NormalProjectile" },
+        { ESkill_Elemental.Fire,   "FireProjectile" },
+        { ESkill_Elemental.Ice,    "IceProjectile" },
+        { ESkill_Elemental.Wind,  "WindProjectile" }
+    };
+    protected Dictionary<ESkill_Elemental, string> hitVFXDict = new Dictionary<ESkill_Elemental, string>()
+    {
+        { ESkill_Elemental.None,   "NormalHit" },
+        { ESkill_Elemental.Fire,   "FireHit" },
+        { ESkill_Elemental.Ice,    "IceHit" },
+        { ESkill_Elemental.Wind,  "WindHit" }
+    };
+    protected Dictionary<ESkill_Elemental, string> muzzleVFXDict = new Dictionary<ESkill_Elemental, string>()
+    {
+        { ESkill_Elemental.None,   "NormalMuzzle" },
+        { ESkill_Elemental.Fire,   "FireMuzzle" },
+        { ESkill_Elemental.Ice,    "IceMuzzle" },
+        { ESkill_Elemental.Wind,  "WindMuzzle" }
+    };
+    protected Dictionary<ESkill_Elemental, string> areaDict = new Dictionary<ESkill_Elemental, string>()
+    {
+        { ESkill_Elemental.None, "NormalArea" },
+        { ESkill_Elemental.Fire, "FireArea" },
+        { ESkill_Elemental.Ice,"IceArea" },
+        { ESkill_Elemental.Wind,"WindArea" }
+    };
+    public virtual void SetElemental()
+    {
+        switch (skill.skillData.type)
+        {
+            case ESkill.Projectile:
+                {
+                    ProjectileSkill projectileSkill = skill as ProjectileSkill;
+                    projectileSkill.prefab = Managers.Resource.Load<GameObject>(projectileDict[elemental]);
+                    projectileSkill.hitVFX = Managers.Resource.Load<GameObject>(hitVFXDict[elemental]);
+                    projectileSkill.muzzleVFX = Managers.Resource.Load<GameObject>(muzzleVFXDict[elemental]);
+                }
+                break;
+            case ESkill.AreaOfEffect:
+                {
+                    ExplosionSkill explosionSkill = skill as ExplosionSkill;
+                    explosionSkill.prefab = Managers.Resource.Load<GameObject>(areaDict[elemental]);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    public override void Execute(Skill _skill)
+    {
+        base.Execute(_skill);
+
+        SetElemental();
+    }
+}
+
+```   
+</details>
+
+#### - 구성
+스킬의 생성 갯수 혹은 생성패턴을 바꾸도록 구현했습니다.
+
+<details Open>
+<summary> 구성 Code </summary>
+
+```C#
+public class EmbodimentMotify : Motify
+{
+    protected int count = 1;
+
+    public virtual void Embodiment(Transform pos) {...}
+    public void AreaEmbodiment(Transform pos) {...}
+    public void ProjectileEmbodiment(Transform pos) {...}
+    public override void Execute(Skill _skill) {...}
+}
+```
+</details>
+
+<details>
+<summary> 구성 Full Code Open </summary>
+
+```C#
+public class EmbodimentMotify : Motify
+{
+    protected int count = 1;
+
+    public virtual void Embodiment(Transform pos) 
+    {
+        switch (skill.skillData.type)
+        {
+            case Define.ESkill.Projectile:
+                ProjectileEmbodiment(pos);
+                break;
+            case Define.ESkill.AreaOfEffect:
+                AreaEmbodiment(pos);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void AreaEmbodiment(Transform pos)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            ExplosionSkill explosionSkill = skill as ExplosionSkill;
+            GameObject go = Managers.Resource.Instantiate(explosionSkill.prefab);
+            go.transform.position = skill.targetPos;
+
+            go.transform.SetParent(skill.transform);
+            objects.Add(go);
+        }
+    }
+
+    public void ProjectileEmbodiment(Transform pos)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            ProjectileSkill projectileSkill = skill as ProjectileSkill;
+            GameObject go = Managers.Resource.Instantiate(projectileSkill.prefab);
+            go.transform.position = pos.position;
+            go.transform.forward = projectileSkill.GetDirection();
+
+            Projectile projectile = go.GetComponent<Projectile>();
+            projectile.hitVFX = projectileSkill.hitVFX;
+            projectile.muzzleVFX = projectileSkill.muzzleVFX;
+
+            go.transform.SetParent(skill.transform);
+            objects.Add(go);
+        }
+    }
+
+    public override void Execute(Skill _skill)
+    {
+        base.Execute(_skill);
+
+        Embodiment(skill.transform);
+    }
+    public override void SetMana() { }
+}
+```
+</details>
+
+#### - 움직임
+스킬들의 움직임을 바꾸도록 구현했습니다.
+
+<details Open>
+<summary> 움직임 Code </summary>
+
+```C#
+public class MoveMotify : Motify
+{
+    protected float speed = 40f;
+
+    public virtual IEnumerator Movement() {...}
+    public override void Execute(Skill _skill) {...}
+    public override void StopRun() {...}
+    public override void SetMana()  {...}
+}
+```
+</details>
+
+<details>
+<summary>움직임 Full Code Open </summary>
+
+```C#
+using Data;
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.UIElements;
+using static Define;
+
+public class MoveMotify : Motify
+{
+    protected float speed = 40f;
+
+    public virtual IEnumerator Movement()
+    {
+        yield return null;
+        for (int i = 0; i < objects.Count; i++)
+        {
+            Rigidbody rigid = objects[i].GetComponent<Rigidbody>();
+            rigid.AddForce(objects[i].transform.forward * speed, ForceMode.Impulse);
+        }
+    }
+
+    public override void Execute(Skill _skill) 
+    { 
+        base.Execute(_skill);
+
+        // 스킬마다 다른 기능사용
+        switch (skill.skillData.type)
+        {
+            case ESkill.Projectile:
+                CoroutineRunner.Instance.StartCoroutine(Movement());
+                break;
+            default:
+                break;
+        }
+    }
+
+    // 사용한 코루틴중지
+    public override void StopRun() { CoroutineRunner.Instance.StopRunCoroutine(Movement(), GetType().Name); }
+    public override void SetMana()  { skill.skillData.mana += 10; }
+}
+```
+</details>
+
+### 3. 인벤토리
+기본적인 아이템 추가, 삭제, 정렬기능을 구현했고 데이터와 UI를 분리하여 보다 유연하게 기능들이 작동할수 있도록 구현하였습니다.
 
 <details open> 
 <summary>인벤토리 매니저 Code Open</summary>
@@ -327,7 +680,7 @@ public class UI_Inven : UIScene
 </details>
 </details>
 
-### 3. 퀘스트 관리
+### 4. 퀘스트 관리
 Action을 이용한 리스너 패턴식 퀘스트 상태 관리 와 조건 업데이트를 구현했고 NPC들이 사용할 기능들을 이벤트로써 관리하도록 구현했습니다.
 
 <details open>
@@ -732,10 +1085,10 @@ public class UI_Giver : UIPopup
 
 ## 만들며 느꼈던 점
 ### 신경썼던 점
-스킬설계와 인벤토리의 기능, 퀘스트 조건을 탐색하는 부분들 인것같습니다.
+구현할 컨텐츠가 많은 RPG인 만큼 최대한 많은걸 구현 할려고 노력했습니다.
 
 ### 아쉬운 점
-퀘스트 구현에서 데드라인에 쫓겨 다소 조잡한 부분이있어 다음 RPG 나 퀘스트구현하는 프로젝트에선 좀더 시간배분을 하여 만들꺼 같습니다.
+많은걸 구현한 만큼 다소 조잡하고 완성도가 부족했던거 같습니다.
 
 긴 글 읽어 주셔서 감사합니다.
 이준호였습니다.
