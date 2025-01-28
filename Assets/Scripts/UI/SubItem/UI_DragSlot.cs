@@ -20,10 +20,10 @@ public class UI_DragSlot : UI_Slot
         gameObject.BindEvent(OnRayTarget,Define.EUiEvent.PointerExit);
         gameObject.BindEvent(StartDragging,Define.EUiEvent.BeginDrag);
         gameObject.BindEvent(Dragging,Define.EUiEvent.Drag);
-        gameObject.BindEvent(EndDragging,Define.EUiEvent.EndDrag);
+        gameObject.BindEvent(EndDragging,Define.EUiEvent.EndDrag);      
     }
 
-    void OffRayTarget(PointerEventData eventData)
+    private void OffRayTarget(PointerEventData eventData)
     {
         if (eventData.pointerDrag == null || !UI_SetDragSlot.instance.isDraging)
             return;
@@ -32,7 +32,7 @@ public class UI_DragSlot : UI_Slot
         UI_SetDragSlot.instance.hoverSlots.Add(icon);
     }
 
-    void OnRayTarget(PointerEventData eventData)
+    private void OnRayTarget(PointerEventData eventData)
     {
         if (eventData.pointerDrag == null || UI_SetDragSlot.instance.isDraging)
             return;
@@ -41,7 +41,7 @@ public class UI_DragSlot : UI_Slot
         UI_SetDragSlot.instance.hoverSlots.Remove(icon);
     }
 
-    void StartDragging(PointerEventData eventData)
+    private void StartDragging(PointerEventData eventData)
     {
         UI_SetDragSlot.instance.dragSlot = this;
         UI_SetDragSlot.instance.DragSetIcon(icon);
@@ -50,13 +50,13 @@ public class UI_DragSlot : UI_Slot
         UI_SetDragSlot.instance.icon.raycastTarget = false;
     }
 
-    void Dragging(PointerEventData eventData)
+    private void Dragging(PointerEventData eventData)
     {
         UI_SetDragSlot.instance.SetColor(0.6f);
         UI_SetDragSlot.instance.transform.position = eventData.position;
     }
 
-    void EndDragging(PointerEventData eventData)
+    private void EndDragging(PointerEventData eventData)
     {
         UI_SetDragSlot.instance.SetColor(0);
         UI_SetDragSlot.instance.isDraging = false;

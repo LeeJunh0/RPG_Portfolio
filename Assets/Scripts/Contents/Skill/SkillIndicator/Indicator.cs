@@ -40,6 +40,11 @@ public class Indicator : MonoBehaviour
                 break;
         }
     }
+    public void InitRotate(Vector3 direction)
+    {
+        Quaternion targetRotation = Quaternion.LookRotation(direction.normalized, Vector3.up);
+        transform.rotation = targetRotation * Quaternion.Euler(90, 0, 90);
+    }
 
     public virtual void UpdatePosition(Vector3 inputPos) 
     {

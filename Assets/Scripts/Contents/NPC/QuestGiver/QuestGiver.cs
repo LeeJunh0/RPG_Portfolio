@@ -11,6 +11,7 @@ public class QuestGiver : NpcController
 
     public override void Init()
     {
+        npcType = Define.ENpc.Giver;
         base.Init();
 
         Search();

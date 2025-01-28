@@ -8,9 +8,8 @@ using UnityEngine.UI;
 public class UIManager
 {
     public Action<int> UIStatUpdate = null;
-    Stack<UIPopup> popupStack = new Stack<UIPopup>();
-    UIScene SceneUI = null;
-    int sortOrder = 10;
+    public Stack<UIPopup> popupStack = new Stack<UIPopup>();
+    private int sortOrder = 10;
 
     public GameObject Root
     {
@@ -66,9 +65,20 @@ public class UIManager
         GameObject go = Managers.Resource.Instantiate(name);
         T poPup = Util.GetOrAddComponent<T>(go);
         popupStack.Push(poPup);
-
         go.transform.SetParent(Root.transform);
         return poPup;
+    }
+
+    public T ShowSceneUI<T>(string name = null) where T : UIScene
+    {
+        if (string.IsNullOrEmpty(name))
+            name = typeof(T).Name;
+
+        GameObject go = Managers.Resource.Instantiate(name);
+        T sceneUI = Util.GetOrAddComponent<T>(go);
+
+        go.transform.SetParent(Root.transform);
+        return sceneUI;
     }
 
     public T MakeSceneUI<T>(string name = null) where T : UIScene
@@ -138,7 +148,6 @@ public class UIManager
 
         UIPopup popup = popupStack.Pop();
         Managers.Resource.Destroy(popup.gameObject);
-        popup = null;
         sortOrder--;
     }
 
@@ -165,6 +174,5 @@ public class UIManager
     public void Clear()
     {
         CloseAllPopupUI();
-        SceneUI = null;
     }
 }

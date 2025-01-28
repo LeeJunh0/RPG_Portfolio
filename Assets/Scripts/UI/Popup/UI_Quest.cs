@@ -12,9 +12,9 @@ public class UI_Quest : UIPopup
         UI_Quest_Popup
     }
 
-    GameObject          list;
-    GameObject          popup;
-    int questId         = int.MaxValue;
+    GameObject list;
+    GameObject popup;
+    int questId = int.MaxValue;
 
     public override void Init()
     {
@@ -23,7 +23,6 @@ public class UI_Quest : UIPopup
         BindObject(typeof(GameObjects));
         Debug.Log("UI_Quest Binding");
 
-        base.Init();
         list = GetObject((int)GameObjects.QuestList);
         popup = GetObject((int)GameObjects.UI_Quest_Popup);
 

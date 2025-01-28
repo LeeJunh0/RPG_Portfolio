@@ -42,7 +42,7 @@ public class UI_MotifySlot : UI_Slot
         UI_MotifyGround parent = transform.parent.GetComponent<UI_MotifyGround>();
         parent.CheckSlots(this);
 
-        Motify motify = Managers.Skill.SetMotify(motifyInfo.skillName);
+        //Motify motify = Managers.Skill.SetMotify(motifyInfo.skillName);
         Managers.Skill.playerInventory.AddMotify(motifyInfo);
     }
 

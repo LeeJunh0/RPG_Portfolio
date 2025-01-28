@@ -5,7 +5,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Timeline;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class BossController : MonsterController
 {
@@ -64,7 +63,7 @@ public class BossController : MonsterController
         {
             sec += Time.deltaTime;
             float moveLength = Vector3.Distance(prevPos, transform.position);
-            if (AttackChecking(prevPos) == true)
+            if (AttackChecking(prevPos, 2f) == true)
             {
                 Stat targetStat = lockTarget.GetComponent<Stat>();
                 targetStat.OnDamaged(stat);
@@ -79,33 +78,34 @@ public class BossController : MonsterController
 
         OffSkill();
     }
-    private bool AttackChecking(Vector3 prevPos)
+    private bool AttackChecking(Vector3 prevPos, float maxLength)
     {
         float distance = Vector3.Distance(lockTarget.transform.position, transform.position);
-        return distance <= 2f;
+        return distance <= maxLength;
     }
 
     public IEnumerator OnGroundAttack()
     {
         OnSkill();
         Indicator indicator = IndicatorExecute(Define.EState.GroundAttack);
+        indicator.InitRotate(lockTarget.transform.position - transform.position);
 
         float sec = 0f;
-        while (sec >= 5f)
+        while (sec <= 5f)
         {
             sec += Time.deltaTime;
             indicator.UpdatePosition(transform.position);
-            indicator.UpdateRotate(lockTarget.transform.position - transform.position,10f);
+            indicator.UpdateRotate(lockTarget.transform.position - transform.position,20f);
 
-            float lerpX = Mathf.Lerp(0.1f, 5f, sec / 3f);
-            indicator.transform.localScale = new Vector3(lerpX, 1, 1);
+            float lerpX = Mathf.Lerp(0.1f, 3f, sec / 3f);
+            indicator.transform.localScale = new Vector3(lerpX, lerpX * 1.5f, 1);
+
+            if (sec >= 4f && EState != Define.EState.GroundAttack)
+                EState = Define.EState.GroundAttack;
             yield return null;
         }
-
-        Stat targetStat = lockTarget.GetComponent<Stat>();
-        targetStat.OnDamaged(stat);
+        
         Managers.Resource.Destroy(indicator.gameObject);
-        OffSkill();
     }
 
     public void GroundAttack()
@@ -114,7 +114,7 @@ public class BossController : MonsterController
         float distance = direction.magnitude;
         float angle = Vector3.Angle(transform.forward, direction.normalized);
 
-        if(120f >= angle / 2 && distance <= 5f)
+        if(120f >= angle / 2 && distance <= 6f)
         {
             Stat targetStat = lockTarget.GetComponent<Stat>();
             targetStat.OnDamaged(stat);

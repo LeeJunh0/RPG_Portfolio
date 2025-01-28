@@ -32,7 +32,7 @@ public class UI_SkillSlot : UI_Slot
         slotIcon.sprite = Managers.UI.TextureToSprite(texture);
     }
 
-    void EnterSlotEvent(PointerEventData eventData)
+    private void EnterSlotEvent(PointerEventData eventData)
     {
         UI_SkillTip.Instance.SetColor(1f);
         UI_SkillTip.Instance.SetToolTip(skillInfo);
@@ -48,10 +48,9 @@ public class UI_SkillSlot : UI_Slot
         Cursor.visible = false;
     }
 
-    void ExitSlotEvent(PointerEventData eventData)
+    private void ExitSlotEvent(PointerEventData eventData)
     {
         UI_SkillTip.Instance.SetColor(0f);
-
         Cursor.visible = true;
     }
 }

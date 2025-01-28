@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class Define
 {
+    public enum ItemType
+    {
+        None = 0,
+        Consumable,
+        Weapon,
+        Chest,
+        Pants,
+        Boots
+    }
     public enum EWorldObject
     {
         Unknown = 0,
@@ -41,7 +50,8 @@ public class Define
 
     public enum ESkill
     {
-        Projectile = 0,
+        Public = 0,
+        Projectile,
         AreaOfEffect,
         Assault
     }

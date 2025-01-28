@@ -20,6 +20,12 @@ public abstract class UIBase : MonoBehaviour
     {
         string[] names = Enum.GetNames(type);
         UnityEngine.Object[] objects = new UnityEngine.Object[names.Length];
+        if (Objects.ContainsKey(typeof(T)) == true)
+        {
+            Debug.LogError("중복된 바인딩입니다.");
+            return;
+        }
+
         Objects.Add(typeof(T), objects);
 
         for (int i = 0; i < names.Length; i++)

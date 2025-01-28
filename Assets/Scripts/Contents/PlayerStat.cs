@@ -51,7 +51,7 @@ public class PlayerStat : Stat
         defense = 5;
         movespeed = 5.0f;
         exp = 0;
-        gold = 0;
+        gold = 1000000;
 
         SetStat(level);
         StartCoroutine(Regenerate());
@@ -71,6 +71,11 @@ public class PlayerStat : Stat
 
         if(Managers.Data.StatDict.TryGetValue(level + 1, out stat) == true)
             totalExp = stat.totalExp;
+    }
+
+    public void OnHealing(int heal)
+    {
+        Hp = Mathf.Clamp(Hp + heal, 0, maxHp);
     }
 
     IEnumerator Regenerate()

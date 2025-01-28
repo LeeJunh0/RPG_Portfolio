@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 public class SkillManager
 {
     public SkillInventory playerInventory;
-
+    public Define.ESkill curMainSkill = Define.ESkill.Projectile;
     public void GetSkillInventory() { playerInventory = Managers.Game.GetPlayer().GetComponent<SkillInventory>(); }
 
     public Motify SetMotify(string name)
@@ -43,6 +43,5 @@ public class SkillManager
 
     // 스킬들 -> 공격 -> 모든 공격의 효과. 범위형 혹은 단일형 범위형은 무슨 모양범위인지.
     // 각 공격들의 공격까지의 시간, 범위, 
-
-    
+  
 }

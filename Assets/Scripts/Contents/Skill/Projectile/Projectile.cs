@@ -30,10 +30,15 @@ public class Projectile : Attack
     private void OnCollisionEnter(Collision co)
     {
         int layer = 1 << (int)Define.ELayer.Monster | 1 << (int)Define.ELayer.Block;
-        if (co.gameObject.layer != layer)
+        if ((layer & (1 << co.gameObject.layer)) == 0)
             return;
 
         StartCoroutine(OnDamaged());
+        if(co.gameObject.layer == (int)Define.ELayer.Monster)
+        {
+            Stat monster = co.gameObject.GetComponent<Stat>();
+            DirectDamaged(monster);
+        }
     }
 
     IEnumerator DurationDestroy(GameObject go, float sec)
@@ -69,7 +74,7 @@ public class Projectile : Attack
     protected override IEnumerator OnDamaged()
     {
         if (hitVFX == null) yield break;
-
+        
         GameObject hitPrefab = Managers.Resource.Instantiate(hitVFX);
         hitPrefab.transform.position = transform.position;
         var particle = hitPrefab.GetComponent<ParticleSystem>();
@@ -81,6 +86,8 @@ public class Projectile : Attack
         else
             Destroy(hitPrefab, particle.main.duration);
 
+
+        
         StartCoroutine(ParticleDestroy(0f));
 
         yield return null;

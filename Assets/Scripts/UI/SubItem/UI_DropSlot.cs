@@ -20,9 +20,9 @@ public class UI_DropSlot : UI_Slot
         gameObject.BindEvent(OnDrop, Define.EUiEvent.Drop);              
     }
 
-    void OnHighlight(PointerEventData eventData) { icon.color = Color.red; }
-    void OffHighlight(PointerEventData eventData) { icon.color = Color.white; }
-    void OnDrop(PointerEventData eventData)
+    private void OnHighlight(PointerEventData eventData) { icon.color = Color.red; }
+    private void OffHighlight(PointerEventData eventData) { icon.color = Color.white; }
+    private void OnDrop(PointerEventData eventData)
     {
         if (eventData.pointerDrag.gameObject == this.gameObject)
             return;

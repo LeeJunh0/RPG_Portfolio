@@ -24,6 +24,5 @@ public class UIButton : UIPopup
         Bind<Image>(typeof(Images));
         GameObject go = GetImage((int)Images.ItemIcon).gameObject;
         BindEvent(go, (PointerEventData data) => { go.transform.position = data.position; }, Define.EUiEvent.Drag);
-
     }
 }

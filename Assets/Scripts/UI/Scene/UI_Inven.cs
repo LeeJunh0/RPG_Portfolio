@@ -4,26 +4,26 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class UI_Inven : UIPopup
 {
     enum GameObjects
     {
         UI_Inven_Sorting,
-        UI_Inven_Popup,
+        UI_Sliver_Text,
         Content
     }
-    int curIndex        = int.MaxValue;
-    UI_Inven_Slot[]     iconInfos;
-    GameObject          popup;
 
+    UI_Inven_Slot[] iconInfos;
+    Text sliverText;
 
     public override void Init()
     {
         base.Init();
 
         Bind<GameObject>(typeof(GameObjects));
-        popup = GetObject((int)GameObjects.UI_Inven_Popup);
+        sliverText = GetObject((int)GameObjects.UI_Sliver_Text).GetComponent<Text>();
 
         GetObject((int)GameObjects.UI_Inven_Sorting).BindEvent((evt) =>
         {
@@ -32,13 +32,17 @@ public class UI_Inven : UIPopup
         });
 
         InfosInit();
-        popup.SetActive(false);
     }
 
     private void Start()
     {
         Managers.Inventory.SetInvenReference(iconInfos);
         Managers.Inventory.InterLocking();
+    }
+
+    private void Update()
+    {
+        SetSliverText();     
     }
 
     public void InfosInit()
@@ -54,23 +58,15 @@ public class UI_Inven : UIPopup
             item.transform.SetParent(GetObject((int)GameObjects.Content).transform);
             item.GetComponent<RectTransform>().localScale = Vector3.one;
             iconInfos[i] = item.GetOrAddComponent<UI_Inven_Slot>();
-            iconInfos[i].SetIndex(i);
-            
+            iconInfos[i].SetIndex(i);           
         }
     }
 
-    public void OnInvenPopup(int index)
+    public void SetSliverText() 
     {
-        Iteminfo iteminfo = Managers.Inventory.InvenInfos[index];
-        popup.GetComponent<UI_Inven_Popup>().InvenPopupInit(iteminfo);
-
-        if (curIndex != index)
-        {
-            curIndex = index;
-            return;
-        }
-
-        curIndex = int.MaxValue;
-        popup.SetActive(false);
+        PlayerStat playerStat = Managers.Game.GetPlayer().GetComponent<PlayerStat>();
+        int curSliver = playerStat.Gold;
+ 
+        sliverText.text = string.Format("{0:#,0}", curSliver);
     }
 }

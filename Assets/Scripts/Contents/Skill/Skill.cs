@@ -26,10 +26,6 @@ public class Skill : MonoBehaviour
         SetMotifies();
         StartCoroutine(DestroySkill());
 
-        if (initialize == null) { initialize = new InitializeMotify(); }
-        if (embodiment == null) { embodiment = new EmbodimentMotify(); }
-        if (movement == null) { movement = new MoveMotify(); }
-
         initialize.Execute(this);
         embodiment.Execute(this);
         movement.Execute(this);
@@ -37,7 +33,7 @@ public class Skill : MonoBehaviour
 
     public void SetMotifies()
     {
-        foreach(MotifyInfo info in motifies)
+        foreach (MotifyInfo info in motifies)
         {
             Motify motify = Managers.Skill.SetMotify(info.skillName);
 
@@ -48,11 +44,16 @@ public class Skill : MonoBehaviour
             else
                 SetMovementMotify(motify);
         }
+
+        if (initialize == null) { SetInitializeMotify(new InitializeMotify()); }
+        if (embodiment == null) { SetEmbodimentMotify(new EmbodimentMotify()); }
+        if (movement == null) { SetMovementMotify(new MoveMotify()); }
     }
 
     public void SetInitializeMotify(Motify motify)    { initialize = motify; }
     public void SetEmbodimentMotify(Motify motify)    { embodiment = motify; }
     public void SetMovementMotify(Motify motify)      { movement = motify; }
+
     protected IEnumerator DestroySkill()
     {
         yield return new WaitForSeconds(1f);

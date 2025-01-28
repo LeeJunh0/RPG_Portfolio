@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
@@ -10,7 +11,7 @@ public class PlayerController : BaseController
 {
     int mask =  (1 << (int)Define.ELayer.Ground) | (1 << (int)Define.ELayer.NPC);
 
-    PlayerStat  stat;
+    PlayerStat stat;
 
     public override void Init()
     {
@@ -40,7 +41,23 @@ public class PlayerController : BaseController
                 if (lockTarget.layer == (int)Define.ELayer.NPC)
                 {
                     EState = Define.EState.Idle;
-                    lockTarget.GetOrAddComponent<QuestGiver>().OnTypeUI();
+                    NpcController npc = lockTarget.GetComponent<NpcController>();
+                    
+                    switch(npc.npcType)
+                    {
+                        case Define.ENpc.Giver:
+                            {
+                                QuestGiver giver = npc.GetComponent<QuestGiver>();
+                                giver.OnTypeUI();
+                            }
+                            break;
+                        case Define.ENpc.Trader:
+                            {
+                                TraderController trader = npc.GetComponent<TraderController>();
+                                trader.OnTraderUI();
+                            }
+                            break;
+                    }                   
                 }                                             
                 return;
             }                        

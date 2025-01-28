@@ -7,27 +7,27 @@ using UnityEngine.UI;
 
 public class UI_SkillTip : MonoBehaviour
 {
-    static UI_SkillTip      instance;
+    private static UI_SkillTip instance;
 
-    public CanvasGroup      group;
-    public RectTransform    parentRect;
-    public Image            icon;
-    public Text             skillName;
-    public Text             skillFuction;
-    public Text             skillStat;
-    public Text             skillDescription;
-    public Text             initMotify;
-    public Text             embodiMotify;
-    public Text             moveMotify;
+    public CanvasGroup group;
+    public RectTransform parentRect;
+    public Image icon;
+    public Text skillName;
+    public Text skillFuction;
+    public Text skillStat;
+    public Text skillDescription;
+    public Text initMotify;
+    public Text embodiMotify;
+    public Text moveMotify;
 
-    MotifyInfo initInfo;
-    MotifyInfo embodiInfo;
-    MotifyInfo moveInfo;
+    private MotifyInfo initInfo;
+    private MotifyInfo embodiInfo;
+    private MotifyInfo moveInfo;
 
     public static UI_SkillTip Instance => instance;
-    public MotifyInfo InitInfo      { get { return initInfo == null ? null : initInfo; } set { initInfo = value; } }
-    public MotifyInfo EmbodiInfo    { get { return embodiInfo == null ? null : embodiInfo; } set { embodiInfo = value; } }
-    public MotifyInfo MoveInfo      { get { return moveInfo == null ? null : moveInfo; } set { moveInfo = value; } }
+    public MotifyInfo InitInfo { get { return initInfo == null ? null : initInfo; } set { initInfo = value; } }
+    public MotifyInfo EmbodiInfo { get { return embodiInfo == null ? null : embodiInfo; } set { embodiInfo = value; } }
+    public MotifyInfo MoveInfo { get { return moveInfo == null ? null : moveInfo; } set { moveInfo = value; } }
 
     void Start()
     {

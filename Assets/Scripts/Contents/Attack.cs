@@ -33,8 +33,5 @@ public class Attack : MonoBehaviour
         }
     }
 
-    protected void TargetDamage(float radius, int layer)
-    {
-        
-    }
+    protected void DirectDamaged(Stat monster) { monster.OnDamaged(Managers.Game.GetPlayer().GetComponent<Stat>()); }
 }

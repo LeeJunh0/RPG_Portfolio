@@ -38949,8 +38949,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4555007779233668}
   - component: {fileID: 54270707880095282}
-  - component: {fileID: 135330449751369596}
   - component: {fileID: 5002946648801649175}
+  - component: {fileID: 6682218360474137357}
   m_Layer: 11
   m_Name: FireProjectile
   m_TagString: Bullet
@@ -39011,8 +39011,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!135 &135330449751369596
-SphereCollider:
+--- !u!114 &5002946648801649175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1745751436853880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5c1e1a1818b5da4aa0507b652be3e1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitVFX: {fileID: 0}
+  muzzleVFX: {fileID: 0}
+--- !u!65 &6682218360474137357
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -39030,22 +39044,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.4
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5002946648801649175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1745751436853880}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5c1e1a1818b5da4aa0507b652be3e1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hitVFX: {fileID: 0}
-  muzzleVFX: {fileID: 0}
 --- !u!1 &1759366201568408
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,27 +12,25 @@ using UnityEngine.UIElements;
 
 public class InventoryManager
 {
-    Iteminfo[]              invenInfos;
-    UI_Inven_Slot[]         invenIcons;
-    int                     sliver;
+    private UsingItem[] invenInfos;
+    private UI_Inven_Slot[] invenIcons;
 
     public int SelectIndex { get; set; }
-    public int Sliver { get { return sliver; } set { sliver = value; } }
-    public Iteminfo[] InvenInfos    { get { return invenInfos; } private set { } }
-    public UI_Inven_Slot[] InvenIcons{ get { return invenIcons; } private set { } }
+    public Item[] InvenInfos { get { return invenInfos; } private set { } }
+    public UI_Inven_Slot[] InvenIcons { get { return invenIcons; } private set { } }
 
-    public class ItemComparer : IComparer<Iteminfo>
+    public class ItemComparer : IComparer<UsingItem>
     {
-        public int Compare(Iteminfo x, Iteminfo y)
+        public int Compare(UsingItem x, UsingItem y)
         {
-            if (x == null) 
+            if (x.ItemInfo == null) 
                 return 1;
-            else if (y == null) 
+            else if (y.ItemInfo == null) 
                 return -1;
-            else if (x == null || y == null)
+            else if (x.ItemInfo == null || y.ItemInfo == null)
                 return 0;
             else 
-                return x.id.CompareTo(y.id);
+                return x.ItemInfo.id.CompareTo(y.ItemInfo.id);
         }      
     }
 
@@ -40,10 +38,10 @@ public class InventoryManager
 
     public void Init()
     {
-        invenInfos = new Iteminfo[Managers.Option.InventoryCount];
+        invenInfos = new UsingItem[Managers.Option.InventoryCount];
 
         for (int i = 0; i < invenInfos.Length; i++)
-            invenInfos[i] = null;        
+            invenInfos[i] = new UsingItem();        
     }
 
     public void OnInventory()
@@ -57,7 +55,7 @@ public class InventoryManager
         if (Util.FindChild<UI_Inven>(Managers.UI.Root) == false)
             return;
 
-        invenIcons[index].SetInfo(invenInfos[index]);       
+        invenIcons[index].SetInfo(invenInfos[index].ItemInfo);       
     }
 
     public void UpdateAllSlot()
@@ -75,14 +73,14 @@ public class InventoryManager
         {
             for (int i = 0; i < invenInfos.Length; i++)
             {
-                if (invenInfos[i] == null)
+                if (invenInfos[i].ItemInfo == null)
                     continue;
 
-                if (invenInfos[i].id == item.id)
+                if (invenInfos[i].ItemInfo.id == item.id)
                 {
-                    invenInfos[i].MyStack++;
-                    Managers.Quest.OnGetQuestAction?.Invoke(item.GetItemName(), GetItemCount(item.GetItemName()));
+                    invenInfos[i].ItemInfo.curStack++; 
                     UpdateSlotInfo(i);
+                    Managers.Quest.OnGetQuestAction?.Invoke(item.GetItemName(), GetItemCount(item.GetItemName()));
                     return;
                 }
             }
@@ -90,12 +88,12 @@ public class InventoryManager
 
         for (int i = 0; i < invenInfos.Length; i++)
         {
-            if (invenInfos[i] != null)
+            if (invenInfos[i].ItemInfo != null)
                 continue;
 
-            invenInfos[i] = item;
-            Managers.Quest.OnGetQuestAction?.Invoke(item.uiInfo.name, GetItemCount(item.uiInfo.name));
+            invenInfos[i].SetItem(item);
             UpdateSlotInfo(i);
+            Managers.Quest.OnGetQuestAction?.Invoke(item.uiInfo.name, GetItemCount(item.uiInfo.name));
             break;
         }
     }
@@ -105,15 +103,31 @@ public class InventoryManager
         if (invenInfos.Length <= 0)
             return;
 
-        invenInfos[index] = null;
+        invenInfos[index].SetItem(null);
         UpdateSlotInfo(index);
+    }
+
+    public bool RemoveItem(Iteminfo item)
+    {
+        for (int i = 0; i < invenInfos.Length; i++)
+        {
+            if (invenInfos[i].ItemInfo == item)
+            {
+                invenInfos[i].SetItem(null);
+                UpdateSlotInfo(i);
+                TrimAll();
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public void ChangeItem(int item1, int item2)
     {
-        Iteminfo item = invenInfos[item1];
-        invenInfos[item1] = invenInfos[item2];
-        invenInfos[item2] = item;
+        Iteminfo item = invenInfos[item1].ItemInfo;
+        invenInfos[item1].SetItem(invenInfos[item2].ItemInfo);
+        invenInfos[item2].SetItem(item);
     }
 
     public void TrimAll()
@@ -122,7 +136,7 @@ public class InventoryManager
             return;
 
         int voidSearch = -1;
-        while (++voidSearch < invenInfos.Length && invenInfos[voidSearch] != null)
+        while (++voidSearch < invenInfos.Length && invenInfos[voidSearch].ItemInfo != null)
         {
             if (voidSearch >= invenInfos.Length)
             {
@@ -135,13 +149,13 @@ public class InventoryManager
 
         while (true)
         {
-            while (++itemSearch < invenInfos.Length && invenInfos[itemSearch] == null) ;
+            while (++itemSearch < invenInfos.Length && invenInfos[itemSearch].ItemInfo == null) ;
 
             if (itemSearch >= invenInfos.Length)
                 break;
 
-            invenInfos[voidSearch] = invenInfos[itemSearch];
-            invenInfos[itemSearch] = null;
+            invenInfos[voidSearch].SetItem(invenInfos[itemSearch].ItemInfo);
+            invenInfos[itemSearch].SetItem(null);
             voidSearch++;
         }
         UpdateAllSlot();
@@ -172,10 +186,13 @@ public class InventoryManager
         int curCount = 0;
         for(int i = 0; i < invenInfos.Length; i++)
         {
-            if (invenInfos[i] == null)
+            if (invenInfos[i].ItemInfo == null)
                 continue;
-
-            curCount = invenInfos[i].uiInfo.name == target ? curCount + invenInfos[i].MyStack : curCount;
+            else
+            {
+                curCount = invenInfos[i].ItemInfo.uiInfo.name == target ? curCount + invenInfos[i].ItemInfo.curStack : curCount;
+                break;
+            }
         }                  
         return curCount;
     }

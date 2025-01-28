@@ -15,16 +15,22 @@ public class UI_Skill : UIPopup
     }
 
     int slotCount = 3;
-    Define.ESkill curSkillType;
 
-    public Define.ESkill SkillType { get { return curSkillType; } set { curSkillType = value; } }
     public override void Init()
     {
         base.Init();
 
         BindObject(typeof(GameObjects));
-
-        SkillType = Define.ESkill.Projectile;
+        GetObject((int)GameObjects.ProjectileTab).BindEvent(evt => 
+        {
+            Managers.Skill.curMainSkill = Define.ESkill.Projectile;
+            SetSkill();
+        });
+        GetObject((int)GameObjects.ExplosionTab).BindEvent(evt => 
+        {
+            Managers.Skill.curMainSkill = Define.ESkill.AreaOfEffect;
+            SetSkill();
+        });
 
         SetSkill();
         SetMotifys();
@@ -35,13 +41,13 @@ public class UI_Skill : UIPopup
         GameObject go = GetObject((int)GameObjects.MainSkill_Slot);
         UI_SkillSlot slot = go.GetComponent<UI_SkillSlot>();
 
-        switch (SkillType)
+        switch (Managers.Skill.curMainSkill)
         {
             case Define.ESkill.Projectile:
                 slot.SetInfo(Managers.Data.SkillDict["ProjectileSkill"]);
                 break;
             case Define.ESkill.AreaOfEffect:
-                slot.SetInfo(Managers.Data.SkillDict["Explosion"]);
+                slot.SetInfo(Managers.Data.SkillDict["ExplosionSkill"]);
                 break;
         }
     }
@@ -102,10 +108,5 @@ public class UI_Skill : UIPopup
         }
 
         ground.SetSlots();
-    }
-
-    private void TabClickEvent()
-    {
-        
     }
 }

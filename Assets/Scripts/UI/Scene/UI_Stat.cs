@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_Stat : UIPopup
+public class UI_Stat : UIScene
 {    
     enum GameObjects
     {

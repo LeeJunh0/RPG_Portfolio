@@ -5,12 +5,13 @@
       "hp": 0,
       "att": 0,
       "gold": 0,
-      "type": "None",
+      "type": 0,
+      "isStack": false,
+      "curStack": 1,
       "uiInfo": {
         "icon": "void_Slot",
         "name": ".",
-        "description": ".",
-        "isStack": false
+        "description": "."
       }
     },
     {
@@ -18,13 +19,13 @@
       "hp": 0,
       "att": 10,
       "gold": 250,
-      "type": "Attachment",
-      "isUse": true,
+      "type": 2,
+      "isStack": false,
+      "curStack": 1,
       "uiInfo": {
         "icon": "sword",
         "name": "하급 소드",
-        "description": "상점에서 파는 하급 소드다.",
-        "isStack": false
+        "description": "상점에서 파는 하급 소드다."
       }
     },
     {
@@ -32,12 +33,13 @@
       "hp": 10,
       "att": 0,
       "gold": 200,
-      "type": "Attachment",
+      "type": 3,
+      "isStack": false,
+      "curStack": 1,
       "uiInfo": {
         "icon": "armor",
         "name": "하급 갑옷",
-        "description": "상점에서 파는 하급 갑옷다.",
-        "isStack": false
+        "description": "상점에서 파는 하급 갑옷다."
       }
     },
     {
@@ -45,25 +47,27 @@
       "hp": 8,
       "att": 0,
       "gold": 150,
-      "type": "Attachment",
+      "type": 4,
+      "isStack": false,
+      "curStack": 1,
       "uiInfo": {
         "icon": "pants",
         "name": "하급 바지",
-        "description": "상점에서 파는 하급 바지다.",
-        "isStack": false
+        "description": "상점에서 파는 하급 바지다."
       }
     },
     {
       "id": 105,
-      "hp": 0,
+      "hp": 5,
       "att": 0,
       "gold": 15,
-      "type": "None",
+      "type": 1,
+      "isStack": true,
+      "curStack": 1,
       "uiInfo": {
         "icon": "apple",
         "name": "작은 사과",
-        "description": "기사가 떨어트린 사과다.",
-        "isStack": true
+        "description": "기사가 떨어트린 사과다."
       }
     },
     {
@@ -71,12 +75,13 @@
       "hp": 20,
       "att": 0,
       "gold": 120,
-      "type": "Consumable",
+      "type": 1,
+      "isStack": true,
+      "curStack": 1,
       "uiInfo": {
         "icon": "hp",
         "name": "하급 힐링포션",
-        "description": "상점에서 파는 하급 힐링 포션이다.",
-        "isStack": true
+        "description": "상점에서 파는 하급 힐링 포션이다."
       }
     },
     {
@@ -84,12 +89,12 @@
       "hp": 15,
       "att": 0,
       "gold": 80,
-      "type": "Attachment",
+      "type": 5,
+      "curStack": 1,
       "uiInfo": {
         "icon": "boots",
         "name": "하급 신발",
-        "description": "상점에서 파는 하급 신발다.",
-        "isStack": true
+        "description": "상점에서 파는 하급 신발다."
       }
     }
   ]

@@ -12,7 +12,7 @@ public class UI_Pause : UIPopup
         NoButton
     }
 
-    private void OnEnable()
+    private void Start()
     {
         Time.timeScale = 0f;
     }
@@ -31,11 +31,11 @@ public class UI_Pause : UIPopup
         }); 
         GetObject((int)Buttons.NoButton).BindEvent((PointerEventData) =>
         {
-            gameObject.SetActive(!gameObject.activeSelf);
+            Managers.Resource.Destroy(this.gameObject);
         });
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         Time.timeScale = 1f;
     }

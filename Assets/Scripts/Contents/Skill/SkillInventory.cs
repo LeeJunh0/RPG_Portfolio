@@ -13,7 +13,7 @@ public class SkillInventory : MonoBehaviour
     public List<SkillInfo> skillInven;
     public List<SkillInfo> mySkills;
     
-    BaseController owner;
+    private BaseController owner;
 
     private void Start()
     {
@@ -54,14 +54,14 @@ public class SkillInventory : MonoBehaviour
 
     public void AddMotify(MotifyInfo info)
     {
-        SkillInfo skill = skillMotifies.FirstOrDefault(x => x.Key.type == info.owner).Key;
+        SkillInfo skill = skillMotifies.FirstOrDefault(x => x.Key.type == Managers.Skill.curMainSkill).Key;
 
         if (skill == null)
             return;
 
         if (skillMotifies[skill].Any(motify => motify.skillName == info.skillName) == true)
         {
-            Debug.Log("중복된 스킬 입니다.");
+            Debug.Log("중복된 파츠 입니다.");
             return;
         }
 
@@ -99,7 +99,7 @@ public class SkillInventory : MonoBehaviour
 
             yield return null;
         }
-        Debug.Log("??");
+
         SkillExecute(skill, indicator.transform.position);
         Managers.Resource.Destroy(indicator.gameObject);
     }

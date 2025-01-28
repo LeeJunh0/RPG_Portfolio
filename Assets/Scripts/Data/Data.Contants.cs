@@ -95,21 +95,18 @@ namespace Data
     #endregion
 
     #region Item
-    public enum ItemType
-    {
-        None = 0,
-        Consumable,
-        Attachment
-    }
+
 
     [Serializable]
-    public class Iteminfo : ItemStack
+    public class Iteminfo
     {        
         public int          id;
         public int          hp;
         public int          att;
         public int          gold;
         public ItemType     type;
+        public bool         isStack;
+        public int          curStack;
         public ItemUIinfo   uiInfo;
 
         public Iteminfo(Iteminfo info)
@@ -119,6 +116,8 @@ namespace Data
             this.att = info.att;
             this.gold = info.gold;
             this.type = info.type;
+            this.isStack = info.isStack;
+            this.curStack = info.curStack;
             this.uiInfo = info.uiInfo;
         }
 
