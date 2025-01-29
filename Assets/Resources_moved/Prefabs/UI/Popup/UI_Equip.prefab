@@ -1011,6 +1011,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c3075a3d782c4a49897e2582daca5c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  equipItem:
+    id: 0
+    hp: 0
+    att: 0
+    gold: 0
+    type: 0
+    isStack: 0
+    curStack: 0
+    uiInfo:
+      icon: 
+      name: 
+      description: 
+  index: 0
 --- !u!1 &7857789907154663610
 GameObject:
   m_ObjectHideFlags: 0
@@ -1022,6 +1035,7 @@ GameObject:
   - component: {fileID: 7857789907154663609}
   - component: {fileID: 7857789907154663591}
   - component: {fileID: 7857789907154663608}
+  - component: {fileID: 6947830058101301240}
   m_Layer: 5
   m_Name: SlotIcon
   m_TagString: Untagged
@@ -1086,6 +1100,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6947830058101301240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7857789907154663610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 508c2262a33740f4a8836d10bc5eb897, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8204452239400187421
 GameObject:
   m_ObjectHideFlags: 0
@@ -1406,6 +1432,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c3075a3d782c4a49897e2582daca5c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  equipItem:
+    id: 0
+    hp: 0
+    att: 0
+    gold: 0
+    type: 0
+    isStack: 0
+    curStack: 0
+    uiInfo:
+      icon: 
+      name: 
+      description: 
+  index: 0
 --- !u!1 &8950853341117827411
 GameObject:
   m_ObjectHideFlags: 0
@@ -1417,6 +1456,7 @@ GameObject:
   - component: {fileID: 8950853341117827410}
   - component: {fileID: 8950853341117827408}
   - component: {fileID: 8950853341117827409}
+  - component: {fileID: 1611230338277779288}
   m_Layer: 5
   m_Name: SlotIcon
   m_TagString: Untagged
@@ -1481,6 +1521,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1611230338277779288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8950853341117827411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 508c2262a33740f4a8836d10bc5eb897, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8950853341269988492
 GameObject:
   m_ObjectHideFlags: 0
@@ -1847,6 +1899,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c3075a3d782c4a49897e2582daca5c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  equipItem:
+    id: 0
+    hp: 0
+    att: 0
+    gold: 0
+    type: 0
+    isStack: 0
+    curStack: 0
+    uiInfo:
+      icon: 
+      name: 
+      description: 
+  index: 0
 --- !u!1 &8950853341850717400
 GameObject:
   m_ObjectHideFlags: 0
@@ -1936,6 +2001,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c3075a3d782c4a49897e2582daca5c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  equipItem:
+    id: 0
+    hp: 0
+    att: 0
+    gold: 0
+    type: 0
+    isStack: 0
+    curStack: 0
+    uiInfo:
+      icon: 
+      name: 
+      description: 
+  index: 0
 --- !u!1 &8950853341998310842
 GameObject:
   m_ObjectHideFlags: 0
@@ -1947,6 +2025,7 @@ GameObject:
   - component: {fileID: 8950853341998310841}
   - component: {fileID: 8950853341998310823}
   - component: {fileID: 8950853341998310840}
+  - component: {fileID: 5642605202178851117}
   m_Layer: 5
   m_Name: SlotIcon
   m_TagString: Untagged
@@ -2011,6 +2090,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5642605202178851117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8950853341998310842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 508c2262a33740f4a8836d10bc5eb897, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8950853342034609530
 GameObject:
   m_ObjectHideFlags: 0
@@ -2099,6 +2190,7 @@ GameObject:
   - component: {fileID: 8950853342362718879}
   - component: {fileID: 8950853342362718877}
   - component: {fileID: 8950853342362718878}
+  - component: {fileID: 1588814366801645589}
   m_Layer: 5
   m_Name: SlotIcon
   m_TagString: Untagged
@@ -2163,6 +2255,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1588814366801645589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8950853342362718864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 508c2262a33740f4a8836d10bc5eb897, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8950853342457155077
 GameObject:
   m_ObjectHideFlags: 0

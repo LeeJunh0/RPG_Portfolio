@@ -22,7 +22,7 @@ public class GameScene : BaseScene
 
         Managers.Resource.Instantiate("UI_Game");
         Managers.Skill.GetSkillInventory();
-
+        Managers.Equip.Init();
     }
 
     public override void Clear()

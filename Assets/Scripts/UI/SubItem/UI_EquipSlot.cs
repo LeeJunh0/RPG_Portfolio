@@ -29,7 +29,7 @@ public class UI_EquipSlot : UIPopup
         slot.sprite = Managers.UI.TextureToSprite(texture);
     }
 
-    public void SetInfo(Texture2D image)
+    public void SetBefore(Texture2D image)
     {
         equipItem = null;
 

@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class EquipManager
 {
+    public Action OnStatusSet = null;
+
     public Texture2D[] emptyImage = new Texture2D[4];
     public Iteminfo[] equipInfos = new Iteminfo[4];
     public UI_EquipSlot[] slots = new UI_EquipSlot[4];
@@ -52,16 +54,22 @@ public class EquipManager
         }
 
         PlayerStat playerStat = Managers.Game.GetPlayer().GetComponent<PlayerStat>();
-        playerStat.Hp += item.hp;
+        playerStat.MaxHp += item.hp;
         playerStat.Attack += item.att;
+
+        OnStatusSet?.Invoke();
     }
 
-    //public void ItemUnEquip( item)
-    //{
-    //    PlayerStat playerStat = Managers.Game.GetPlayer().GetComponent<PlayerStat>();
-    //    playerStat.Hp -= equipInfos[index].hp;
-    //    playerStat.Attack -= equipInfos[index].att;
-    //
-    //
-    //}
+    public void ItemUnEquip(int index)
+    {
+        PlayerStat playerStat = Managers.Game.GetPlayer().GetComponent<PlayerStat>();
+        playerStat.MaxHp -= equipInfos[index].hp;
+        playerStat.Attack -= equipInfos[index].att;
+
+        Managers.Inventory.AddItem(equipInfos[index]);
+        equipInfos[index] = null;
+        slots[index].SetBefore(emptyImage[index]);
+
+        OnStatusSet?.Invoke();
+    }
 }

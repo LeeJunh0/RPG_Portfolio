@@ -9,6 +9,9 @@ public class UsingItem : Item
 {
     public override void Use(int index)
     {
+        if (itemInfo == null)
+            return;
+
         if (ItemInfo.type == ItemType.None)
             return;
 

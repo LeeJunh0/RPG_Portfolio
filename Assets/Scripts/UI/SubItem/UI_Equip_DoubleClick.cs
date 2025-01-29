@@ -18,7 +18,7 @@ public class UI_Equip_DoubleClick : MonoBehaviour
     {
         if (isDoubleCheck == true)
         {
-            //Managers.Equip.ItemUnEquip(slot.equipItem);
+            Managers.Equip.ItemUnEquip(slot.index);
             isDoubleCheck = false;
         }
     }

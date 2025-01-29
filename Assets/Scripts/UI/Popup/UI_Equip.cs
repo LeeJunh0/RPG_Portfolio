@@ -30,6 +30,9 @@ public class UI_Equip : UIPopup
 
         GetObject((int)GameObjects.UI_Equip_ExitButton).BindEvent(evt => { Managers.UI.ClosePopupUI(); });
         SetSlots();
+
+        Managers.Equip.OnStatusSet -= StatusSet;
+        Managers.Equip.OnStatusSet += StatusSet;
     }
 
     public void SetSlots()
@@ -40,5 +43,16 @@ public class UI_Equip : UIPopup
             UI_EquipSlot slot = go.GetComponent<UI_EquipSlot>();
             Managers.Equip.slots[i] = slot;
         }
+    }
+
+    public void StatusSet()
+    {
+        PlayerStat playerStat = Managers.Game.GetPlayer().GetComponent<PlayerStat>();
+
+        GetText((int)Texts.UI_Equip_Hp_Text).text = string.Format($"{playerStat.Hp} / {playerStat.MaxHp}");
+        GetText((int)Texts.UI_Equip_Mp_Text).text = string.Format($"{playerStat.Mp} / {playerStat.MaxMp}");
+        GetText((int)Texts.UI_Equip_Att_Text).text = string.Format($"{playerStat.Attack}");
+        GetText((int)Texts.UI_Equip_Def_Text).text = string.Format($"{playerStat.Defense}");
+        GetText((int)Texts.UI_Equip_Move_Text).text = string.Format($"{playerStat.Movespeed}");
     }
 }
