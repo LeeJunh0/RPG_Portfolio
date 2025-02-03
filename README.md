@@ -3,15 +3,14 @@ Unity3D의 RPG형식 게임입니다.
 
 # 개발환경
 - Visual Studio 2022
-- Unity 2021.3.39f1
+- Unity 2022.3.21f1
 
 # 목차
 - [컨텐츠 기능 구성](#컨텐츠-기능-구성-1)
 - [만들며 느꼈던 점](#만들며-느꼈던-점)  
 
 ## 컨텐츠 기능 구성
-- 스킬
-- 스킬 범위표시
+- 스킬, 범위표시
 - 스킬파츠 3가지
     - 속성(Elemental)
     - 구성
@@ -27,6 +26,47 @@ Unity3D의 RPG형식 게임입니다.
 - 각종 작은기능들
   
 ## 컨텐츠 기능 구성
+
+### 1. 스킬 및 범위표시
+|발사체공격|범위공격|
+|------|---|
+|<img src="https://github.com/user-attachments/assets/a7d0b8e7-e71f-428a-9529-bf3646c31eb9" width= "300">|<img src="https://github.com/user-attachments/assets/5cded845-937b-4092-afd2-a4873488da2c" width="300">|
+
+### 2. 보스스킬 및 범위표시
+|보스|범위공격|
+|--|--|
+|<img src="https://github.com/user-attachments/assets/d35fd5c2-7408-457c-b556-6a7d662e2e7f" width="300">|<img src="https://github.com/user-attachments/assets/a060a02d-d315-4494-899d-72a8c18d59a9" width="300">|
+
+### 3. 인벤토리와 세부기능
+|슬롯드래그|아이템 툴팁|
+|--|--|
+|<img src="https://github.com/user-attachments/assets/c5e6f977-4856-4500-a39b-fa141bd44eea" width="400">|<img src="https://github.com/user-attachments/assets/020a2837-262b-4e02-adae-7f52ad637c87" width="400">|
+
+|아이템 정렬|아이템 사용|
+|--|--|
+|<img src="https://github.com/user-attachments/assets/4fe937c3-705e-4776-9c17-8f205e3c948e" width="400">|<img src="https://github.com/user-attachments/assets/5fd1930c-f106-44eb-8369-9ef80ace78c7" width="400">|
+
+### 4. 장비창과 세부기능
+|장착확인|장착해제|
+|--|--|
+|<img src="https://github.com/user-attachments/assets/44301a29-95e6-4f47-96a2-e4b3d1d86167" width="400">|<img src="https://github.com/user-attachments/assets/4c13870a-70bb-469f-a795-d978b9b2afef" width="400">|
+
+### 5. 스킬창과 세부기능
+|슬롯하이라이트|스킬툴팁|스킬탭|
+|--|--|--|
+|<img src="https://github.com/user-attachments/assets/75cb6cba-46c8-49ce-b275-fe1f569718c4" width="300">|<img src="https://github.com/user-attachments/assets/57d90e18-55b6-479c-8fbe-f77f5e545dc8" width="300">|<img src="https://github.com/user-attachments/assets/afb70c76-f09c-4706-9a0d-1af5715e2766" width="300">|
+
+### 6. 퀘스트창 과 세부기능
+|퀘스트리스트 및 수락|수락퀘스트 확인|
+|--|--|
+|<img src="https://github.com/user-attachments/assets/2a7b9fd8-1c01-4249-88a5-d93e2eda38df" width="400">|<img src="https://github.com/user-attachments/assets/3e3a16a8-303d-4f11-9a63-c44c11107fa6" width="400">|
+
+### 7. 상점과 세부기능
+|아이템구매|아이템판매|
+|--|--|
+|<img src="https://github.com/user-attachments/assets/ad6dc11b-bff7-405f-a06d-154510d06bd8" width="400">|<img src="https://github.com/user-attachments/assets/e3aee9ab-2a65-4188-b800-3a7e699718aa" width="400">|
+
+
 
 ### 1. 스킬
 베이스가 되는 스킬과 파츠로 나뉘어진 기능들이 합쳐져 만들어지는 스킬을 구현하였습니다.
