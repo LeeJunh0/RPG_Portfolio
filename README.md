@@ -11,6 +11,7 @@ Unity3D의 RPG형식 게임입니다.
 
 ## 컨텐츠 기능 구성
 - 스킬
+- 스킬 범위표시
 - 스킬파츠 3가지
     - 속성(Elemental)
     - 구성
@@ -474,7 +475,12 @@ public class ExplosionSkill : Skill
 ```
 </details>
 
-### 2. 스킬 구성 3가지
+### 2. 스킬 범위표시
+플레이어와 보스에 스킬타입마다 각각 다른 스킬범위표시를 플레이어에게 제공합니다.
+
+
+
+### 3. 스킬 구성 3가지
 #### - 속성(Elemental)
 스킬의 속성마다 고유한 시각적 효과와 기능들을 가질수 있도록 구현하였습니다.
 
@@ -719,7 +725,7 @@ public class MoveMotify : Motify
 ```
 </details>
 
-### 3. 인벤토리
+### 4. 인벤토리
 기본적인 아이템 추가, 삭제, 정렬기능을 구현했고 데이터와 UI를 분리하여 보다 유연하게 기능들이 작동할수 있도록 구현하였습니다.
 
 <details open> 
@@ -1109,7 +1115,7 @@ public class UI_Inven : UIPopup
 ```
 </details>
 
-### 4. 퀘스트 관리
+### 5. 퀘스트 관리
 Action을 이용한 리스너 패턴식 퀘스트 상태 관리 와 조건 업데이트를 구현했고 NPC들이 사용할 기능들을 이벤트로써 관리하도록 구현했습니다.
 
 <details open>
@@ -1367,7 +1373,7 @@ public class UI_Quest : UIPopup
 ```
 </details>
 
-### 4. 퀘스트 NPC
+### 6. 퀘스트 NPC
 퀘스트 매니저의 기능들을 가져와 UI 적으로 플레이어에게 제공하도록 구현했습니다.
 
 <details open>
@@ -1529,7 +1535,7 @@ public class UI_Giver : UIPopup
 ```
 </details>
 
-### 5. 상인 NPC
+### 7. 상인 NPC
 아이템리스트를 띄워주는 UI발사대로 UI에 파싱된 데이터를 가져와 유저에게 제공하고 Buy, Sell기능도 UI에서 제공하도록 합니다.    
 
 <details Open>
