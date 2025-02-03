@@ -17,10 +17,14 @@ Unity3D의 RPG형식 게임입니다.
     - 움직임
 
 - 인벤토리
+- 장비창
+- 스킬창
 - 퀘스트 관리
 - 퀘스트 NPC
-  각종 작은기능들
-
+- 상인 NPC
+- 보스 패턴
+- 각종 작은기능들
+  
 ## 컨텐츠 기능 구성
 
 ### 1. 스킬
@@ -30,32 +34,299 @@ Unity3D의 RPG형식 게임입니다.
 <summary>스킬 인벤토리 Code Open</summary>
 
 ```C#
+using Data;
+using System;
+using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+using static Define;
+
 public class SkillInventory : MonoBehaviour
 {
-    public Dictionary<SkillInfo, List<MotifyInfo>> skillMotifies;
+    public Dictionary<SkillInfo, MotifyInfo[]> skillMotifies;
     public List<SkillInfo> skillInven;
     public List<SkillInfo> mySkills;
     
-    BaseController owner;
+    private BaseController owner;
+    private bool duplicateCheck = false;
+
+    private void Start()
+    {
+        skillMotifies = new Dictionary<SkillInfo, MotifyInfo[]>();
+        InitSkills();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(BindKey.SkillSlot_1) && duplicateCheck == false)
+            StartCoroutine(SkillActivation(mySkills[0]));
+        if (Input.GetKeyDown(BindKey.SkillSlot_2) && duplicateCheck == false)
+            StartCoroutine(SkillActivation(mySkills[1]));
+    }
 
     public void InitSkills() {...}
     public void AddSkill(SkillInfo skillInfo) {...}
     public void RemoveSkill(SkillInfo skillInfo) {...}
     public void AddMotify(MotifyInfo info) {...}
-    public void RemoveMotify(SkillInfo skill, MotifyInfo info) {...}
-    public void SkillExecute(SkillInfo skill, Vector3 pos) {...}
-
+    public void RemoveByNameMotify(SkillInfo skill, MotifyInfo info)  {...}
+    public void RemoveByTypeMotify(SkillInfo skill, MotifyInfo info) {...}
     private bool CoolTimeCheck(SkillInfo skill) {...}
     private IEnumerator PlayerSetIndicator(SkillInfo skill) {...}
+    public void RangeIndicatorSet(Indicator indicator) {...}
+    public void SkillExecute(SkillInfo skill, Vector3 pos) {...}
+    public float SkillManaSum(SkillInfo skill) {...}
+    public bool SkillManaCheck(float mana) {...}
+    public void PlayerManaUse(float mana) {...}
     private IEnumerator SkillActivation(SkillInfo skill) {...}
+    private void OnDisable() {...}
+}
 ```
 </details>
 
 <details>
-<summary> 스킬 클래스 Code Open </summary>
+<summary> 스킬 인벤토리 Full Open </summary>
 
 ```C#
-public interface ISkill { void Execute(Skill _skill); }
+using Data;
+using System;
+using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+using static Define;
+
+public class SkillInventory : MonoBehaviour
+{
+    public Dictionary<SkillInfo, MotifyInfo[]> skillMotifies;
+    public List<SkillInfo> skillInven;
+    public List<SkillInfo> mySkills;
+    
+    private BaseController owner;
+    private bool duplicateCheck = false;
+
+    private void Start()
+    {
+        skillMotifies = new Dictionary<SkillInfo, MotifyInfo[]>();
+        InitSkills();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(BindKey.SkillSlot_1) && duplicateCheck == false)
+            StartCoroutine(SkillActivation(mySkills[0]));
+        if (Input.GetKeyDown(BindKey.SkillSlot_2) && duplicateCheck == false)
+            StartCoroutine(SkillActivation(mySkills[1]));
+    }
+
+    public void InitSkills()
+    {
+        owner = GetComponent<BaseController>();
+        Stat ownerStat = owner.GetComponent<Stat>();
+
+        foreach (SkillInfo skillinfo in Managers.Data.SkillDict.Values)
+        {
+            if (skillinfo.useObject == owner.WorldObjectType)
+            {
+                skillInven.Add(skillinfo);
+
+                if (ownerStat.Level >= skillinfo.level)
+                {
+                    AddSkill(skillinfo);
+                    skillMotifies.Add(skillinfo, new MotifyInfo[3]);
+                }
+            }
+        }
+    }
+
+    public void AddSkill(SkillInfo skillInfo) { mySkills.Add(skillInfo); }
+    public void RemoveSkill(SkillInfo skillInfo) { mySkills.Remove(skillInfo); }
+
+    public void AddMotify(MotifyInfo info)
+    {
+        SkillInfo skill = skillMotifies.FirstOrDefault(x => x.Key.type == Managers.Skill.curMainSkill).Key;
+
+        if (skill == null)
+            return;
+
+        if (Managers.Skill.MotifyNameEqule(skillMotifies[skill], info) == true)
+        {
+            RemoveByNameMotify(skill, info);
+            Debug.Log("중복파츠입니다.");
+            return;
+        }
+
+        if (Managers.Skill.MotifyTypeEqule(skillMotifies[skill], info) == true)       
+            RemoveByTypeMotify(skill, info);
+
+        switch (info.type)
+        {
+            case EMotifyType.Initialize:
+                skillMotifies[skill][0] = info;
+                break;
+            case EMotifyType.Embodiment:
+                skillMotifies[skill][1] = info;
+                break;
+            case EMotifyType.Movement:
+                skillMotifies[skill][2] = info;
+                break;
+        }
+    }
+
+    public void RemoveByNameMotify(SkillInfo skill, MotifyInfo info) 
+    {
+        for (int i = 0; i < skillMotifies[skill].Length; i++)
+        {
+            if (skillMotifies[skill][i].NameEquals(info) == true)
+            {
+                skillMotifies[skill][i] = null;
+                break;
+            }  
+        }
+    }
+
+    public void RemoveByTypeMotify(SkillInfo skill, MotifyInfo info)
+    {
+        for (int i = 0; i < skillMotifies[skill].Length; i++)
+        {
+            if (skillMotifies[skill][i].TypeEquals(info) == true)
+            {
+                skillMotifies[skill][i] = null;
+                break;
+            }
+        }
+    }
+
+    private bool CoolTimeCheck(SkillInfo skill) { return skill.isActive; }
+
+    private IEnumerator PlayerSetIndicator(SkillInfo skill)
+    {
+        float manaSum = SkillManaSum(skill);
+        bool manaCheck = SkillManaCheck(manaSum);
+
+        if (manaCheck == false)
+            yield break;
+
+        GameObject prefab = Managers.Skill.SetIndicator(skill.indicator);
+        Indicator indicator = prefab.GetComponent<Indicator>();
+        indicator.SetInfo(skill.indicator, skill.length, skill.radius);
+
+        if (skill.indicator == EIndicator.CircleIndicator)
+            RangeIndicatorSet(indicator);
+
+        bool isCancel = false;
+        while (Input.GetKey(BindKey.SkillSlot_1) || Input.GetKey(BindKey.SkillSlot_2))
+        {
+            if (Input.GetMouseButtonDown(1))
+            { 
+                isCancel = true;
+                break;
+            }
+            
+            Vector3 mousePos = Input.mousePosition;
+            mousePos.z = Camera.main.WorldToScreenPoint(indicator.transform.position).z; 
+            Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
+
+            indicator.UpdatePosition(worldPos);
+
+            yield return null;
+        }
+        
+        if (isCancel == false)        
+            SkillExecute(skill, indicator.transform.position);
+
+        Managers.Resource.Destroy(indicator.gameObject); 
+        duplicateCheck = false;
+    }
+
+    public void RangeIndicatorSet(Indicator indicator)
+    {
+        GameObject range = Managers.Skill.SetIndicator(EIndicator.RangeIndicator);
+        CircleIndicator circle = indicator.GetComponent<CircleIndicator>();
+        circle.SetRange(range);
+    }
+
+    public void SkillExecute(SkillInfo skill, Vector3 pos)
+    {
+        GameObject skillPrefab = new GameObject(name: "SkillObject");
+        Managers.Resource.AddComponentByName(skill.name, skillPrefab);
+        Skill instanceSkill = skillPrefab.GetComponent<Skill>();
+        instanceSkill.motifies = skillMotifies[skill].ToArray();
+        instanceSkill.targetPos = pos;
+        instanceSkill.Execute();
+
+        float mana = SkillManaSum(skill);
+        PlayerManaUse(mana);
+    }
+
+    public float SkillManaSum(SkillInfo skill)
+    {
+        float usingMana = skill.mana;
+        for (int i = 0; i < skillMotifies[skill].Length; i++)
+        {
+            if (skillMotifies[skill][i] == null)
+                continue;
+
+            usingMana += skillMotifies[skill][i].mana;
+        }
+
+        return usingMana;
+    }
+
+    public bool SkillManaCheck(float mana)
+    {
+        PlayerStat playerStat = Managers.Game.GetPlayer().GetComponent<PlayerStat>();
+        if (playerStat.Mp < mana)
+            return false;
+
+        return true;
+    }
+
+    public void PlayerManaUse(float mana)
+    {
+        PlayerStat playerStat = Managers.Game.GetPlayer().GetComponent<PlayerStat>();
+        playerStat.Mp -= mana;
+    }
+
+    private IEnumerator SkillActivation(SkillInfo skill)
+    {
+        if (CoolTimeCheck(skill) == false)
+            yield break;
+
+        duplicateCheck = true;
+        StartCoroutine(PlayerSetIndicator(skill));
+        
+        skill.isActive = false;
+        yield return new WaitForSeconds(skill.coolTime);
+        skill.isActive = true;
+    }
+
+    private void OnDisable()
+    {
+        if (owner.WorldObjectType != EWorldObject.Monster)
+            return;
+
+        StopAllCoroutines();
+    }
+}
+```
+</details>
+
+<details>
+<summary> 스킬 클래스 Full Code Open </summary>
+
+```C#
+using Data;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public interface ISkill
+{
+    void Execute(Skill _skill);
+}
 
 public class Skill : MonoBehaviour
 {
@@ -70,30 +341,86 @@ public class Skill : MonoBehaviour
     public Motify           embodiment;
     public Motify           movement;
 
-    public virtual void Execute() {...}
-    public void SetMotifies() {...}
-    public void SetInitializeMotify(Motify motify)  {...}
-    public void SetEmbodimentMotify(Motify motify)  {...}
-    public void SetMovementMotify(Motify motify)    {...}
-    protected IEnumerator DestroySkill() {...}
-    protected virtual IEnumerator OnDamaged() {...}
-    private void OnDestroy() {...}
+    public virtual void Execute() 
+    {
+        SetMotifies();
+        StartCoroutine(DestroySkill());
+
+        initialize.Execute(this);
+        embodiment.Execute(this);
+        movement.Execute(this);
+    }
+
+    public void SetMotifies()
+    {
+        foreach (MotifyInfo info in motifies)
+        {
+            if (info == null)
+                continue;
+
+            Motify motify = Managers.Skill.SetMotify(info.skillName);
+
+            if (motify is InitializeMotify)
+                SetInitializeMotify(motify);
+            else if(motify is EmbodimentMotify)
+                SetEmbodimentMotify(motify);
+            else
+                SetMovementMotify(motify);
+        }
+
+        if (initialize == null) { SetInitializeMotify(new InitializeMotify()); }
+        if (embodiment == null) { SetEmbodimentMotify(new EmbodimentMotify()); }
+        if (movement == null) { SetMovementMotify(new MoveMotify()); }
+    }
+
+    public void SetInitializeMotify(Motify motify)    { initialize = motify; }
+    public void SetEmbodimentMotify(Motify motify)    { embodiment = motify; }
+    public void SetMovementMotify(Motify motify)      { movement = motify; }
+
+    protected IEnumerator DestroySkill()
+    {
+        yield return new WaitForSeconds(1f);
+        Destroy(this.gameObject);
+    }
+
+    protected virtual IEnumerator OnDamaged()
+    {
+        int layer = 1 << (int)Define.ELayer.Monster;
+
+        yield return new WaitForSeconds(0.5f);
+
+        Collider[] monsters = Physics.OverlapSphere(targetPos, skillData.radius / 2, layer);
+    }
+
+    private void OnDestroy()
+    {
+        movement.StopRun();
+        StopCoroutine(OnDamaged());
+    }
 }
 ```
 
 </details>
 
 <details>
-<summary> 발사체 스킬 Code Open </summary>
+<summary> 발사체 스킬 Full Code Open </summary>
     
 ```C#
-    public class ProjectileSkill : Skill
+using Data;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.PlayerLoop;
+using static Define;
+
+public class ProjectileSkill : Skill
 {
     public GameObject       hitVFX;
     public GameObject       muzzleVFX;
     public int              count = 1;
 
-    private Rigidbody rigid;
+    Rigidbody rigid;
     
     private void Awake()
     {       
@@ -101,27 +428,47 @@ public class Skill : MonoBehaviour
         skillData = new SkillInfo(Managers.Data.SkillDict["ProjectileSkill"]);        
     }
 
-    public override void Execute() {...}
-    private void DefaultShoot() {...}
-    public Vector3 GetDirection() {...}
+    public override void Execute()
+    {
+        DefaultShoot();
+        base.Execute();
+    }
+
+    private void DefaultShoot()
+    {
+        transform.position = new Vector3(Managers.Game.GetPlayer().transform.position.x, 1f, Managers.Game.GetPlayer().transform.position.z);       
+        transform.forward = GetDirection();
+        rigid.AddForce(transform.forward * 20f, ForceMode.Impulse);
+    }
+
+    public Vector3 GetDirection() 
+    {
+        Vector3 direction = (targetPos - Managers.Game.GetPlayer().transform.position).normalized;
+        direction.y = 0f;
+
+        return direction;
+    }
 }
 ```
 </details>
 
 <details>
-<summary> 범위 지정스킬 Code Open</summary>
+<summary> 범위 지정스킬 Full Code Open</summary>
 
 ```C#
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
 public class ExplosionSkill : Skill
 {
     private void Awake()
     {
         skillData = new Data.SkillInfo(Managers.Data.SkillDict["ExplosionSkill"]);
     }
-
     public override void Execute()
     {
-        base.Execute(); // 발사체와 다르게 애니메이션과 충돌 체크로만 구현
+        base.Execute();
     }
 }
 ```
@@ -393,6 +740,7 @@ public class InventoryManager
     public void UpdateAllSlot() {...}
     public void AddItem(Iteminfo item) {...}
     public void RemoveItem(int index) {...}
+    public bool RemoveItem(Iteminfo item) {...}
     public void TrimAll() {...}
     public void SortAll() {...}
     public void SetInvenReference(UI_Inven_Item[] icons) {...}
@@ -405,75 +753,89 @@ public class InventoryManager
   <summary>FullCode Open</summary>
 
 ```C#
+using Data;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Security.Cryptography;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.UIElements;
+
 public class InventoryManager
 {
-    Iteminfo[] invenInfos;
-    UI_Inven_Item[] invenIcons;
+    private UsingItem[] invenInfos;
+    private UI_Inven_Slot[] invenIcons;
 
     public int SelectIndex { get; set; }
-    public Iteminfo[] InvenInfos    { get { return invenInfos; } private set { } }
+    public Item[] InvenInfos { get { return invenInfos; } private set { } }
+    public UI_Inven_Slot[] InvenIcons { get { return invenIcons; } private set { } }
 
-    // Array.Sort를 쓰기위한 IComparer를 구현
-    public class ItemComparer : IComparer<Iteminfo>
+    public class ItemComparer : IComparer<UsingItem>
     {
-        public int Compare(Iteminfo x, Iteminfo y)
+        public int Compare(UsingItem x, UsingItem y)
         {
-            if (x == null) 
+            if (x.ItemInfo == null) 
                 return 1;
-            else if (y == null) 
+            else if (y.ItemInfo == null) 
                 return -1;
-            else if (x == null || y == null)
+            else if (x.ItemInfo == null || y.ItemInfo == null)
                 return 0;
             else 
-                return x.id.CompareTo(y.id);
+                return x.ItemInfo.id.CompareTo(y.ItemInfo.id);
         }      
     }
 
     ItemComparer comparer = new ItemComparer();
 
-    // 가상 인벤토리 초기화
     public void Init()
     {
-        invenInfos = new Iteminfo[Managers.Option.InventoryCount];
+        invenInfos = new UsingItem[Managers.Option.InventoryCount];
 
         for (int i = 0; i < invenInfos.Length; i++)
-            invenInfos[i] = null;
+            invenInfos[i] = new UsingItem();        
     }
 
-    // 아이콘 업데이트
+    public void OnInventory()
+    {
+        if (Input.GetKeyDown(BindKey.Inventory))
+            Managers.UI.OnGameUIPopup<UI_Inven>();
+    }
+
     public void UpdateSlotInfo(int index)
     {
-        if (invenIcons == null)
+        if (Util.FindChild<UI_Inven>(Managers.UI.Root) == false)
             return;
 
-        invenIcons[index].SetInfo(invenInfos[index]);       
+        invenIcons[index].SetInfo(invenInfos[index].ItemInfo);       
     }
 
-    // 아이콘 전체 업데이트
     public void UpdateAllSlot()
     {
         for (int i = 0; i < invenInfos.Length; i++)
             UpdateSlotInfo(i);
     }
 
-    // 스택 아이템 여부에 따른 추가 및 퀘스트 확인
     public void AddItem(Iteminfo item)
     {
         if (invenInfos.Length <= 0 || item == null)
             return;
         
-        if (item.uiInfo.isStack == true)
+        if (item.isStack == true)
         {
             for (int i = 0; i < invenInfos.Length; i++)
             {
-                if (invenInfos[i] == null)
+                if (invenInfos[i].ItemInfo == null)
                     continue;
 
-                if (invenInfos[i].id == item.id)
+                if (invenInfos[i].ItemInfo.id == item.id)
                 {
-                    invenInfos[i].MyStack++;
-                    Managers.Quest.OnGetQuestAction?.Invoke(item.uiInfo.name, GetItemCount(item.uiInfo.name));
+                    invenInfos[i].ItemInfo.curStack++; 
                     UpdateSlotInfo(i);
+                    Managers.Quest.OnGetQuestAction?.Invoke(item.GetItemName(), GetItemCount(item.GetItemName()));
                     return;
                 }
             }
@@ -481,12 +843,12 @@ public class InventoryManager
 
         for (int i = 0; i < invenInfos.Length; i++)
         {
-            if (invenInfos[i] != null)
+            if (invenInfos[i].ItemInfo != null)
                 continue;
 
-            invenInfos[i] = item;
-            Managers.Quest.OnGetQuestAction?.Invoke(item.uiInfo.name, GetItemCount(item.uiInfo.name));
+            invenInfos[i].SetItem(item);
             UpdateSlotInfo(i);
+            Managers.Quest.OnGetQuestAction?.Invoke(item.uiInfo.name, GetItemCount(item.uiInfo.name));
             break;
         }
     }
@@ -496,19 +858,59 @@ public class InventoryManager
         if (invenInfos.Length <= 0)
             return;
 
-        invenInfos[index] = null;
+        invenInfos[index].SetItem(null);
         UpdateSlotInfo(index);
     }
 
-    // 인벤토리 공백 제거
+    public bool RemoveItem(Iteminfo item)
+    {
+        for (int i = 0; i < invenInfos.Length; i++)
+        {
+            if (invenInfos[i].ItemInfo == null)
+                continue;
+
+            if (invenInfos[i].ItemInfo.Equals(item) == true)
+            {
+                if (invenInfos[i].ItemInfo.isStack == true)
+                {
+                    invenInfos[i].ItemInfo.curStack -= 1;
+                    UpdateSlotInfo(i);
+
+                    if (invenInfos[i].ItemInfo.curStack <= 0)
+                    {
+                        invenInfos[i].SetItem(null);
+                        UpdateSlotInfo(i);
+                        TrimAll();
+                    }
+                }
+                else
+                {
+                    invenInfos[i].SetItem(null);
+                    UpdateSlotInfo(i);
+                    TrimAll();                
+                }
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public void ChangeItem(int item1, int item2)
+    {
+        Iteminfo item = invenInfos[item1].ItemInfo;
+        invenInfos[item1].SetItem(invenInfos[item2].ItemInfo);
+        invenInfos[item2].SetItem(item);
+    }
+
     public void TrimAll()
     {
         if (invenInfos.Length <= 0)
             return;
 
-        // 가장 앞 빈칸을 찾는 while 문
         int voidSearch = -1;
-        while (++voidSearch < invenInfos.Length && invenInfos[voidSearch] != null)
+        while (++voidSearch < invenInfos.Length && invenInfos[voidSearch].ItemInfo != null)
         {
             if (voidSearch >= invenInfos.Length)
             {
@@ -518,37 +920,30 @@ public class InventoryManager
         }
 
         int itemSearch = voidSearch;
+
         while (true)
         {
-            while (++itemSearch < invenInfos.Length && invenInfos[itemSearch] == null) ;
+            while (++itemSearch < invenInfos.Length && invenInfos[itemSearch].ItemInfo == null) ;
 
             if (itemSearch >= invenInfos.Length)
                 break;
 
-            invenInfos[voidSearch] = invenInfos[itemSearch];
-            invenInfos[itemSearch] = null;
+            invenInfos[voidSearch].SetItem(invenInfos[itemSearch].ItemInfo);
+            invenInfos[itemSearch].SetItem(null);
             voidSearch++;
         }
         UpdateAllSlot();
     }
 
-    // 인벤토리 정렬
     public void SortAll()
     {
         TrimAll();
-
-        // IComperer를 쓴 정렬
         Array.Sort(invenInfos, comparer);
         UpdateAllSlot();
     }
 
-    // 아이콘 List를 받아옴
-    public void SetInvenReference(UI_Inven_Item[] icons)
-    {
-        invenIcons = icons;
-    }
+    public void SetInvenReference(UI_Inven_Slot[] icons) { invenIcons = icons; }
 
-    // 가상의 인벤토리와 아이콘 List를 연결해줌
     public void InterLocking()
     {
         if (invenIcons == null)
@@ -565,119 +960,153 @@ public class InventoryManager
         int curCount = 0;
         for(int i = 0; i < invenInfos.Length; i++)
         {
-            if (invenInfos[i] == null)
+            if (invenInfos[i].ItemInfo == null)
                 continue;
-
-            curCount = invenInfos[i].uiInfo.name == target ? curCount + invenInfos[i].MyStack : curCount;
+            else
+            {
+                curCount = invenInfos[i].ItemInfo.uiInfo.name == target ? curCount + invenInfos[i].ItemInfo.curStack : curCount;
+                break;
+            }
         }                  
         return curCount;
     }
-}
 
+    public void InfoLink(int item1, int item2)
+    {
+        ChangeItem(item1, item2);
+        UpdateSlotInfo(item1);
+        UpdateSlotInfo(item2);
+    }
+}
 ```
 </details>
     
 </details>
 
-<details>
-<summary>인벤토리 UI Code Open</summary>
+<details Open>
+<summary> 인벤토리 UI Code </summary>
 
 ```C#
-public class UI_Inven : UIScene
+using Data;
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+
+public class UI_Inven : UIPopup
 {
     enum GameObjects
     {
-        Sorting,
-        Create,
-        UI_Inven_Popup
+        UI_Inven_Sorting,
+        UI_Sliver_Text,
+        Content
     }
 
-    GameObject InvenUI;
-    UI_Inven_Item[] iconInfos;
-    GameObject popup;
-    int curIndex = int.MaxValue;
+    UI_Inven_Slot[] iconInfos;
+    Text sliverText;
 
-    public override void Init() {...}
+    public override void Init()
+    {
+        base.Init();
+
+        Bind<GameObject>(typeof(GameObjects));
+        sliverText = GetObject((int)GameObjects.UI_Sliver_Text).GetComponent<Text>();
+
+        GetObject((int)GameObjects.UI_Inven_Sorting).BindEvent((evt) => { Managers.Inventory.SortAll(); });
+        InfosInit();
+    }
+
+    private void Start()
+    {
+        Managers.Inventory.SetInvenReference(iconInfos);
+        Managers.Inventory.InterLocking();
+    }
+
+    private void Update()
+    {
+        // 실시간 화폐 데이터 연동
+        SetSliverText();     
+    }
+
     public void InfosInit() {...}
-    public void OnInvenPopup(int index) {...}
+    public void SetSliverText() {...}
+}
 ```
 
 <details>
 <summary>FullCode Open</summary>
   
 ```C#
-public class UI_Inven : UIScene
+using Data;
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+
+public class UI_Inven : UIPopup
 {
     enum GameObjects
     {
-        Sorting,
-        Create,
-        UI_Inven_Popup
+        UI_Inven_Sorting,
+        UI_Sliver_Text,
+        Content
     }
 
-    GameObject InvenUI;
-    UI_Inven_Item[] iconInfos;
-    GameObject popup;
-    int curIndex = int.MaxValue;
-    
+    UI_Inven_Slot[] iconInfos;
+    Text sliverText;
+
     public override void Init()
     {
-        Bind<GameObject>(typeof(GameObjects));
-        InvenUI = Util.FindChild(this.gameObject, "Content", true);
-        popup = GetObject((int)GameObjects.UI_Inven_Popup);
+        base.Init();
 
-        // 버튼이벤트 할당
-        GetObject((int)GameObjects.Sorting).BindEvent((evt) =>
-        {
-            Debug.Log("정렬버튼 on");
-            Managers.Inventory.SortAll();
-        });
-        GetObject((int)GameObjects.Create).BindEvent((evt) =>
-        {
-            int random = Random.Range(102, 106);
-            Managers.Inventory.AddItem(new Iteminfo(Managers.Data.ItemDict[random]));
-        });
+        Bind<GameObject>(typeof(GameObjects));
+        sliverText = GetObject((int)GameObjects.UI_Sliver_Text).GetComponent<Text>();
+
+        GetObject((int)GameObjects.UI_Inven_Sorting).BindEvent((evt) => { Managers.Inventory.SortAll(); });
         InfosInit();
-        popup.SetActive(false);
     }
 
     private void Start()
     {
-        // 인벤토리 매니저에 IconList 전달
         Managers.Inventory.SetInvenReference(iconInfos);
         Managers.Inventory.InterLocking();
     }
 
+    private void Update()
+    {
+        SetSliverText();     
+    }
+
     public void InfosInit()
     {
-        iconInfos = new UI_Inven_Item[Managers.Option.InventoryCount];
+        iconInfos = new UI_Inven_Slot[Managers.Option.InventoryCount];
+
+        foreach (Transform child in GetObject((int)GameObjects.Content).transform)
+            Managers.Resource.Destroy(child.gameObject);
 
         for(int i = 0; i < iconInfos.Length; i++)
         {
-            iconInfos[i] = InvenUI.transform.GetChild(i).GetOrAddComponent<UI_Inven_Item>();
-            iconInfos[i].SetIndex(i);
+            GameObject item = Managers.Resource.Instantiate("UI_Inven_Slot");
+            item.transform.SetParent(GetObject((int)GameObjects.Content).transform);
+            item.GetComponent<RectTransform>().localScale = Vector3.one;
+            iconInfos[i] = item.GetOrAddComponent<UI_Inven_Slot>();
+            iconInfos[i].SetIndex(i);           
         }
     }
 
-    // 인벤 팝업창 On Off 및 팝업창 Init수행
-    public void OnInvenPopup(int index)
+    public void SetSliverText() 
     {
-        Iteminfo iteminfo = Managers.Inventory.InvenInfos[index];
-        popup.GetComponent<UI_Inven_Popup>().InvenPopupInit(iteminfo);
-
-        if (curIndex != index)
-        {
-            curIndex = index;
-            return;
-        }
-
-        curIndex = int.MaxValue;
-        popup.SetActive(false);
+        PlayerStat playerStat = Managers.Game.GetPlayer().GetComponent<PlayerStat>();
+        int curSliver = playerStat.Gold;
+ 
+        sliverText.text = string.Format("{0:#,0}", curSliver);
     }
-}
-
+} 
 ```
-</details>
 </details>
 
 ### 4. 퀘스트 관리
@@ -725,6 +1154,7 @@ public class QuestManager
     public void UpdateLevel(int curLevel) {...}
 }
 ```
+</details>
 
 <details>
 <summary>FullCode Open</summary>
@@ -843,7 +1273,6 @@ public class QuestManager
 
 ```
 </details>
-</details>
 
 <details>
 <summary>퀘스트 UI Code Open</summary>
@@ -862,17 +1291,24 @@ public class UI_Quest : UIPopup
     int questId = int.MaxValue;
 
     public override void Init() {...}
-    void QuestListInit() {...}
+    private void QuestListInit() {...}
     public void OnQuestPopup(int id) {...}
     private void Update() {...}
 }
 
 ```
+</details>
 
 <details>
 <summary>FullCode Open</summary>
 
 ```C#
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
 public class UI_Quest : UIPopup
 {
     enum GameObjects
@@ -885,13 +1321,13 @@ public class UI_Quest : UIPopup
     GameObject popup;
     int questId = int.MaxValue;
 
-    
     public override void Init()
     {
-        Bind<GameObject>(typeof(GameObjects));
+        base.Init();
+
+        BindObject(typeof(GameObjects));
         Debug.Log("UI_Quest Binding");
 
-        base.Init();
         list = GetObject((int)GameObjects.QuestList);
         popup = GetObject((int)GameObjects.UI_Quest_Popup);
 
@@ -899,8 +1335,7 @@ public class UI_Quest : UIPopup
         popup.SetActive(false);
     }
 
-    // 아이콘 List Update
-    void QuestListInit()
+    private void QuestListInit()
     {
         for (int i = list.transform.childCount; i < Managers.Quest.ActiveQuests.Count; i++)
         {
@@ -911,7 +1346,6 @@ public class UI_Quest : UIPopup
         }
     }
 
-    // 퀘스트 팝업창 On Off 및 팝업창 Init
     public void OnQuestPopup(int id)
     {
         popup.GetOrAddComponent<UI_Quest_Popup>().QuestPopupInit(id);
@@ -930,9 +1364,7 @@ public class UI_Quest : UIPopup
         QuestListInit();
     }
 }
-
 ```
-</details>
 </details>
 
 ### 4. 퀘스트 NPC
@@ -942,30 +1374,44 @@ public class UI_Quest : UIPopup
 <summary>퀘스트 NPC Code Open</summary>
 
 ```C#
-public class QuestGiver : MonoBehaviour
+using Data;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class QuestGiver : NpcController
 {
     List<QuestInfo> quests = new List<QuestInfo>();
-    public IReadOnlyList<QuestInfo> Quests => quests;
+    public List<QuestInfo> Quests => quests;
 
-    // 현재 가능한 퀘스트 검색
-    public void Search() {...}
-    // 현재 NPC의 퀘스트팝업창 On
-    public void GiverUIOpen() {...}
+    public override void Init() {...}
+    public void Search() {...} // 가능한 퀘스트들 리스트업 후 저장
+    public void OnTypeUI() {...} // 퀘스트리스트 UI 오픈
 }
-
 ```
+</details>
 
 <details>
 <summary>FullCode Open</summary>
 
 ```C#
-public class QuestGiver : MonoBehaviour
+using Data;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class QuestGiver : NpcController
 {
     List<QuestInfo> quests = new List<QuestInfo>();
-    public IReadOnlyList<QuestInfo> Quests => quests;
+    public List<QuestInfo> Quests => quests;
 
-    private void Awake()
+    public override void Init()
     {
+        npcType = Define.ENpc.Giver;
+        base.Init();
+
         Search();
     }
 
@@ -975,25 +1421,29 @@ public class QuestGiver : MonoBehaviour
             quests.Add(new QuestInfo(Managers.Data.QuestDict[i]));
     }
 
-    public void GiverUIOpen()
+    public void OnTypeUI()
     {
-        if (Util.FindChild<UI_Giver>(Managers.UI.Root, "UI_Giver") != null)        
+        if (Util.FindChild<UI_Giver>(Managers.UI.Root, "UI_Giver") != null)
             return;
-        
-        UI_Giver ui = Managers.UI.ShowPopupUI<UI_Giver>();
 
+        UI_Giver ui = Managers.UI.ShowPopupUI<UI_Giver>();
         ui.UIListInit(quests);
     }
 }
-
 ```
 </details>  
-</details>
 
 <details>
 <summary>UI Code Open</summary>
 
 ```C#
+using Data;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
 public class UI_Giver : UIPopup
 {
     enum GiverObject
@@ -1003,19 +1453,17 @@ public class UI_Giver : UIPopup
         UI_Giver_ExitButton
     }
 
-    // 현재 NPC의 퀘스트목록
     List<QuestInfo> ownerQuests = new List<QuestInfo>();
     GameObject popup;
     GameObject list;
 
-    
     public override void Init() {...}
     public void ListUp() {...}
     public void UIListInit(List<QuestInfo> quests) {...}
     public void OnGiverPopup(QuestInfo quest) {...}
 }
-
 ```
+</details>
 
 <details>
 <summary>FullCode Open</summary>
@@ -1078,17 +1526,212 @@ public class UI_Giver : UIPopup
         popup.GetOrAddComponent<GiverQuest_Popup>().GiverPopupInit();
     }
 }
-
 ```
 </details>
+
+### 5. 상인 NPC
+아이템리스트를 띄워주는 UI발사대로 UI에 파싱된 데이터를 가져와 유저에게 제공하고 Buy, Sell기능도 UI에서 제공하도록 합니다.    
+
+<details Open>
+<summary> 상인NPC Code </summary>
+    
+```C#
+using Data;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class TraderController : NpcController
+{
+    public override void Init()
+    {
+        npcType = Define.ENpc.Trader;
+        base.Init();
+    }
+
+    // 상점 UI 오픈과 함께 인벤토리도 오픈
+    public void OnTraderUI()
+    {
+        if (Util.FindChild<UI_Trader>(Managers.UI.Root, "UI_Trader") != null)
+            return;
+
+        Managers.UI.ShowPopupUI<UI_Trader>();
+        Managers.UI.OnGameUIPopup<UI_Inven>();
+    }
+}
+```
 </details>
+
+<details>
+<summary> 상점UI FullCode Open </summary>
+    
+```C#
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class UI_Trader : UIPopup
+{
+    enum GameObjects
+    {
+        UI_Trader_ItemList,
+        UI_Trader_ExitButton
+    }
+
+    public override void Init()
+    {
+        base.Init();
+
+        Bind<GameObject>(typeof(GameObjects));
+        GetObject((int)GameObjects.UI_Trader_ExitButton).BindEvent(evt =>
+        {
+            Managers.UI.ClosePopupUI();
+        });
+
+        ItemListCreate();
+    }
+
+    // 파싱된 아이템데이터를 받아와 아이템슬롯을 만들어 해당 슬롯에 아이템 데이터를 입력해줌
+    public void ItemListCreate()
+    {
+        GameObject list = GetObject((int)GameObjects.UI_Trader_ItemList);
+        for (int i = 0; i < Managers.Data.ItemDict.Count - 1; i++)
+        {
+            GameObject item = Managers.UI.MakeSubItem<UI_Trader_Item>(parent: list.transform).gameObject;
+            UI_Trader_Item traderItem = item.GetOrAddComponent<UI_Trader_Item>();
+            item.transform.localScale = Vector3.one;
+
+            traderItem.ItemInit(Managers.Data.ItemDict[102 + i]);
+        }
+    }
+}
+```
+</details>
+
+<details Open>
+<summary> 상점 아이템슬롯 Code </summary>
+
+```C#
+using Data;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class UI_Trader_Item : UIPopup
+{
+    enum ItemButtons
+    {
+        UI_Trader_Sell,
+        UI_Trader_Buy
+    }
+
+    enum ItemImage
+    {
+        UI_Trader_Item_Slot
+    }
+
+    enum ItemTexts
+    {
+        UI_Trader_Item_Name,
+        UI_Trader_Item_Sell
+    }
+
+    public override void Init() {...}
+    public void ItemInit(Iteminfo info) {...}
+    public void ItemBuy(Iteminfo item) {...}
+    public void ItemSell(Iteminfo item) {...}
+}
+```    
+</details>
+<details>
+<summary> 상점 아이템슬롯 FullCode Open </summary>
+
+```C#
+using Data;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class UI_Trader_Item : UIPopup
+{
+    enum ItemButtons
+    {
+        UI_Trader_Sell,
+        UI_Trader_Buy
+    }
+
+    enum ItemImage
+    {
+        UI_Trader_Item_Slot
+    }
+
+    enum ItemTexts
+    {
+        UI_Trader_Item_Name,
+        UI_Trader_Item_Sell
+    }
+
+    public override void Init()
+    {
+        BindButton(typeof(ItemButtons));
+        BindImage(typeof(ItemImage));
+        BindText(typeof(ItemTexts));
+    }
+
+    public void ItemInit(Iteminfo info)
+    {
+        Image slot = GetImage((int)ItemImage.UI_Trader_Item_Slot);
+        Texture2D texture = Managers.Resource.Load<Texture2D>(info.uiInfo.icon);
+        slot.sprite = Managers.UI.TextureToSprite(texture);
+
+        GetText((int)ItemTexts.UI_Trader_Item_Name).text = info.uiInfo.name;
+        GetText((int)ItemTexts.UI_Trader_Item_Sell).text = string.Format("${0}", info.gold);
+
+        GetButton((int)ItemButtons.UI_Trader_Buy).gameObject.BindEvent(evt => { ItemBuy(info); });
+        GetButton((int)ItemButtons.UI_Trader_Sell).gameObject.BindEvent(evt => { ItemSell(info); });
+    }
+
+    public void ItemBuy(Iteminfo item)
+    {
+        PlayerStat playerStat = Managers.Game.GetPlayer().GetComponent<PlayerStat>();
+
+        if(playerStat.Gold - item.gold < 0)
+        {
+            Debug.Log("화폐 부족");
+            return;
+        }
+
+        playerStat.Gold -= item.gold;
+        Managers.Inventory.AddItem(new Iteminfo(item));
+        Debug.Log($"{item.uiInfo.name} 구매성공");
+    }
+
+    public void ItemSell(Iteminfo item)
+    {
+        bool isCheck = Managers.Inventory.RemoveItem(item);
+        if (isCheck == false)
+        {
+            Debug.Log("아이템이 없는데 팔려고 시도함");
+            return;
+        }
+
+        PlayerStat playerStat = Managers.Game.GetPlayer().GetComponent<PlayerStat>();
+        playerStat.Gold += item.gold;
+        Debug.Log($"{item.uiInfo.name} 판매 {item.gold} +");
+    }
+}
+``` 
+</details>
+
 
 ## 만들며 느꼈던 점
 ### 신경썼던 점
-구현할 컨텐츠가 많은 RPG인 만큼 최대한 많은걸 구현 할려고 노력했습니다.
+구현할 컨텐츠가 많은 RPG인 만큼 최대한 많은걸 구현하며 버그를 줄이기 위해 노력했습니다.
 
 ### 아쉬운 점
-많은걸 구현한 만큼 다소 조잡하고 완성도가 부족했던거 같습니다.
+많은 기능들에 많은버그들로 시간이 많이걸렸고 버그를 잡는과정에서 깨달은것이 많아 아쉽긴해도 다음 RPG요소가 있는 게임을 만들때 참고할 점들을 많이 챙겼습니다.
 
 긴 글 읽어 주셔서 감사합니다.
 이준호였습니다.
