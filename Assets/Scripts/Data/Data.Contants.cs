@@ -3,6 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Localization.SmartFormat.Utilities;
 using UnityEngine.UI;
@@ -121,6 +123,22 @@ namespace Data
             this.uiInfo = info.uiInfo;
         }
 
+        public override bool Equals(object obj) { return Equals(obj as Iteminfo); }
+        public bool Equals(Iteminfo info)
+        {
+            if (info == null) return false;
+
+            else if (id != info.id) return false;
+            else if (hp != info.hp) return false;
+            else if (att != info.att) return false;
+            else if (gold != info.gold) return false;
+            else if (type != info.type) return false;
+            else if (isStack != info.isStack) return false;
+            else if (uiInfo.Equals(info.uiInfo) == false) return false;
+
+            return true;
+        }
+
         public string GetItemName() { return uiInfo.name; }
     }
 
@@ -130,6 +148,18 @@ namespace Data
         public string icon;
         public string name;
         public string description;
+
+        public override bool Equals(object obj) { return base.Equals(obj as ItemUIinfo); }
+        public bool Equals(ItemUIinfo info) 
+        {
+            if (info == null) return false;
+
+            else if (icon != info.icon) return false;
+            else if (name != info.name) return false;
+            else if(description != info.description) return false;
+
+            return true;
+        }
     }
     
     [Serializable]
@@ -254,6 +284,25 @@ namespace Data
             icon = refinfo.icon;
             function = refinfo.function;
             description = refinfo.description;
+        }
+
+        public bool TypeEquals(MotifyInfo info) { return type == info.type; }
+        public bool NameEquals(MotifyInfo info) { return skillName == info.skillName; }
+        public override bool Equals(object obj) { return Equals(obj as MotifyInfo); }
+        public bool Equals(MotifyInfo info)
+        {
+            if(info == null) return false;
+
+            else if (id != info.id) return false;
+            else if (skillName != info.skillName) return false;
+            else if (owner != info.owner) return false;
+            else if (type != info.type) return false;
+            else if(name != info.name) return false;
+            else if(icon != info.icon) return false;
+            else if(function != info.function) return false;
+            else if(description != info.description) return false;
+
+            return true;
         }
     }
 

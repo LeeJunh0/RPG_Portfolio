@@ -35,9 +35,12 @@ public class Skill : MonoBehaviour
     {
         foreach (MotifyInfo info in motifies)
         {
+            if (info == null)
+                continue;
+
             Motify motify = Managers.Skill.SetMotify(info.skillName);
 
-            if(motify is InitializeMotify)
+            if (motify is InitializeMotify)
                 SetInitializeMotify(motify);
             else if(motify is EmbodimentMotify)
                 SetEmbodimentMotify(motify);

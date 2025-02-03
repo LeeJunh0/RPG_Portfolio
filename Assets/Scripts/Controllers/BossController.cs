@@ -9,7 +9,7 @@ using UnityEngine.Timeline;
 public class BossController : MonsterController
 {
     [SerializeField]
-    float curSec = 0f;
+    private float curSec = 0f;
 
     public override void Init()
     {
@@ -29,6 +29,7 @@ public class BossController : MonsterController
     {
         OnSkill();
         Indicator indicator = IndicatorExecute(Define.EState.HardAttack);
+        indicator.transform.parent = this.gameObject.transform;
 
         float sec = 0f;
         while(sec <= 5f)
@@ -89,19 +90,21 @@ public class BossController : MonsterController
         OnSkill();
         Indicator indicator = IndicatorExecute(Define.EState.GroundAttack);
         indicator.InitRotate(lockTarget.transform.position - transform.position);
+        indicator.transform.parent = this.gameObject.transform;
 
         float sec = 0f;
         while (sec <= 5f)
         {
             sec += Time.deltaTime;
             indicator.UpdatePosition(transform.position);
-            indicator.UpdateRotate(lockTarget.transform.position - transform.position,20f);
-
             float lerpX = Mathf.Lerp(0.1f, 3f, sec / 3f);
             indicator.transform.localScale = new Vector3(lerpX, lerpX * 1.5f, 1);
 
-            if (sec >= 4f && EState != Define.EState.GroundAttack)
+            if (sec <= 4)
+                indicator.UpdateRotate(lockTarget.transform.position - transform.position, 20f);
+            else if (sec >= 4f && EState != Define.EState.GroundAttack)
                 EState = Define.EState.GroundAttack;
+
             yield return null;
         }
         
@@ -163,10 +166,10 @@ public class BossController : MonsterController
             if (lockTarget != null && (EState != Define.EState.HardAttack && EState != Define.EState.GroundAttack))            
                 curSec++;
 
-            if (curSec > 3f)//Random.Range(3f, 6f))
+            if (curSec > 3f)
             {
-                cur = Define.EState.GroundAttack;
-                //cur = (cur == Define.EState.GroundAttack) ? Define.EState.HardAttack : Define.EState.GroundAttack;                  
+                //cur = Define.EState.GroundAttack;
+                cur = (cur == Define.EState.GroundAttack) ? Define.EState.HardAttack : Define.EState.GroundAttack;                  
                 curSec = 0f; 
 
                 switch (cur)

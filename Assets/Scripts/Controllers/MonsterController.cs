@@ -71,7 +71,7 @@ public class MonsterController : BaseController
             agent.SetDestination(DestPos);
             agent.speed = stat.Movespeed;
 
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 10f * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 5f * Time.deltaTime);
         }
     }
 

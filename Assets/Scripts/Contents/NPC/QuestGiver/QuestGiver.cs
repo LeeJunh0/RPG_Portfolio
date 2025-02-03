@@ -7,7 +7,7 @@ using UnityEngine;
 public class QuestGiver : NpcController
 {
     List<QuestInfo> quests = new List<QuestInfo>();
-    public IReadOnlyList<QuestInfo> Quests => quests;
+    public List<QuestInfo> Quests => quests;
 
     public override void Init()
     {

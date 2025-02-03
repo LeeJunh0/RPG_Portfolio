@@ -12,6 +12,7 @@ public static class BindKey
     public static KeyCode SkillSlot_1 { get; set; }
     public static KeyCode SkillSlot_2 { get; set; }
     public static KeyCode SkillSlot_3 { get; set; }
+    public static KeyCode Interact { get; set; }
     public static void Init()
     {
         Inventory = KeyCode.Tab;
@@ -22,5 +23,6 @@ public static class BindKey
         SkillSlot_1 = KeyCode.A;
         SkillSlot_2 = KeyCode.S;
         SkillSlot_3 = KeyCode.D;
+        Interact = KeyCode.Space;
     }
 }

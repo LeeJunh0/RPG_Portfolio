@@ -21,10 +21,13 @@ public class UI_EquipSlot : UIPopup
     }
 
     public void SetInfo(Iteminfo info)
-    {
+    {       
         equipItem = info;
+        GameObject go = GetObject((int)GameObjects.SlotIcon);
+        if (go == null)
+            return;
 
-        Image slot = GetObject((int)GameObjects.SlotIcon).GetComponent<Image>();
+        Image slot = go.GetComponent<Image>();
         Texture2D texture = Managers.Resource.Load<Texture2D>(info.uiInfo.icon);
         slot.sprite = Managers.UI.TextureToSprite(texture);
     }

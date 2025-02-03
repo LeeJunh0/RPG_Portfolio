@@ -9,23 +9,24 @@ using static Define;
 
 public class SkillInventory : MonoBehaviour
 {
-    public Dictionary<SkillInfo, List<MotifyInfo>> skillMotifies;
+    public Dictionary<SkillInfo, MotifyInfo[]> skillMotifies;
     public List<SkillInfo> skillInven;
     public List<SkillInfo> mySkills;
     
     private BaseController owner;
+    private bool duplicateCheck = false;
 
     private void Start()
     {
-        skillMotifies = new Dictionary<SkillInfo, List<MotifyInfo>>();
+        skillMotifies = new Dictionary<SkillInfo, MotifyInfo[]>();
         InitSkills();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(BindKey.SkillSlot_1))
+        if (Input.GetKeyDown(BindKey.SkillSlot_1) && duplicateCheck == false)
             StartCoroutine(SkillActivation(mySkills[0]));
-        if (Input.GetKeyDown(BindKey.SkillSlot_2))
+        if (Input.GetKeyDown(BindKey.SkillSlot_2) && duplicateCheck == false)
             StartCoroutine(SkillActivation(mySkills[1]));
     }
 
@@ -43,7 +44,7 @@ public class SkillInventory : MonoBehaviour
                 if (ownerStat.Level >= skillinfo.level)
                 {
                     AddSkill(skillinfo);
-                    skillMotifies.Add(skillinfo, new List<MotifyInfo>());
+                    skillMotifies.Add(skillinfo, new MotifyInfo[3]);
                 }
             }
         }
@@ -59,38 +60,80 @@ public class SkillInventory : MonoBehaviour
         if (skill == null)
             return;
 
-        if (skillMotifies[skill].Any(motify => motify.skillName == info.skillName) == true)
+        if (Managers.Skill.MotifyNameEqule(skillMotifies[skill], info) == true)
         {
-            Debug.Log("중복된 파츠 입니다.");
+            RemoveByNameMotify(skill, info);
+            Debug.Log("중복파츠입니다.");
             return;
         }
 
-        MotifyInfo removeValue = skillMotifies[skill].FirstOrDefault(x => x.type == info.type);
-        if (removeValue != null)
-            RemoveMotify(skill, removeValue);
+        if (Managers.Skill.MotifyTypeEqule(skillMotifies[skill], info) == true)       
+            RemoveByTypeMotify(skill, info);
 
-        skillMotifies[skill].Add(info);
+        switch (info.type)
+        {
+            case EMotifyType.Initialize:
+                skillMotifies[skill][0] = info;
+                break;
+            case EMotifyType.Embodiment:
+                skillMotifies[skill][1] = info;
+                break;
+            case EMotifyType.Movement:
+                skillMotifies[skill][2] = info;
+                break;
+        }
     }
 
-    public void RemoveMotify(SkillInfo skill, MotifyInfo info) { skillMotifies[skill].Remove(info); }
+    public void RemoveByNameMotify(SkillInfo skill, MotifyInfo info) 
+    {
+        for (int i = 0; i < skillMotifies[skill].Length; i++)
+        {
+            if (skillMotifies[skill][i].NameEquals(info) == true)
+            {
+                skillMotifies[skill][i] = null;
+                break;
+            }  
+        }
+    }
+
+    public void RemoveByTypeMotify(SkillInfo skill, MotifyInfo info)
+    {
+        for (int i = 0; i < skillMotifies[skill].Length; i++)
+        {
+            if (skillMotifies[skill][i].TypeEquals(info) == true)
+            {
+                skillMotifies[skill][i] = null;
+                break;
+            }
+        }
+    }
 
     private bool CoolTimeCheck(SkillInfo skill) { return skill.isActive; }
 
     private IEnumerator PlayerSetIndicator(SkillInfo skill)
     {
+        float manaSum = SkillManaSum(skill);
+        bool manaCheck = SkillManaCheck(manaSum);
+
+        if (manaCheck == false)
+            yield break;
+
         GameObject prefab = Managers.Skill.SetIndicator(skill.indicator);
         Indicator indicator = prefab.GetComponent<Indicator>();
         indicator.SetInfo(skill.indicator, skill.length, skill.radius);
 
         if (skill.indicator == EIndicator.CircleIndicator)
-        {
-            GameObject range = Managers.Skill.SetIndicator(EIndicator.RangeIndicator);
-            CircleIndicator circle = indicator.GetComponent<CircleIndicator>();
-            circle.SetRange(range);
-        }
+            RangeIndicatorSet(indicator);
 
+        bool isCancel = false;
         while (Input.GetKey(BindKey.SkillSlot_1) || Input.GetKey(BindKey.SkillSlot_2))
         {
+            if (Input.GetMouseButtonDown(1))
+            { 
+                isCancel = true;
+                break;
+            }
+            
             Vector3 mousePos = Input.mousePosition;
             mousePos.z = Camera.main.WorldToScreenPoint(indicator.transform.position).z; 
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
@@ -99,9 +142,19 @@ public class SkillInventory : MonoBehaviour
 
             yield return null;
         }
+        
+        if (isCancel == false)        
+            SkillExecute(skill, indicator.transform.position);
 
-        SkillExecute(skill, indicator.transform.position);
-        Managers.Resource.Destroy(indicator.gameObject);
+        Managers.Resource.Destroy(indicator.gameObject); 
+        duplicateCheck = false;
+    }
+
+    public void RangeIndicatorSet(Indicator indicator)
+    {
+        GameObject range = Managers.Skill.SetIndicator(EIndicator.RangeIndicator);
+        CircleIndicator circle = indicator.GetComponent<CircleIndicator>();
+        circle.SetRange(range);
     }
 
     public void SkillExecute(SkillInfo skill, Vector3 pos)
@@ -112,6 +165,38 @@ public class SkillInventory : MonoBehaviour
         instanceSkill.motifies = skillMotifies[skill].ToArray();
         instanceSkill.targetPos = pos;
         instanceSkill.Execute();
+
+        float mana = SkillManaSum(skill);
+        PlayerManaUse(mana);
+    }
+
+    public float SkillManaSum(SkillInfo skill)
+    {
+        float usingMana = skill.mana;
+        for (int i = 0; i < skillMotifies[skill].Length; i++)
+        {
+            if (skillMotifies[skill][i] == null)
+                continue;
+
+            usingMana += skillMotifies[skill][i].mana;
+        }
+
+        return usingMana;
+    }
+
+    public bool SkillManaCheck(float mana)
+    {
+        PlayerStat playerStat = Managers.Game.GetPlayer().GetComponent<PlayerStat>();
+        if (playerStat.Mp < mana)
+            return false;
+
+        return true;
+    }
+
+    public void PlayerManaUse(float mana)
+    {
+        PlayerStat playerStat = Managers.Game.GetPlayer().GetComponent<PlayerStat>();
+        playerStat.Mp -= mana;
     }
 
     private IEnumerator SkillActivation(SkillInfo skill)
@@ -119,8 +204,9 @@ public class SkillInventory : MonoBehaviour
         if (CoolTimeCheck(skill) == false)
             yield break;
 
+        duplicateCheck = true;
         StartCoroutine(PlayerSetIndicator(skill));
-
+        
         skill.isActive = false;
         yield return new WaitForSeconds(skill.coolTime);
         skill.isActive = true;

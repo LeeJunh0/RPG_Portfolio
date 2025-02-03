@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UI_Equip : UIPopup
 {
@@ -33,6 +34,7 @@ public class UI_Equip : UIPopup
 
         Managers.Equip.OnStatusSet -= StatusSet;
         Managers.Equip.OnStatusSet += StatusSet;
+        StatusSet();
     }
 
     public void SetSlots()
@@ -48,6 +50,10 @@ public class UI_Equip : UIPopup
     public void StatusSet()
     {
         PlayerStat playerStat = Managers.Game.GetPlayer().GetComponent<PlayerStat>();
+
+        Text bindCheck = GetText((int)Texts.UI_Equip_Hp_Text);
+        if (bindCheck == null)
+            return;
 
         GetText((int)Texts.UI_Equip_Hp_Text).text = string.Format($"{playerStat.Hp} / {playerStat.MaxHp}");
         GetText((int)Texts.UI_Equip_Mp_Text).text = string.Format($"{playerStat.Mp} / {playerStat.MaxMp}");

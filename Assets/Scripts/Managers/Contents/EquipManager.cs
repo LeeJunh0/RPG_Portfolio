@@ -25,6 +25,21 @@ public class EquipManager
     {
         if (Input.GetKeyDown(BindKey.Equipment))
             Managers.UI.OnGameUIPopup<UI_Equip>();
+
+        if (Util.FindChild<UI_Equip>(Managers.UI.Root) == null)
+            return;
+        else
+        {
+            for (int i = 0; i < slots.Length; i++)
+            {
+                if (equipInfos[i] == null)
+                    slots[i].SetBefore(emptyImage[i]);
+                else
+                    slots[i].SetInfo(equipInfos[i]);
+
+                slots[i].index = i;
+            }
+        }  
     }
 
     public void ItemEquip(Iteminfo item)
@@ -33,24 +48,28 @@ public class EquipManager
         {
             case Define.ItemType.Weapon:
                 equipInfos[0] = item;
-                slots[0].SetInfo(item);
-                slots[0].index = 0;
                 break;
             case Define.ItemType.Chest:
                 equipInfos[1] = item; 
-                slots[1].SetInfo(item);
-                slots[1].index = 1;
                 break;
             case Define.ItemType.Pants:
                 equipInfos[2] = item; 
-                slots[2].SetInfo(item);
-                slots[2].index = 2;
                 break;
             case Define.ItemType.Boots:
                 equipInfos[3] = item; 
-                slots[3].SetInfo(item);
-                slots[3].index = 3;
                 break;
+        }
+
+        if(Util.FindChild(Managers.UI.Root) != null)
+        {
+            for (int i = 0; i < slots.Length; i++) 
+            {
+                if (equipInfos[i] == null || slots[i] == null)
+                    continue;
+
+                slots[i].SetInfo(equipInfos[i]);
+                slots[i].index = i;
+            }
         }
 
         PlayerStat playerStat = Managers.Game.GetPlayer().GetComponent<PlayerStat>();
@@ -60,8 +79,25 @@ public class EquipManager
         OnStatusSet?.Invoke();
     }
 
+    public void ItemStatPlus()
+    {
+        PlayerStat playerStat = Managers.Game.GetPlayer().GetComponent<PlayerStat>();
+
+        for (int i = 0; i < equipInfos.Length; i++)
+        {
+            if (equipInfos[i] == null)
+                continue;
+
+            playerStat.MaxHp += equipInfos[i].hp;
+            playerStat.Attack += equipInfos[i].att;
+        }
+    }
+
     public void ItemUnEquip(int index)
     {
+        if (equipInfos[index] == null)
+            return;
+
         PlayerStat playerStat = Managers.Game.GetPlayer().GetComponent<PlayerStat>();
         playerStat.MaxHp -= equipInfos[index].hp;
         playerStat.Attack -= equipInfos[index].att;

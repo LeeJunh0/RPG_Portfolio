@@ -1,3 +1,4 @@
+using Data;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -23,9 +24,7 @@ public class SkillManager
             case "EmbodimentMotify":
                 return new EmbodimentMotify();
             case "HorizontalDeployment":
-                return new HorizontalDeployment();
-            case "DefenceDeployment":
-                break;
+                return new HorizontalDeployment();           
             case "MoveMotify":
                 return new MoveMotify();
             case "CircleMove":
@@ -41,7 +40,28 @@ public class SkillManager
         return Managers.Resource.Instantiate(typeName);
     }
 
-    // 스킬들 -> 공격 -> 모든 공격의 효과. 범위형 혹은 단일형 범위형은 무슨 모양범위인지.
-    // 각 공격들의 공격까지의 시간, 범위, 
-  
+    public bool MotifyNameEqule(MotifyInfo[] infos, MotifyInfo info)
+    {
+        for(int i = 0; i < infos.Length; i++)
+        {
+            if (infos[i] == null) continue;
+
+            if (infos[i].skillName == info.skillName)
+                return true;
+        }
+
+        return false;
+    }
+    public bool MotifyTypeEqule(MotifyInfo[] infos, MotifyInfo info)
+    {
+        for (int i = 0; i < infos.Length; i++)
+        {
+            if (infos[i] == null) continue;
+
+            if (infos[i].TypeEquals(info) == true)
+                return true;
+        }
+
+        return false;
+    }
 }

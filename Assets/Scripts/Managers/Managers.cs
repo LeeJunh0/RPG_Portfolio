@@ -9,42 +9,42 @@ public class Managers : MonoBehaviour
     static Managers Instance { get { Init(); return s_instance; } }
 
     #region Contents
-    EquipManager        _equip = new EquipManager();
-    GameManager         _game = new GameManager();
-    InventoryManager    _inven = new InventoryManager();
-    QuestManager        _quest = new QuestManager();
-    SkillManager        _skill = new SkillManager();
+    EquipManager equip = new EquipManager();
+    GameManager game = new GameManager();
+    InventoryManager inven = new InventoryManager();
+    QuestManager quest = new QuestManager();
+    SkillManager skill = new SkillManager();
 
-    public static EquipManager          Equip { get { return Instance._equip; } }
-    public static GameManager           Game { get { return Instance._game; } }
-    public static InventoryManager      Inventory { get { return Instance._inven; } }
-    public static QuestManager          Quest { get { return Instance._quest; } }
-    public static SkillManager          Skill { get {  return Instance._skill; } }
+    public static EquipManager Equip { get { return Instance.equip; } }
+    public static GameManager Game { get { return Instance.game; } }
+    public static InventoryManager Inventory { get { return Instance.inven; } }
+    public static QuestManager Quest { get { return Instance.quest; } }
+    public static SkillManager Skill { get { return Instance.skill; } }
     #endregion
 
     #region Core
-    DataManager         _data = new DataManager();
-    InputManager        _input = new InputManager();
-    OptionManager       _option = new OptionManager();
-    ResourceManager     _resource = new ResourceManager();
-    PoolManager         _pool = new PoolManager();
-    SceneManagerEx      _scene = new SceneManagerEx();
-    SoundManager        _sound = new SoundManager();
-    UIManager           _ui = new UIManager();
+    DataManager data = new DataManager();
+    InputManager input = new InputManager();
+    OptionManager option = new OptionManager();
+    ResourceManager resource = new ResourceManager();
+    PoolManager pool = new PoolManager();
+    SceneManagerEx scene = new SceneManagerEx();
+    SoundManager sound = new SoundManager();
+    UIManager ui = new UIManager();
 
-    public static DataManager Data              { get { return Instance._data; } }
-    public static InputManager Input            { get { return Instance._input; } }
-    public static OptionManager Option          { get { return Instance._option; } }
-    public static ResourceManager Resource      { get { return Instance._resource; } }
-    public static PoolManager Pool              { get { return Instance._pool; } }
-    public static SceneManagerEx EScene         { get { return Instance._scene; } }
-    public static SoundManager ESound           { get { return Instance._sound; } }
-    public static UIManager UI                  { get { return Instance._ui; } }
+    public static DataManager Data { get { return Instance.data; } }
+    public static InputManager Input { get { return Instance.input; } }
+    public static OptionManager Option { get { return Instance.option; } }
+    public static ResourceManager Resource { get { return Instance.resource; } }
+    public static PoolManager Pool { get { return Instance.pool; } }
+    public static SceneManagerEx EScene { get { return Instance.scene; } }
+    public static SoundManager Sound { get { return Instance.sound; } }
+    public static UIManager UI { get { return Instance.ui; } }
     #endregion
 
     void Update()
     {
-        _input.OnUpdate();
+        input.OnUpdate();
     }
 
     static void Init()
@@ -62,16 +62,15 @@ public class Managers : MonoBehaviour
             DontDestroyOnLoad(go);
 
             BindKey.Init();
-            s_instance._sound.Init();
-            s_instance._pool.Init();
-            s_instance._quest.Init();
-            s_instance._inven.Init();
+            s_instance.sound.Init();
+            s_instance.pool.Init();
+            s_instance.quest.Init();
+            s_instance.inven.Init();
         }
     }
 
     static public void Clear()
     {
-        ESound.Clear();
         Input.Clear();
         UI.Clear();
         EScene.Clear();

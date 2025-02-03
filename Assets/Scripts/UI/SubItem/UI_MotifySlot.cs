@@ -40,9 +40,11 @@ public class UI_MotifySlot : UI_Slot
     void OnClickEvent(PointerEventData eventData)
     {
         UI_MotifyGround parent = transform.parent.GetComponent<UI_MotifyGround>();
-        parent.CheckSlots(this);
+        if (isClick == true)
+            parent.DeSelect();
+        else
+            parent.CheckSlots(this);
 
-        //Motify motify = Managers.Skill.SetMotify(motifyInfo.skillName);
         Managers.Skill.playerInventory.AddMotify(motifyInfo);
     }
 

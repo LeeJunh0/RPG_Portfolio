@@ -22,7 +22,6 @@ public abstract class UIBase : MonoBehaviour
         UnityEngine.Object[] objects = new UnityEngine.Object[names.Length];
         if (Objects.ContainsKey(typeof(T)) == true)
         {
-            Debug.LogError("중복된 바인딩입니다.");
             return;
         }
 

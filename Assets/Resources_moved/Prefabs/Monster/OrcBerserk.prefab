@@ -111,13 +111,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: 0
-  hp: 100
-  maxHp: 100
+  hp: 400
+  maxHp: 400
   mp: 0
   maxMp: 0
   manaRecovery: 0
-  attack: 0
-  defense: 0
+  attack: 40
+  defense: 6
   movespeed: 4
 --- !u!1001 &1645358789783649244
 PrefabInstance:

@@ -12,6 +12,6 @@ public class EnemyArcIndicator : Indicator
     public override void UpdateRotate(Vector3 direction, float speed)
     {
         Quaternion targetRotation = Quaternion.LookRotation(direction.normalized, Vector3.up);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation * Quaternion.Euler(90, 0, 90), speed * Time.deltaTime);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation * Quaternion.Euler(90, 0, 90), speed);
     }
 }

@@ -15,9 +15,9 @@ public class Stat : MonoBehaviour
     [SerializeField]
     protected int maxHp;
     [SerializeField]
-    protected int mp;
+    protected float mp;
     [SerializeField] 
-    protected int maxMp;
+    protected float maxMp;
     [SerializeField]
     protected int manaRecovery;
     [SerializeField]
@@ -28,26 +28,37 @@ public class Stat : MonoBehaviour
     protected float movespeed;
 
     public int Level { get { return level; } set { level = value; } }
-    public int Hp { get { return hp; } set { hp = value; } }
     public int MaxHp { get { return maxHp; } set { maxHp = value; } }
-    public int Mp { get { return mp; } set { mp = value; } }
-    public int MaxMp { get { return maxMp; } set { maxMp = value; } }
+    public float MaxMp { get { return maxMp; } set { maxMp = value; } }
     public int ManaRecovery { get { return manaRecovery; } set { manaRecovery = value; } }
     public int Attack { get { return attack; } set { attack = value; } }
     public int Defense { get { return defense; } set { defense = value; } }
     public float Movespeed { get { return movespeed; } set { movespeed = value; } }
-
-    private void Start()
+    public int Hp 
     {
-        level = 1;
-        hp = 100;
-        maxHp = 100;
-        mp = 100;
-        maxMp = 100;
-        manaRecovery = 1;
-        attack = 6;
-        defense = 5;
-        movespeed = 4.0f;
+        get { return hp; }
+        set 
+        {
+            hp = value;
+
+            PlayerStat playerStat = this as PlayerStat;            
+            if (playerStat != null)
+                Managers.Equip.OnStatusSet?.Invoke();
+        } 
+    }
+    public float Mp 
+    { 
+        get { return mp; }
+        set
+        {
+            mp = value;
+
+            PlayerStat playerStat = this as PlayerStat;
+            if (playerStat != null)
+                return;
+
+            Managers.Equip.OnStatusSet?.Invoke();
+        } 
     }
 
     public virtual void OnDamaged(Stat attacker)

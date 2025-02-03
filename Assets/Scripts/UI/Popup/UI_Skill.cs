@@ -1,5 +1,7 @@
+using Data;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class UI_Skill : UIPopup
@@ -14,7 +16,8 @@ public class UI_Skill : UIPopup
         MainSkill_Slot
     }
 
-    int slotCount = 3;
+    private UI_MotifyGround[] grounds = new UI_MotifyGround[3];
+    private int slotCount = 3;
 
     public override void Init()
     {
@@ -32,8 +35,8 @@ public class UI_Skill : UIPopup
             SetSkill();
         });
 
-        SetSkill();
         SetMotifys();
+        SetSkill();     
     }
 
     private void SetSkill()
@@ -50,6 +53,7 @@ public class UI_Skill : UIPopup
                 slot.SetInfo(Managers.Data.SkillDict["ExplosionSkill"]);
                 break;
         }
+        SetGroundInfo();
     }
 
     private void SetMotifys()
@@ -63,6 +67,7 @@ public class UI_Skill : UIPopup
     {
         Transform parent = GetObject((int)GameObjects.Initialize_MotifyGround).transform; 
         UI_MotifyGround ground = parent.GetComponent<UI_MotifyGround>();
+        grounds[0] = ground;
 
         for (int i = 1; i <= slotCount; i++)
         {
@@ -80,6 +85,7 @@ public class UI_Skill : UIPopup
     {
         Transform parent = GetObject((int)GameObjects.Embodiment_MotifyGround).transform;
         UI_MotifyGround ground = parent.GetComponent<UI_MotifyGround>();
+        grounds[1] = ground;
 
         for (int i = 1; i <= slotCount; i++)
         {
@@ -97,6 +103,7 @@ public class UI_Skill : UIPopup
     {
         Transform parent = GetObject((int)GameObjects.Movement_MotifyGround).transform;
         UI_MotifyGround ground = parent.GetComponent<UI_MotifyGround>();
+        grounds[2] = ground;
 
         for (int i = 1; i <= slotCount; i++)
         {
@@ -108,5 +115,31 @@ public class UI_Skill : UIPopup
         }
 
         ground.SetSlots();
+    }
+
+    private void SetGroundInfo()
+    {      
+        SkillInventory skillInven = Managers.Game.GetPlayer().GetComponent<SkillInventory>();
+        SkillInfo mainSkill = skillInven.skillMotifies.FirstOrDefault(x => x.Key.type == Managers.Skill.curMainSkill).Key;
+
+        if (mainSkill == null) return;
+
+        for(int i = 0; i < grounds.Length; i++)
+        {
+            if (skillInven.skillMotifies[mainSkill][i] == null)
+            {
+                grounds[i].DeSelect();
+                continue;
+            }
+
+            for (int j = 0; j < slotCount; j++)
+            {
+                if (skillInven.skillMotifies[mainSkill][i].Equals(grounds[i].slots[j].motifyInfo) == false)
+                    continue;
+
+                grounds[i].CheckSlots(grounds[i].slots[j]);
+            }
+        }
+        
     }
 }

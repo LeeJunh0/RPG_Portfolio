@@ -111,11 +111,30 @@ public class InventoryManager
     {
         for (int i = 0; i < invenInfos.Length; i++)
         {
-            if (invenInfos[i].ItemInfo == item)
+            if (invenInfos[i].ItemInfo == null)
+                continue;
+
+            if (invenInfos[i].ItemInfo.Equals(item) == true)
             {
-                invenInfos[i].SetItem(null);
-                UpdateSlotInfo(i);
-                TrimAll();
+                if (invenInfos[i].ItemInfo.isStack == true)
+                {
+                    invenInfos[i].ItemInfo.curStack -= 1;
+                    UpdateSlotInfo(i);
+
+                    if (invenInfos[i].ItemInfo.curStack <= 0)
+                    {
+                        invenInfos[i].SetItem(null);
+                        UpdateSlotInfo(i);
+                        TrimAll();
+                    }
+                }
+                else
+                {
+                    invenInfos[i].SetItem(null);
+                    UpdateSlotInfo(i);
+                    TrimAll();                
+                }
+
                 return true;
             }
         }

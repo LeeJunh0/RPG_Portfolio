@@ -14,9 +14,9 @@ public class SpawningPool : MonoBehaviour
     [SerializeField]
     Vector3 spawnPos;
     [SerializeField]
-    float spawnRadius = 30f;
+    float spawnRadius = 10f;
     [SerializeField]
-    float spawnTime = 5.0f;
+    float spawnTime = 10.0f;
 
     public void AddMonsterCount(int value) { monsterCount += value; }
     public void SetKeepMonsterCount(int count) { keepMonsterCount = count; }
@@ -26,7 +26,7 @@ public class SpawningPool : MonoBehaviour
         Managers.Game.OnSpawnEvent -= AddMonsterCount;
         Managers.Game.OnSpawnEvent += AddMonsterCount;
 
-        spawnPos = GameObject.Find("SpawnPos").transform.position;
+        spawnPos = GameObject.Find("OrcArea").transform.position;
     }
 
     void Update()
@@ -50,13 +50,12 @@ public class SpawningPool : MonoBehaviour
             Vector3 randDir = Random.insideUnitSphere * spawnRadius;
             randDir.y = 0;
             randPos = spawnPos + randDir;
-
             NavMeshPath path = new NavMeshPath();
             if (agent.CalculatePath(randPos, path))
                 break;
         }
 
-        go.transform.position = randPos;
+        agent.Warp(randPos);
         reserveCount--;
     }
 }

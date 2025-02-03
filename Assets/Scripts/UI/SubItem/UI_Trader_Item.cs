@@ -54,7 +54,7 @@ public class UI_Trader_Item : UIPopup
         }
 
         playerStat.Gold -= item.gold;
-        Managers.Inventory.AddItem(item);
+        Managers.Inventory.AddItem(new Iteminfo(item));
         Debug.Log($"{item.uiInfo.name} 구매성공");
     }
 

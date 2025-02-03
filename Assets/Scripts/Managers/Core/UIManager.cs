@@ -132,7 +132,6 @@ public class UIManager
     public void OnGameUIPopup<T>(GameObject parent = null) where T : UIPopup
     {
         T uiType = Util.FindChild<T>(Root);
-        Debug.Log($"On{typeof(T)}");
 
         if (uiType != null)
             ClosePopupUI(uiType);

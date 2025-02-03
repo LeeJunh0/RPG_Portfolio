@@ -3,7 +3,7 @@
     {
       "id": 0,
       "name": "마을 정리",
-      "description": "기사 두명을 처리하자.",
+      "description": "오크 둘을 처리하자.",
       "successCount": 2,
       "task": {
         "type": 0,
@@ -48,7 +48,7 @@
     {
       "id": 3,
       "name": "마을 구원",
-      "description": "버서커 한명을 처리후 전리품을 획득하자.",
+      "description": "오크족장을 물리치자.",
       "successCount": 1,
       "task": {
         "type": 1,

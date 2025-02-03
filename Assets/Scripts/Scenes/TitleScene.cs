@@ -25,7 +25,7 @@ public class TitleScene : BaseScene
             if (count >= total)
             {
                 Managers.Data.Init();
-                Managers.ESound.Play("Happy", Define.ESound.Bgm); 
+                Managers.Sound.Play("Nwe Ladn", Define.ESound.Bgm); 
                 Managers.UI.ShowPopupUI<UI_TitleScene>();
             }
         });

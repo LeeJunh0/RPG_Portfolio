@@ -29,7 +29,7 @@ public class Projectile : Attack
 
     private void OnCollisionEnter(Collision co)
     {
-        int layer = 1 << (int)Define.ELayer.Monster | 1 << (int)Define.ELayer.Block;
+        int layer = 1 << (int)Define.ELayer.Monster | 1 << (int)Define.ELayer.Block | 1 << (int)Define.ELayer.Ground;
         if ((layer & (1 << co.gameObject.layer)) == 0)
             return;
 

@@ -3,7 +3,7 @@
     {
       "name": "Knight",
       "drops": {
-        "experience": 15,
+        "experience": 5,
         "items": [ "작은 사과" ]
       },
       "sliver": 20
@@ -11,7 +11,7 @@
     {
       "name": "OrkBerserk",
       "drops": {
-        "experience": 15,
+        "experience": 100,
         "items": [ "Iron Axe" ],
         "sliver": 500
       }

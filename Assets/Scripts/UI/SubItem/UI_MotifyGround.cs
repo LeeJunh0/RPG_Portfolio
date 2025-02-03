@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class UI_MotifyGround : MonoBehaviour
 {
-    [SerializeField]
-    UI_MotifySlot[] slots;
+    public UI_MotifySlot[] slots;
 
     public void SetSlots()
     {
@@ -19,25 +19,24 @@ public class UI_MotifyGround : MonoBehaviour
     {
         for(int i = 0; i < slots.Length; i++)
         {
-            if (slots[i] != slot)            
+            if (slots[i] != slot || slots[i] == null)            
                 slots[i].isClick = false;
             else    
                 slots[i].isClick = true;
 
             slots[i].SetColor();
         }
+    }
 
-        switch (slot.motifyInfo.type)
+    public void DeSelect()
+    {
+        if (UI_SkillTip.Instance == null)
+            return;
+
+        for(int i = 0; i < slots.Length; i++)
         {
-            case Define.EMotifyType.Initialize:
-                UI_SkillTip.Instance.InitInfo = slot.motifyInfo;
-                break;
-            case Define.EMotifyType.Embodiment:
-                UI_SkillTip.Instance.EmbodiInfo = slot.motifyInfo;
-                break;
-            case Define.EMotifyType.Movement:
-                UI_SkillTip.Instance.MoveInfo = slot.motifyInfo;
-                break;
-        }
+            slots[i].isClick = false;
+            slots[i].SetColor();
+        }        
     }
 }

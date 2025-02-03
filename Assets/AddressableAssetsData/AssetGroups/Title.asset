@@ -47,12 +47,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - Title
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: bea93a38b71b64b598109b3a3b1a0048
-    m_Address: Happy
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Title
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: dd52dc132b0224c4fa58756e288671c5
     m_Address: UI_ExitScreen
     m_ReadOnly: 0
@@ -97,6 +91,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bd366c03248d25c4d98040ea1772c210
     m_Address: "SF\uD568\uBC15\uB208TTF"
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Title
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 977c6be5eae12564f96aa3abc309db32
+    m_Address: Nwe Ladn
     m_ReadOnly: 0
     m_SerializedLabels:
     - Title

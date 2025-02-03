@@ -23,23 +23,18 @@ public class Indicator : MonoBehaviour
 
         switch (type)
         {
-            case Define.EIndicator.ArrowIndicator:
-                {
-                    transform.localScale = new Vector3(1f, maxLength, 1f);
-                }
+            case Define.EIndicator.ArrowIndicator:               
+                    transform.localScale = new Vector3(1f, maxLength, 1f);           
                 break;
-            case Define.EIndicator.CircleIndicator:
-                {
-                    transform.localScale = new Vector3(maxLength, maxLength, maxLength);
-                }
+            case Define.EIndicator.CircleIndicator:              
+                    transform.localScale = new Vector3(maxLength, maxLength, maxLength);                
                 break;
-            case Define.EIndicator.RangeIndicator:
-                {
-                    transform.localScale = new Vector3(maxRadius, maxRadius, maxRadius);
-                }
+            case Define.EIndicator.RangeIndicator:               
+                    transform.localScale = new Vector3(maxRadius, maxRadius, maxRadius);               
                 break;
         }
     }
+
     public void InitRotate(Vector3 direction)
     {
         Quaternion targetRotation = Quaternion.LookRotation(direction.normalized, Vector3.up);

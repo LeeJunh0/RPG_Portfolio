@@ -4,81 +4,81 @@
       "level": "1",
       "hp": "100",
       "mp": "100",
-      "manaRecovery": "1",
-      "attack": "30",
+      "manaRecovery": "3",
+      "attack": "20",
       "totalExp": "0"
     },
     {
       "level": "2",
       "hp": "150",
-      "mp": "100",
-      "manaRecovery": "1",
-      "attack": "40",
-      "totalExp": "38"
+      "mp": "110",
+      "manaRecovery": "4",
+      "attack": "30",
+      "totalExp": "35"
     },
     {
       "level": "3",
       "hp": "200",
-      "mp": "100",
-      "manaRecovery": "1",
-      "attack": "50",
-      "totalExp": "154"
+      "mp": "120",
+      "manaRecovery": "5",
+      "attack": "40",
+      "totalExp": "126"
     },
     {
       "level": "4",
       "hp": "300",
-      "mp": "100",
-      "manaRecovery": "1",
+      "mp": "130",
+      "manaRecovery": "6",
       "attack": "50",
-      "totalExp": "234"
+      "totalExp": "216"
     },
     {
       "level": "5",
       "hp": "400",
-      "mp": "150",
-      "manaRecovery": "2",
-      "attack": "50",
-      "totalExp": "289"
+      "mp": "140",
+      "manaRecovery": "7",
+      "attack": "60",
+      "totalExp": "276"
     },
     {
       "level": "6",
       "hp": "500",
-      "mp": "100",
-      "manaRecovery": "1",
-      "attack": "50",
-      "totalExp": "346"
+      "mp": "150",
+      "manaRecovery": "8",
+      "attack": "70",
+      "totalExp": "326"
     },
     {
       "level": "7",
-      "hp": "600",
-      "mp": "100",
-      "manaRecovery": "1",
-      "attack": "50",
-      "totalExp": "412"
+      "hp": "500",
+      "mp": "160",
+      "manaRecovery": "9",
+      "attack": "80",
+      "totalExp": "426"
     },
     {
       "level": "8",
-      "hp": "600",
-      "mp": "100",
-      "manaRecovery": "1",
-      "attack": "50",
-      "totalExp": "537"
+      "hp": "500",
+      "mp": "170",
+      "manaRecovery": "10",
+      "attack": "90",
+      "totalExp": "556"
     },
     {
       "level": "9",
-      "hp": "600",
-      "mp": "100",
-      "manaRecovery": "1",
-      "attack": "50",
-      "totalExp": "683"
+      "hp": "500",
+      "mp": "180",
+      "manaRecovery": "11",
+      "attack": "100",
+      "totalExp": "656"
     },
     {
       "level": "10",
-      "hp": "600",
+      "hp": "500",
       "mp": "200",
-      "manaRecovery": "3",
-      "attack": "50",
-      "totalExp": "795"
+      "manaRecovery": "12",
+      "attack": "150",
+      "totalExp": "801"
     }
   ]
 }
