@@ -16,13 +16,13 @@ Unity3D의 RPG형식 게임입니다.
     - 구성
     - 움직임
 
+- 보스 패턴
 - 인벤토리
 - 장비창
 - 스킬창
 - 퀘스트 관리
 - 퀘스트 NPC
 - 상인 NPC
-- 보스 패턴
 - 각종 작은기능들
   
 ## 컨텐츠 기능 구성
@@ -68,22 +68,31 @@ Unity3D의 RPG형식 게임입니다.
 
 
 
-### 1. 스킬
+### 1. 스킬 및 파츠들
 베이스가 되는 스킬과 파츠로 나뉘어진 기능들이 합쳐져 만들어지는 스킬을 구현하였습니다.
+
+<details Open>
+<summary> 스킬 매니저 Code </summary>
+
+```C#
+public class SkillManager
+{
+    public SkillInventory playerInventory;
+    public Define.ESkill curMainSkill = Define.ESkill.Projectile;
+
+    public void GetSkillInventory() { playerInventory = Managers.Game.GetPlayer().GetComponent<SkillInventory>(); }
+    public Motify SetMotify(string name) {...}
+    public GameObject SetIndicator(Define.EIndicator type) {...}
+    public bool MotifyNameEqule(MotifyInfo[] infos, MotifyInfo info) {...}
+    public bool MotifyTypeEqule(MotifyInfo[] infos, MotifyInfo info) {...}
+}
+```
+</details>
 
 <details Open>
 <summary>스킬 인벤토리 Code Open</summary>
 
 ```C#
-using Data;
-using System;
-using System.Linq;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEngine;
-using static Define;
-
 public class SkillInventory : MonoBehaviour
 {
     public Dictionary<SkillInfo, MotifyInfo[]> skillMotifies;
@@ -127,18 +136,76 @@ public class SkillInventory : MonoBehaviour
 </details>
 
 <details>
-<summary> 스킬 인벤토리 Full Open </summary>
+<summary> 스킬 매니저 FullCode Open </summary>
 
 ```C#
-using Data;
-using System;
-using System.Linq;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEngine;
-using static Define;
+public class SkillManager
+{
+    public SkillInventory playerInventory;
+    public Define.ESkill curMainSkill = Define.ESkill.Projectile;
+    public void GetSkillInventory() { playerInventory = Managers.Game.GetPlayer().GetComponent<SkillInventory>(); }
 
+    public Motify SetMotify(string name)
+    {
+        switch (name)
+        {
+            case "IceElemental":
+                return new IceElemental();
+            case "WindElemental": 
+                return new WindElemental();
+            case "FireElemental":
+                return new FireElemental();
+            case "EmbodimentMotify":
+                return new EmbodimentMotify();
+            case "HorizontalDeployment":
+                return new HorizontalDeployment();           
+            case "MoveMotify":
+                return new MoveMotify();
+            case "CircleMove":
+                return new CircleMove();
+        }
+
+        return null;
+    }
+
+    public GameObject SetIndicator(Define.EIndicator type)
+    {
+        string typeName = Enum.GetName(typeof(Define.EIndicator), type);
+        return Managers.Resource.Instantiate(typeName);
+    }
+
+    public bool MotifyNameEqule(MotifyInfo[] infos, MotifyInfo info)
+    {
+        for(int i = 0; i < infos.Length; i++)
+        {
+            if (infos[i] == null) continue;
+
+            if (infos[i].skillName == info.skillName)
+                return true;
+        }
+
+        return false;
+    }
+    public bool MotifyTypeEqule(MotifyInfo[] infos, MotifyInfo info)
+    {
+        for (int i = 0; i < infos.Length; i++)
+        {
+            if (infos[i] == null) continue;
+
+            if (infos[i].TypeEquals(info) == true)
+                return true;
+        }
+
+        return false;
+    }
+}
+```
+</details>
+
+<details>
+<summary> 스킬 인벤토리 FullCode Open </summary>
+
+```C#
 public class SkillInventory : MonoBehaviour
 {
     public Dictionary<SkillInfo, MotifyInfo[]> skillMotifies;
@@ -359,11 +426,6 @@ public class SkillInventory : MonoBehaviour
 <summary> 스킬 클래스 Full Code Open </summary>
 
 ```C#
-using Data;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public interface ISkill
 {
     void Execute(Skill _skill);
@@ -447,21 +509,13 @@ public class Skill : MonoBehaviour
 <summary> 발사체 스킬 Full Code Open </summary>
     
 ```C#
-using Data;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.PlayerLoop;
-using static Define;
-
 public class ProjectileSkill : Skill
 {
     public GameObject       hitVFX;
     public GameObject       muzzleVFX;
     public int              count = 1;
 
-    Rigidbody rigid;
+    private Rigidbody rigid;
     
     private void Awake()
     {       
@@ -497,10 +551,6 @@ public class ProjectileSkill : Skill
 <summary> 범위 지정스킬 Full Code Open</summary>
 
 ```C#
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class ExplosionSkill : Skill
 {
     private void Awake()
@@ -515,12 +565,26 @@ public class ExplosionSkill : Skill
 ```
 </details>
 
-### 2. 스킬 범위표시
-플레이어와 보스에 스킬타입마다 각각 다른 스킬범위표시를 플레이어에게 제공합니다.
+<details>
+<summary> 범위 지정스킬 공격 FullCode Open </summary>
 
+```C#
+public class Explosion : Attack
+{
+    private void Start()
+    {
+        StartCoroutine(OnDamaged());   
+    }
 
+    private void OnDestroy()
+    {
+        StopCoroutine(OnDamaged());
+    }
+}
+```   
+</details>
 
-### 3. 스킬 구성 3가지
+### 스킬 구성 3가지
 #### - 속성(Elemental)
 스킬의 속성마다 고유한 시각적 효과와 기능들을 가질수 있도록 구현하였습니다.
 
@@ -765,11 +829,316 @@ public class MoveMotify : Motify
 ```
 </details>
 
-### 4. 인벤토리
-기본적인 아이템 추가, 삭제, 정렬기능을 구현했고 데이터와 UI를 분리하여 보다 유연하게 기능들이 작동할수 있도록 구현하였습니다.
 
-<details open> 
-<summary>인벤토리 매니저 Code Open</summary>
+### 2. 스킬 범위표시
+플레이어와 보스에 스킬타입마다 각각 다른 스킬범위표시를 플레이어에게 제공합니다.
+
+<details Open>
+<summary> Indicator Code </summary>
+
+```C#
+public class IndicatorInfo
+{
+    public Define.EIndicator type = Define.EIndicator.RangeIndicator;
+    public float maxLength = 5f;
+    public float maxRadius = 5f;
+}
+
+public class Indicator : MonoBehaviour
+{
+    public IndicatorInfo info;
+
+    public void SetInfo(Define.EIndicator type, float maxLength, float maxRadius) {...}
+    public void InitRotate(Vector3 direction) {...}
+    public virtual void UpdatePosition(Vector3 inputPos)  {...}
+    public virtual void UpdateRotate(Vector3 direction, float speed) {...}
+}
+```
+</details>
+
+<details>
+<summary> Indicator FullCode Open </summary>
+
+```C#
+public class IndicatorInfo
+{
+    public Define.EIndicator type = Define.EIndicator.RangeIndicator;
+    public float maxLength = 5f;
+    public float maxRadius = 5f;
+}
+
+public class Indicator : MonoBehaviour
+{
+    public IndicatorInfo info;
+
+    public void SetInfo(Define.EIndicator type, float maxLength, float maxRadius)
+    {
+        info = new IndicatorInfo();
+
+        info.type = type;
+        info.maxLength = maxLength;
+        info.maxRadius = maxRadius;
+
+        switch (type)
+        {
+            case Define.EIndicator.ArrowIndicator:               
+                    transform.localScale = new Vector3(1f, maxLength, 1f);           
+                break;
+            case Define.EIndicator.CircleIndicator:              
+                    transform.localScale = new Vector3(maxLength, maxLength, maxLength);                
+                break;
+            case Define.EIndicator.RangeIndicator:               
+                    transform.localScale = new Vector3(maxRadius, maxRadius, maxRadius);               
+                break;
+        }
+    }
+
+    public void InitRotate(Vector3 direction)
+    {
+        Quaternion targetRotation = Quaternion.LookRotation(direction.normalized, Vector3.up);
+        transform.rotation = targetRotation * Quaternion.Euler(90, 0, 90);
+    }
+
+    public virtual void UpdatePosition(Vector3 inputPos) 
+    {
+        if (info.type != Define.EIndicator.CircleIndicator)
+            return;
+    }
+    public virtual void UpdateRotate(Vector3 direction, float speed)
+    {
+
+    }
+}
+```
+</details>
+
+<details>
+<summary> 화살 Indicator FullCode Open </summary>
+
+```C#
+public class ArrowIndicator : Indicator
+{   
+    public override void UpdatePosition(Vector3 inputPos)
+    {
+        base.UpdatePosition(inputPos);
+
+        Vector3 playerPos = Managers.Game.GetPlayer().transform.position;
+        Vector3 direction = (inputPos - Managers.Game.GetPlayer().transform.position).normalized;
+        Vector3 length = direction * (info.maxLength / 2);
+        transform.position = new Vector3(playerPos.x + length.x, 1f, playerPos.z + length.z);
+
+        Quaternion rotate = Quaternion.LookRotation(direction, Vector3.up);
+        transform.rotation = Quaternion.Euler(90f, rotate.eulerAngles.y, rotate.eulerAngles.z);     
+    }
+}
+
+```    
+</details>
+
+<details>
+<summary> 원 Indicator Fullcode Open </summary>
+
+```C#
+public class CircleIndicator : Indicator
+{
+    RangeIndicator rangeIndicator;
+
+    public void SetRange(GameObject go) 
+    {
+        // RangeIndicator는 모양뿐인 클래스
+        rangeIndicator = go.GetComponent<RangeIndicator>();
+        rangeIndicator.SetInfo(Define.EIndicator.RangeIndicator, info.maxLength, info.maxRadius);
+
+        Vector3 playerPos = Managers.Game.GetPlayer().transform.position;
+        go.transform.position = new Vector3(playerPos.x, go.transform.position.y, playerPos.z);
+        go.transform.parent = Managers.Game.GetPlayer().transform;
+    }
+
+    public override void UpdatePosition(Vector3 inputPos)
+    {
+        if (rangeIndicator == null)
+            return;
+
+        Vector3 playerPos = Managers.Game.GetPlayer().transform.position;
+        float distance = Vector3.Distance(inputPos, playerPos);
+
+        if(distance > (rangeIndicator.info.maxRadius / 2))
+        {
+            Vector3 direction = (inputPos - playerPos).normalized;
+            Vector3 maxPos = direction * (info.maxRadius / 2);
+            inputPos = new Vector3(playerPos.x + maxPos.x, transform.position.y, playerPos.z + maxPos.z);
+        }
+
+        transform.position = new Vector3(inputPos.x, transform.position.y, inputPos.z);
+    }
+
+    private void OnDestroy()
+    {
+        Managers.Resource.Destroy(rangeIndicator.gameObject);
+    }
+}
+
+```
+</details>
+
+<details>
+<summary> 몬스터 부채꼴 Indicator FullCode Open </summary>
+
+```C#
+public class EnemyArcIndicator : Indicator
+{ 
+    public override void UpdatePosition(Vector3 inputPos)
+    {
+        transform.position = new Vector3(inputPos.x, transform.position.y, inputPos.z);
+    }
+
+    public override void UpdateRotate(Vector3 direction, float speed)
+    {
+        Quaternion targetRotation = Quaternion.LookRotation(direction.normalized, Vector3.up);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation * Quaternion.Euler(90, 0, 90), speed);
+    }
+}
+```    
+</details>
+
+<details>
+<summary> 몬스터 박스형 Indicator FullCode Open </summary>
+
+```C#
+public class EnemyBoxIndicator : Indicator
+{
+    public override void UpdatePosition(Vector3 inputPos)
+    {
+        transform.position = new Vector3(inputPos.x, transform.position.y, inputPos.z);
+    }
+
+    public override void UpdateRotate(Vector3 direction, float speed)
+    {
+        Quaternion targetRotation = Quaternion.LookRotation(direction.normalized,Vector3.up);
+        transform.rotation = targetRotation * Quaternion.Euler(90, 0, 90);
+    }
+}
+```
+</details>
+
+### 2. 보스의 공격패턴들
+보스는 2가지의 강한스킬과 기본공격을 하도록 구현했습니다.
+
+<details Open>
+<summary> 내려찍기 범위표시 및 공격 FullCode </summary>
+
+```C#
+public IEnumerator OnGroundAttack()
+{
+    OnSkill();
+    Indicator indicator = IndicatorExecute(Define.EState.GroundAttack);
+    indicator.InitRotate(lockTarget.transform.position - transform.position);
+    indicator.transform.parent = this.gameObject.transform;
+
+    float sec = 0f;
+    while (sec <= 5f)
+    {
+        sec += Time.deltaTime;
+        indicator.UpdatePosition(transform.position);
+        float lerpX = Mathf.Lerp(0.1f, 3f, sec / 3f);
+        indicator.transform.localScale = new Vector3(lerpX, lerpX * 1.5f, 1);
+
+        if (sec <= 4)
+            indicator.UpdateRotate(lockTarget.transform.position - transform.position, 20f);
+        else if (sec >= 4f && EState != Define.EState.GroundAttack)
+            EState = Define.EState.GroundAttack;
+
+        yield return null;
+    }
+    
+    Managers.Resource.Destroy(indicator.gameObject);
+}
+
+public void GroundAttack()
+{
+    Vector3 direction = lockTarget.transform.position - transform.position;        
+    float distance = direction.magnitude;
+    float angle = Vector3.Angle(transform.forward, direction.normalized);
+
+    if(120f >= angle / 2 && distance <= 6f)
+    {
+        Stat targetStat = lockTarget.GetComponent<Stat>();
+        targetStat.OnDamaged(stat);
+    }
+}
+```    
+</details>
+
+<details Open>
+<summary> 돌진 범위표시 및 공격 FullCode </summary>
+
+```C#
+// 공격 범위표시용 코루틴
+public IEnumerator OnHardAttack()
+{
+    OnSkill();
+    Indicator indicator = IndicatorExecute(Define.EState.HardAttack);
+    indicator.transform.parent = this.gameObject.transform;
+
+    float sec = 0f;
+    while(sec <= 5f)
+    {
+        sec += Time.deltaTime;
+        indicator.UpdatePosition(transform.position);
+        indicator.UpdateRotate((lockTarget.transform.position - transform.position).normalized, 10f);
+
+        float lerpX = Mathf.Lerp(0.1f, 5f, sec / 3f);
+        indicator.transform.localScale = new Vector3(lerpX, 1, 1);
+
+        Vector3 direction = (lockTarget.transform.position - transform.position).normalized;
+        Quaternion targetRotate = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotate, 10f * Time.deltaTime);
+
+        yield return null;          
+    }
+    Managers.Resource.Destroy(indicator.gameObject);
+
+    StartCoroutine(HardAttack());
+}
+
+// 공격을 위한 이동목적 코루틴
+private IEnumerator HardAttack()
+{
+    EState = Define.EState.HardAttack;
+    Vector3 prevPos = transform.position;
+    Vector3 prevForward = transform.forward;
+    float speed = stat.Movespeed * 1.5f;
+    float sec = 0f;
+
+    while (true)
+    {
+        sec += Time.deltaTime;
+        float moveLength = Vector3.Distance(prevPos, transform.position);
+        if (AttackChecking(prevPos, 2f) == true)
+        {
+            Stat targetStat = lockTarget.GetComponent<Stat>();
+            targetStat.OnDamaged(stat);
+            break;
+        }
+        else if(moveLength >= 40f || sec >= 5f)
+            break;
+                      
+        transform.position += prevForward * Time.deltaTime * speed;
+        yield return new WaitForFixedUpdate();
+    }
+
+    OffSkill();
+}
+```
+</details>
+
+### 3. 인벤토리
+기본적인 아이템 추가, 삭제, 정렬기능을 구현했고 데이터와 UI를 분리하여 보다 업데이트를 사용하지않고 개발자가 원하는 타이밍에 데이터를 업데이트 하도록 구현하였으며
+
+아이템 툴팁과 슬롯의 드래그이동, 클릭이벤트를 응용한 더블클릭 이벤트를 구현해 아이템 사용을 구현했습니다.
+
+<details Open> 
+<summary>인벤토리 매니저 Code</summary>
 
 ```C#
 public class InventoryManager
@@ -795,8 +1164,90 @@ public class InventoryManager
 }
 
 ```
+</details>
+
+<details Open>
+<summary> 인벤토리 UI Code </summary>
+
+```C#
+using Data;
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+
+public class UI_Inven : UIPopup
+{
+    enum GameObjects
+    {
+        UI_Inven_Sorting,
+        UI_Sliver_Text,
+        Content
+    }
+
+    UI_Inven_Slot[] iconInfos;
+    Text sliverText;
+
+    public override void Init()
+    {
+        base.Init();
+
+        Bind<GameObject>(typeof(GameObjects));
+        sliverText = GetObject((int)GameObjects.UI_Sliver_Text).GetComponent<Text>();
+
+        GetObject((int)GameObjects.UI_Inven_Sorting).BindEvent((evt) => { Managers.Inventory.SortAll(); });
+        InfosInit();
+    }
+
+    private void Start()
+    {
+        Managers.Inventory.SetInvenReference(iconInfos);
+        Managers.Inventory.InterLocking();
+    }
+
+    private void Update()
+    {
+        // 실시간 화폐 데이터 연동
+        SetSliverText();     
+    }
+
+    public void InfosInit() {...}
+    public void SetSliverText() {...}
+}
+```
+</details>
+
+<details Open>
+<summary> 아이템 슬롯 Code </summary>
+
+```C#
+public class UI_Inven_Slot : UIPopup
+{
+    enum GameObjects
+    {
+        SlotIcon,
+        ItemStack
+    }
+
+    public Iteminfo item;
+    private RectTransform rect;
+
+    public int Index { get; private set; }
+
+    public override void Init() {...}
+    public void SetInfo(Iteminfo info) {...}
+    public void ItemCounting(Iteminfo info) {...}
+    public void SetIndex(int index) {...}
+    private void EnterSlotEvent(PointerEventData eventData) {...}
+    private void ExitSlotEvent(PointerEventData eventData) {...}
+}
+```
+</details>
+
 <details>
-  <summary>FullCode Open</summary>
+  <summary> 인벤토리 매니저 FullCode Open</summary>
 
 ```C#
 using Data;
@@ -1026,63 +1477,8 @@ public class InventoryManager
 }
 ```
 </details>
-    
-</details>
-
-<details Open>
-<summary> 인벤토리 UI Code </summary>
-
-```C#
-using Data;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
-
-public class UI_Inven : UIPopup
-{
-    enum GameObjects
-    {
-        UI_Inven_Sorting,
-        UI_Sliver_Text,
-        Content
-    }
-
-    UI_Inven_Slot[] iconInfos;
-    Text sliverText;
-
-    public override void Init()
-    {
-        base.Init();
-
-        Bind<GameObject>(typeof(GameObjects));
-        sliverText = GetObject((int)GameObjects.UI_Sliver_Text).GetComponent<Text>();
-
-        GetObject((int)GameObjects.UI_Inven_Sorting).BindEvent((evt) => { Managers.Inventory.SortAll(); });
-        InfosInit();
-    }
-
-    private void Start()
-    {
-        Managers.Inventory.SetInvenReference(iconInfos);
-        Managers.Inventory.InterLocking();
-    }
-
-    private void Update()
-    {
-        // 실시간 화폐 데이터 연동
-        SetSliverText();     
-    }
-
-    public void InfosInit() {...}
-    public void SetSliverText() {...}
-}
-```
-
 <details>
-<summary>FullCode Open</summary>
+<summary> 인벤토리UI FullCode Open</summary>
   
 ```C#
 using Data;
@@ -1155,38 +1551,1036 @@ public class UI_Inven : UIPopup
 ```
 </details>
 
-### 5. 퀘스트 관리
-Action을 이용한 리스너 패턴식 퀘스트 상태 관리 와 조건 업데이트를 구현했고 NPC들이 사용할 기능들을 이벤트로써 관리하도록 구현했습니다.
+<details>
+<summary> 드래그슬롯 클래스 FullCode Open </summary>
 
-<details open>
-<summary>퀘스트 매니저 Code Open</summary>
+```C#
+private void OffRayTarget(PointerEventData eventData)
+{
+    if (eventData.pointerDrag == null || !UI_SetDragSlot.instance.isDraging)
+        return;
+
+    icon.raycastTarget = false;
+    UI_SetDragSlot.instance.hoverSlots.Add(icon);
+}
+
+private void OnRayTarget(PointerEventData eventData)
+{
+    if (eventData.pointerDrag == null || UI_SetDragSlot.instance.isDraging)
+        return;
+    
+    icon.raycastTarget = true;
+    UI_SetDragSlot.instance.hoverSlots.Remove(icon);
+}
+
+private void StartDragging(PointerEventData eventData)
+{
+    UI_SetDragSlot.instance.dragSlot = this;
+    UI_SetDragSlot.instance.DragSetIcon(icon);
+    UI_SetDragSlot.instance.transform.position = eventData.position;
+    UI_SetDragSlot.instance.isDraging = true;
+    UI_SetDragSlot.instance.icon.raycastTarget = false;
+}
+
+private void Dragging(PointerEventData eventData)
+{
+    UI_SetDragSlot.instance.SetColor(0.6f);
+    UI_SetDragSlot.instance.transform.position = eventData.position;
+}
+
+private void EndDragging(PointerEventData eventData)
+{
+    UI_SetDragSlot.instance.SetColor(0);
+    UI_SetDragSlot.instance.isDraging = false;
+    UI_SetDragSlot.instance.icon.raycastTarget = true;
+    UI_SetDragSlot.instance.gameObject.transform.position = new Vector3(99f, 99f, 99f);
+    UI_SetDragSlot.instance.dragSlot = null;
+
+    foreach (Image slot in UI_SetDragSlot.instance.hoverSlots)
+        slot.raycastTarget = true;
+}
+```
+</details>
+
+<details>
+<summary> 드랍슬롯 클래스 FullCode Open </summary>
+
+```C#
+private void OnHighlight(PointerEventData eventData) { icon.color = Color.red; }
+private void OffHighlight(PointerEventData eventData) { icon.color = Color.white; }
+private void OnDrop(PointerEventData eventData)
+{
+    if (eventData.pointerDrag.gameObject == this.gameObject)
+        return;
+
+    if (eventData.pointerDrag == null || eventData.pointerDrag.GetComponent<UI_DropSlot>() == true)
+        return;
+
+    int item1 = GetComponent<UI_Inven_Slot>().Index;
+    int item2 = eventData.pointerDrag.transform.parent.GetComponent<UI_Inven_Slot>().Index;
+    Managers.Inventory.InfoLink(item1, item2);
+}
+```
+</details>
+
+<details>
+<summary> 아이템슬롯 FullCode Open </summary>
+
+```C#
+public class UI_Inven_Slot : UIPopup
+{
+    enum GameObjects
+    {
+        SlotIcon,
+        ItemStack
+    }
+
+    public Iteminfo item;
+    private RectTransform rect;
+
+
+    public int Index { get; private set; }
+
+    public override void Init()
+    {
+        rect = GetComponent<RectTransform>();
+        BindObject(typeof(GameObjects));
+        GetObject((int)GameObjects.ItemStack).SetActive(false);
+
+        gameObject.BindEvent((evt) => { Managers.Inventory.SelectIndex = Index;});
+        gameObject.BindEvent(EnterSlotEvent, Define.EUiEvent.PointerEnter);
+        gameObject.BindEvent(ExitSlotEvent, Define.EUiEvent.PointerExit);
+    }
+
+    public void SetInfo(Iteminfo info)
+    {
+        item = info;
+        info = info ?? Managers.Data.ItemDict[199];
+
+        Image slot = GetObject((int)GameObjects.SlotIcon).GetComponent<Image>();
+        Texture2D texture = Managers.Resource.Load<Texture2D>(info.uiInfo.icon);
+        slot.sprite = Managers.UI.TextureToSprite(texture);
+
+        ItemCounting(info);
+    }
+
+    public void ItemCounting(Iteminfo info)
+    {
+        if (info.isStack == true)
+        {
+            GetObject((int)GameObjects.ItemStack).SetActive(true);
+            GetObject((int)GameObjects.ItemStack).GetComponent<Text>().text = string.Format($"{info.curStack}");
+        }
+        else
+        {
+            GetObject((int)GameObjects.ItemStack).SetActive(false);
+            GetObject((int)GameObjects.ItemStack).GetComponent<Text>().text = "1";
+        }
+    }
+
+    public void SetIndex(int index) { Index = index; }
+
+    private void EnterSlotEvent(PointerEventData eventData)
+    {
+        if (item == null)
+            return;
+
+        UI_InvenTip.Instance.SetColor(1f);
+        UI_InvenTip.Instance.SetToolTip(item);
+
+        RectTransform tooltipRect = UI_InvenTip.Instance.GetComponent<RectTransform>();
+        tooltipRect.pivot = new Vector2(0, 1);
+        tooltipRect.position = rect.position;
+
+        float x = Mathf.Clamp(tooltipRect.anchoredPosition.x, -UI_InvenTip.Instance.parentRect.position.x + tooltipRect.rect.size.x, UI_InvenTip.Instance.parentRect.position.x - tooltipRect.rect.size.x / 2);
+        float y = Mathf.Clamp(tooltipRect.anchoredPosition.y, -UI_InvenTip.Instance.parentRect.position.y + tooltipRect.rect.size.y, UI_InvenTip.Instance.parentRect.position.y);
+
+        tooltipRect.anchoredPosition = new Vector2(x, y);
+
+        //Cursor.visible = false;
+    }
+
+    private void ExitSlotEvent(PointerEventData eventData)
+    {
+        UI_InvenTip.Instance.SetColor(0f);
+
+        //Cursor.visible = true;
+    }
+}
+```
+</details>
+
+<details>
+<summary> 아이템슬롯 더블클릭 FullCode Open </summary>
+
+```C#
+public class UI_Inven_DoubleClick : UI_Slot
+{
+    private UI_Inven_Slot item;
+    private bool isDoubleCheck = false;
+
+    private void Start()
+    {
+        item = transform.parent.GetComponent<UI_Inven_Slot>(); 
+        gameObject.BindEvent(DoubleClickEvent, Define.EUiEvent.Click);
+    }
+
+    void Update()
+    {
+        if(isDoubleCheck == true)
+        {
+            Managers.Inventory.InvenInfos[item.Index].Use(item.Index);
+            isDoubleCheck = false;
+        }
+    }
+
+    private void DoubleClickEvent(PointerEventData eventData)
+    {
+        if (item == null)
+            return;
+
+        if (eventData.clickCount >= 2)
+            isDoubleCheck = true;
+    }
+}
+```
+</details>
+
+### 4. 장비창 및 세부기능
+인벤토리와 유사하게 슬롯UI와 아이템데이터를 나눠 관리했으며, 더블클릭으로 아이템 장착 및 해제시 스텟이 추가 및 감소되고 장비창UI의 텍스트를 업데이트하도록 구현했습니다.
+
+<details Open>
+<summary> 장비 매니저 Code </summary>
 
 ```C#
 using Data;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
-using UnityEngine.SocialPlatforms;
+using UnityEngine.UI;
 
+public class EquipManager
+{
+    public Action OnStatusSet = null;
+
+    public Texture2D[] emptyImage = new Texture2D[4];
+    public Iteminfo[] equipInfos = new Iteminfo[4];
+    public UI_EquipSlot[] slots = new UI_EquipSlot[4];
+
+    public void Init() {...}
+    public void OnEquip() {...}
+    public void ItemEquip(Iteminfo item) {...}
+    public void ItemStatPlus() {...}
+    public void ItemUnEquip(int index) {...}
+}
+```
+</details>
+
+<details>
+<summary> 장비 매니저 FullCode Open </summary>
+
+```C#
+public class EquipManager
+{
+    public Action OnStatusSet = null;
+
+    public Texture2D[] emptyImage = new Texture2D[4];
+    public Iteminfo[] equipInfos = new Iteminfo[4];
+    public UI_EquipSlot[] slots = new UI_EquipSlot[4];
+
+    public void Init()
+    {
+        emptyImage[0] = Managers.Resource.Load<Texture2D>("melee_background");
+        emptyImage[1] = Managers.Resource.Load<Texture2D>("chest_background");
+        emptyImage[2] = Managers.Resource.Load<Texture2D>("pants_background");
+        emptyImage[3] = Managers.Resource.Load<Texture2D>("boots_background");
+    }
+
+    public void OnEquip()
+    {
+        if (Input.GetKeyDown(BindKey.Equipment))
+            Managers.UI.OnGameUIPopup<UI_Equip>();
+
+        if (Util.FindChild<UI_Equip>(Managers.UI.Root) == null)
+            return;
+        else
+        {
+            for (int i = 0; i < slots.Length; i++)
+            {
+                if (equipInfos[i] == null)
+                    slots[i].SetBefore(emptyImage[i]);
+                else
+                    slots[i].SetInfo(equipInfos[i]);
+
+                slots[i].index = i;
+            }
+        }  
+    }
+
+    public void ItemEquip(Iteminfo item)
+    {
+        switch (item.type)
+        {
+            case Define.ItemType.Weapon:
+                equipInfos[0] = item;
+                break;
+            case Define.ItemType.Chest:
+                equipInfos[1] = item; 
+                break;
+            case Define.ItemType.Pants:
+                equipInfos[2] = item; 
+                break;
+            case Define.ItemType.Boots:
+                equipInfos[3] = item; 
+                break;
+        }
+
+        if(Util.FindChild(Managers.UI.Root) != null)
+        {
+            for (int i = 0; i < slots.Length; i++) 
+            {
+                if (equipInfos[i] == null || slots[i] == null)
+                    continue;
+
+                slots[i].SetInfo(equipInfos[i]);
+                slots[i].index = i;
+            }
+        }
+
+        PlayerStat playerStat = Managers.Game.GetPlayer().GetComponent<PlayerStat>();
+        playerStat.MaxHp += item.hp;
+        playerStat.Attack += item.att;
+
+        OnStatusSet?.Invoke();
+    }
+
+    public void ItemStatPlus()
+    {
+        PlayerStat playerStat = Managers.Game.GetPlayer().GetComponent<PlayerStat>();
+
+        for (int i = 0; i < equipInfos.Length; i++)
+        {
+            if (equipInfos[i] == null)
+                continue;
+
+            playerStat.MaxHp += equipInfos[i].hp;
+            playerStat.Attack += equipInfos[i].att;
+        }
+    }
+
+    public void ItemUnEquip(int index)
+    {
+        if (equipInfos[index] == null)
+            return;
+
+        PlayerStat playerStat = Managers.Game.GetPlayer().GetComponent<PlayerStat>();
+        playerStat.MaxHp -= equipInfos[index].hp;
+        playerStat.Attack -= equipInfos[index].att;
+
+        Managers.Inventory.AddItem(equipInfos[index]);
+        equipInfos[index] = null;
+        slots[index].SetBefore(emptyImage[index]);
+
+        OnStatusSet?.Invoke();
+    }
+}
+```
+</details>
+
+<details>
+<summary> 장비창 UI FullCode Open </summary>
+
+```C#
+public class UI_Equip : UIPopup
+{
+    enum GameObjects
+    {
+        UI_Equip_Sword,
+        UI_Equip_Armor,
+        UI_Equip_Pant,
+        UI_Equip_Boots,
+        UI_Equip_ExitButton
+    }
+
+    enum Texts
+    {
+        UI_Equip_Hp_Text,
+        UI_Equip_Mp_Text,
+        UI_Equip_Att_Text,
+        UI_Equip_Def_Text,
+        UI_Equip_Move_Text
+    }
+
+    public override void Init()
+    {
+        base.Init();
+        BindObject(typeof(GameObjects));
+        BindText(typeof(Texts));
+
+        GetObject((int)GameObjects.UI_Equip_ExitButton).BindEvent(evt => { Managers.UI.ClosePopupUI(); });
+        SetSlots();
+
+        Managers.Equip.OnStatusSet -= StatusSet;
+        Managers.Equip.OnStatusSet += StatusSet;
+        StatusSet();
+    }e
+
+    public void SetSlots()
+    {
+        for (int i = 0; i < Managers.Equip.slots.Length; i++)
+        {
+            GameObject go = GetObject((int)GameObjects.UI_Equip_Sword + i);
+            UI_EquipSlot slot = go.GetComponent<UI_EquipSlot>();
+            Managers.Equip.slots[i] = slot;
+        }
+    }
+
+    public void StatusSet()
+    {
+        PlayerStat playerStat = Managers.Game.GetPlayer().GetComponent<PlayerStat>();
+
+        Text bindCheck = GetText((int)Texts.UI_Equip_Hp_Text);
+        if (bindCheck == null)
+            return;
+
+        GetText((int)Texts.UI_Equip_Hp_Text).text = string.Format($"{playerStat.Hp} / {playerStat.MaxHp}");
+        GetText((int)Texts.UI_Equip_Mp_Text).text = string.Format($"{playerStat.Mp} / {playerStat.MaxMp}");
+        GetText((int)Texts.UI_Equip_Att_Text).text = string.Format($"{playerStat.Attack}");
+        GetText((int)Texts.UI_Equip_Def_Text).text = string.Format($"{playerStat.Defense}");
+        GetText((int)Texts.UI_Equip_Move_Text).text = string.Format($"{playerStat.Movespeed}");
+    }
+}
+```
+</details>
+
+<details>
+<summary> 장비창UI 슬롯 FullCode </summary>
+
+```C#
+public class UI_EquipSlot : UIPopup
+{
+    enum GameObjects
+    {
+        SlotIcon
+    }
+
+    public Iteminfo equipItem;
+    public int index;
+
+    public override void Init()
+    {
+        BindObject(typeof(GameObjects));
+    }
+
+    public void SetInfo(Iteminfo info)
+    {       
+        equipItem = info;
+        GameObject go = GetObject((int)GameObjects.SlotIcon);
+        if (go == null)
+            return;
+
+        Image slot = go.GetComponent<Image>();
+        Texture2D texture = Managers.Resource.Load<Texture2D>(info.uiInfo.icon);
+        slot.sprite = Managers.UI.TextureToSprite(texture);
+    }
+
+    public void SetBefore(Texture2D image)
+    {
+        equipItem = null;
+
+        Image slot = GetObject((int)GameObjects.SlotIcon).GetComponent<Image>();
+        slot.sprite = Managers.UI.TextureToSprite(image);
+    }
+}
+```
+</details>
+
+<details>
+<summary> 장비슬롯 더블클릭 FullCode Open </summary>
+
+```C#
+public class UI_Equip_DoubleClick : MonoBehaviour
+{
+    private UI_EquipSlot slot;
+    private bool isDoubleCheck = false;
+
+    private void Start()
+    {
+        slot = transform.parent.GetComponent<UI_EquipSlot>();
+        gameObject.BindEvent(DoubleClickEvent, Define.EUiEvent.Click);
+    }
+
+    void Update()
+    {
+        if (isDoubleCheck == true)
+        {
+            Managers.Equip.ItemUnEquip(slot.index);
+            isDoubleCheck = false;
+        }
+    }
+
+    private void DoubleClickEvent(PointerEventData eventData)
+    {
+        if (slot == null)
+            return;
+
+        if (eventData.clickCount >= 2)
+            isDoubleCheck = true;
+    }
+}
+```
+</details>
+
+### 5. 스킬창 및 세부기능
+스킬들의 세부정보와 현재 사용중인 스킬 및 파츠들의 정보를 제공하는 툴팁, 파츠의 사용을 결정하도록 UI를 구현했습니다.
+
+<details Open> 
+<summary> 스킬창 Code </summary>
+
+```C#
+public class UI_Skill : UIPopup
+{
+    enum GameObjects
+    {
+        ProjectileTab,
+        ExplosionTab,
+        Initialize_MotifyGround,
+        Embodiment_MotifyGround,
+        Movement_MotifyGround,
+        MainSkill_Slot
+    }
+
+    private UI_MotifyGround[] grounds = new UI_MotifyGround[3];
+    private int slotCount = 3;
+
+    public override void Init() {...}
+    private void SetSkill() {...}
+    private void SetMotifys() {...}
+    private void SetInitializeSlot() {...}
+    private void SetEmbodimentSlot() {...}
+    private void SetMovementSlot() {...}
+    private void SetGroundInfo() {...}
+}
+
+```
+</details>
+
+<details Open>
+<summary> 메인스킬 툴팁 Code </summary>
+
+```C#
+public class UI_SkillTip : MonoBehaviour
+{
+    private static UI_SkillTip instance;
+
+    public CanvasGroup group;
+    public RectTransform parentRect;
+    public Image icon;
+    public Text skillName;
+    public Text skillFuction;
+    public Text skillStat;
+    public Text skillDescription;
+    public Text initMotify;
+    public Text embodiMotify;
+    public Text moveMotify;
+
+    private MotifyInfo initInfo;
+    private MotifyInfo embodiInfo;
+    private MotifyInfo moveInfo;
+
+    public static UI_SkillTip Instance => instance;
+
+    private void Awake() {...}
+    public void SetToolTip(SkillInfo skillInfo) {...}
+    public void SetColor(float alpha) {...}
+}
+```
+</details>
+
+<details Open>
+<summary> 스킬파츠 툴팁 Code </summary>
+
+```C#
+public class UI_MotifyTip : MonoBehaviour
+{
+    static UI_MotifyTip instance;
+    public CanvasGroup group;
+    public RectTransform parentRect;
+    public Image motifyIcon;
+    public Text motifyName;
+    public Text motifyFuction;
+    public Text motifyStat;
+    public Text motifyDescription;
+
+    public static UI_MotifyTip Instance => instance;
+
+    private void Start() {...}
+    public void SetToolTip(MotifyInfo motifyInfo) {...}
+    public void SetColor(float alpha) {...}
+}
+```
+</details>
+
+<details Open>
+<summary> 스킬창 슬롯 Code </summary>
+
+```C#
+public class UI_SkillSlot : UI_Slot
+{
+    public static UI_SkillSlot instance;
+    public SkillInfo skillInfo;
+    RectTransform   rect;
+
+    public override void Init() {...}
+    public void SetInfo(SkillInfo info) {...}
+    private void EnterSlotEvent(PointerEventData eventData) {...}
+    private void ExitSlotEvent(PointerEventData eventData) {...}
+}
+```
+</details>
+
+<details Open>
+<summary> 메인스킬 슬롯 Code </summary>
+
+```C#
+public class UI_SkillSlot : UI_Slot
+{
+    public static UI_SkillSlot instance;
+    public SkillInfo skillInfo;
+    RectTransform   rect;
+
+    public override void Init() {...}
+    public void SetInfo(SkillInfo info) {...}
+    private void EnterSlotEvent(PointerEventData eventData) {...}
+    private void ExitSlotEvent(PointerEventData eventData) {...}
+}
+```
+</details>
+
+<details Open>
+<summary> 스킬파츠 슬롯 Code </summary>
+
+```C#
+public class UI_MotifySlot : UI_Slot
+{
+    public bool         isClick = false;
+    public MotifyInfo   motifyInfo;
+    RectTransform       rect;
+
+    public override void Init() {...}
+    public void SetInfo(MotifyInfo info) {...}
+    public void SetColor() {...}
+    private void OnClickEvent(PointerEventData eventData) {...}
+    private void EnterSlotEvent(PointerEventData eventData) {...}
+    private void ExitSlotEvent(PointerEventData eventData) {...}
+    private void OnDestroy() {...}
+}
+
+```
+</details>
+
+<details>
+<summary> 스킬창 FullCode Open </summary>
+
+```C#
+public class UI_Skill : UIPopup
+{
+    enum GameObjects
+    {
+        ProjectileTab,
+        ExplosionTab,
+        Initialize_MotifyGround,
+        Embodiment_MotifyGround,
+        Movement_MotifyGround,
+        MainSkill_Slot
+    }
+
+    private UI_MotifyGround[] grounds = new UI_MotifyGround[3];
+    private int slotCount = 3;
+
+    public override void Init()
+    {
+        base.Init();
+
+        BindObject(typeof(GameObjects));
+        GetObject((int)GameObjects.ProjectileTab).BindEvent(evt => 
+        {
+            Managers.Skill.curMainSkill = Define.ESkill.Projectile;
+            SetSkill();
+        });
+        GetObject((int)GameObjects.ExplosionTab).BindEvent(evt => 
+        {
+            Managers.Skill.curMainSkill = Define.ESkill.AreaOfEffect;
+            SetSkill();
+        });
+
+        SetMotifys();
+        SetSkill();     
+    }
+
+    private void SetSkill()
+    {
+        GameObject go = GetObject((int)GameObjects.MainSkill_Slot);
+        UI_SkillSlot slot = go.GetComponent<UI_SkillSlot>();
+
+        switch (Managers.Skill.curMainSkill)
+        {
+            case Define.ESkill.Projectile:
+                slot.SetInfo(Managers.Data.SkillDict["ProjectileSkill"]);
+                break;
+            case Define.ESkill.AreaOfEffect:
+                slot.SetInfo(Managers.Data.SkillDict["ExplosionSkill"]);
+                break;
+        }
+        SetGroundInfo();
+    }
+
+    private void SetMotifys()
+    {
+        SetInitializeSlot();
+        SetEmbodimentSlot();
+        SetMovementSlot();
+    }
+
+    private void SetInitializeSlot()
+    {
+        Transform parent = GetObject((int)GameObjects.Initialize_MotifyGround).transform; 
+        UI_MotifyGround ground = parent.GetComponent<UI_MotifyGround>();
+        grounds[0] = ground;
+
+        for (int i = 1; i <= slotCount; i++)
+        {
+            GameObject prefab = Managers.Resource.Instantiate("UI_MotifySlot");
+
+            UI_MotifySlot slot = prefab.GetComponent<UI_MotifySlot>();
+            slot.SetInfo(Managers.Data.MotifyDict[100 + i]); 
+            prefab.transform.SetParent(parent);
+        }
+
+        ground.SetSlots();
+    }
+
+    private void SetEmbodimentSlot()
+    {
+        Transform parent = GetObject((int)GameObjects.Embodiment_MotifyGround).transform;
+        UI_MotifyGround ground = parent.GetComponent<UI_MotifyGround>();
+        grounds[1] = ground;
+
+        for (int i = 1; i <= slotCount; i++)
+        {
+            GameObject prefab = Managers.Resource.Instantiate("UI_MotifySlot");
+
+            UI_MotifySlot slot = prefab.GetComponent<UI_MotifySlot>();            
+            slot.SetInfo(Managers.Data.MotifyDict[150 + i]); 
+            prefab.transform.SetParent(parent);
+        }
+
+        ground.SetSlots();
+    }
+    
+    private void SetMovementSlot()
+    {
+        Transform parent = GetObject((int)GameObjects.Movement_MotifyGround).transform;
+        UI_MotifyGround ground = parent.GetComponent<UI_MotifyGround>();
+        grounds[2] = ground;
+
+        for (int i = 1; i <= slotCount; i++)
+        {
+            GameObject prefab = Managers.Resource.Instantiate("UI_MotifySlot");
+
+            UI_MotifySlot slot = prefab.GetComponent<UI_MotifySlot>();
+            slot.SetInfo(Managers.Data.MotifyDict[200 + i]);
+            prefab.transform.SetParent(parent);
+        }
+
+        ground.SetSlots();
+    }
+
+    private void SetGroundInfo()
+    {      
+        SkillInventory skillInven = Managers.Game.GetPlayer().GetComponent<SkillInventory>();
+        SkillInfo mainSkill = skillInven.skillMotifies.FirstOrDefault(x => x.Key.type == Managers.Skill.curMainSkill).Key;
+
+        if (mainSkill == null) return;
+
+        for(int i = 0; i < grounds.Length; i++)
+        {
+            if (skillInven.skillMotifies[mainSkill][i] == null)
+            {
+                grounds[i].DeSelect();
+                continue;
+            }
+
+            for (int j = 0; j < slotCount; j++)
+            {
+                // MofityInfo의 Equals를 오버라이딩해서 사용
+                if (skillInven.skillMotifies[mainSkill][i].Equals(grounds[i].slots[j].motifyInfo) == false)
+                    continue;
+
+                grounds[i].CheckSlots(grounds[i].slots[j]);
+            }
+        }
+    }
+}
+
+```
+</details>
+
+<details>
+<summary> 메인스킬 툴팁 FullCode Open </summary>
+
+```C#
+public class UI_SkillTip : MonoBehaviour
+{
+    private static UI_SkillTip instance;
+
+    public CanvasGroup group;
+    public RectTransform parentRect;
+    public Image icon;
+    public Text skillName;
+    public Text skillFuction;
+    public Text skillStat;
+    public Text skillDescription;
+    public Text initMotify;
+    public Text embodiMotify;
+    public Text moveMotify;
+
+    private MotifyInfo initInfo;
+    private MotifyInfo embodiInfo;
+    private MotifyInfo moveInfo;
+
+    public static UI_SkillTip Instance => instance;
+
+    private void Awake()
+    {
+        instance = this;
+        group = GetComponent<CanvasGroup>();
+        parentRect = transform.parent.GetComponent<RectTransform>();
+    }
+
+    public void SetToolTip(SkillInfo skillInfo)
+    {
+        SkillInventory skillInventory = Managers.Game.GetPlayer().GetComponent<SkillInventory>();
+        MotifyInfo[] motifys = skillInventory.skillMotifies[skillInfo];
+
+        Texture2D texture = Managers.Resource.Load<Texture2D>(skillInfo.icon);
+        icon.sprite = Managers.UI.TextureToSprite(texture);
+
+        skillName.text = string.Format($"{skillInfo.name}");
+        skillStat.text = string.Format($"마나 : {skillInfo.mana}");
+        skillFuction.text = string.Format($"{skillInfo.function}");
+        skillDescription.text = string.Format($"{skillInfo.description}");
+
+        string initName = motifys[0] == null ? Managers.Data.MotifyDict[100].name : motifys[0].name;
+        string embodiName = motifys[1] == null ? Managers.Data.MotifyDict[150].name : motifys[1].name;
+        string moveName = motifys[2] == null ? Managers.Data.MotifyDict[200].name : motifys[2].name;
+
+        initMotify.text = string.Format($"{initName}");
+        embodiMotify.text = string.Format($"{embodiName}");
+        moveMotify.text = string.Format($"{moveName}");
+    }
+
+    public void SetColor(float alpha) { group.alpha = alpha; }
+}
+
+```
+</details>
+
+<details>
+<summary> 스킬파츠 툴팁 FullCode Open </summary>
+
+```C#
+public class UI_MotifyTip : MonoBehaviour
+{
+    static UI_MotifyTip instance;
+    public CanvasGroup group;
+    public RectTransform parentRect;
+    public Image motifyIcon;
+    public Text motifyName;
+    public Text motifyFuction;
+    public Text motifyStat;
+    public Text motifyDescription;
+
+    public static UI_MotifyTip Instance => instance;
+    private void Start()
+    {
+        instance = this;
+        parentRect = transform.parent.GetComponent<RectTransform>();
+        group = GetComponent<CanvasGroup>();
+    }
+
+    public void SetToolTip(MotifyInfo motifyInfo)
+    {
+        Texture2D texture = Managers.Resource.Load<Texture2D>(motifyInfo.icon);
+        motifyIcon.sprite = Managers.UI.TextureToSprite(texture);
+
+        motifyName.text = string.Format($"{motifyInfo.name}");
+        motifyStat.text = string.Format($"마나 : {motifyInfo.mana}");
+        motifyFuction.text = string.Format($"{motifyInfo.function}");
+        motifyDescription.text = string.Format($"{motifyInfo.description}");
+    }
+
+    public void SetColor(float alpha) { group.alpha = alpha; }
+}
+```
+</details>
+
+<details>
+<summary> 메인스킬 슬롯 FullCode Open </summary>
+
+```C#
+public class UI_SkillSlot : UI_Slot
+{
+    public static UI_SkillSlot instance;
+    public SkillInfo skillInfo;
+    RectTransform   rect;
+
+    public override void Init()
+    {
+        instance = this;
+        rect = GetComponent<RectTransform>();
+        gameObject.BindEvent(EnterSlotEvent, Define.EUiEvent.PointerEnter);
+        gameObject.BindEvent(ExitSlotEvent, Define.EUiEvent.PointerExit);
+    }
+
+    public void SetInfo(SkillInfo info)
+    {
+        base.Init();
+
+        skillInfo = info;
+
+        Texture2D texture = Managers.Resource.Load<Texture2D>(skillInfo.icon);
+        Image slotIcon = GetImage((int)Images.SlotIcon);
+        slotIcon.sprite = Managers.UI.TextureToSprite(texture);
+    }
+
+    private void EnterSlotEvent(PointerEventData eventData)
+    {
+        UI_SkillTip.Instance.SetColor(1f);
+        UI_SkillTip.Instance.SetToolTip(skillInfo);
+
+        RectTransform tooltipRect = UI_SkillTip.Instance.GetComponent<RectTransform>();
+        tooltipRect.pivot = new Vector2(0, 1);
+        tooltipRect.position = rect.position;
+
+        float y = Mathf.Clamp(tooltipRect.anchoredPosition.y, -UI_SkillTip.Instance.parentRect.position.y + tooltipRect.rect.size.y, UI_SkillTip.Instance.parentRect.position.y);
+
+        tooltipRect.anchoredPosition = new Vector2(tooltipRect.anchoredPosition.x, y);
+
+        Cursor.visible = false;
+    }
+
+    private void ExitSlotEvent(PointerEventData eventData)
+    {
+        UI_SkillTip.Instance.SetColor(0f);
+        Cursor.visible = true;
+    }
+}
+```
+</details>
+
+<details>
+<summary> 스킬파츠 슬롯 FullCode Open </summary>
+
+```C#
+public class UI_MotifySlot : UI_Slot
+{
+    public bool isClick = false;
+    public MotifyInfo motifyInfo;
+    private RectTransform rect;
+
+    public override void Init()
+    {       
+        icon = GetComponent<Image>();
+        rect = GetComponent<RectTransform>();
+        gameObject.BindEvent(OnClickEvent, Define.EUiEvent.Click);
+        gameObject.BindEvent(EnterSlotEvent, Define.EUiEvent.PointerEnter);
+        gameObject.BindEvent(ExitSlotEvent, Define.EUiEvent.PointerExit);
+    }
+
+    public void SetInfo(MotifyInfo info) 
+    {
+        base.Init();
+
+        motifyInfo = info;
+
+        Texture2D texture = Managers.Resource.Load<Texture2D>(motifyInfo.icon);
+        Image slotIcon = GetImage((int)Images.SlotIcon);
+        slotIcon.sprite = Managers.UI.TextureToSprite(texture);
+    }
+
+    public void SetColor()
+    {
+        icon.color = isClick == true ? Color.red : Color.white;
+    }
+    
+    private void OnClickEvent(PointerEventData eventData)
+    {
+        UI_MotifyGround parent = transform.parent.GetComponent<UI_MotifyGround>();
+        if (isClick == true)
+            parent.DeSelect();
+        else
+            parent.CheckSlots(this);
+
+        Managers.Skill.playerInventory.AddMotify(motifyInfo);
+    }
+
+    private void EnterSlotEvent(PointerEventData eventData)
+    {
+        UI_MotifyTip.Instance.SetToolTip(motifyInfo);
+        UI_MotifyTip.Instance.SetColor(1f);
+
+        RectTransform tooltipRect = UI_MotifyTip.Instance.GetComponent<RectTransform>();
+        tooltipRect.pivot = new Vector2(0, 1);
+        tooltipRect.position = rect.position;
+
+        float y = Mathf.Clamp(tooltipRect.anchoredPosition.y, -UI_MotifyTip.Instance.parentRect.position.y + tooltipRect.rect.size.y, UI_MotifyTip.Instance.parentRect.position.y);
+
+        tooltipRect.anchoredPosition = new Vector2(tooltipRect.anchoredPosition.x, y);
+
+        Cursor.visible = false;
+    }
+
+    private void ExitSlotEvent(PointerEventData eventData)
+    {
+        UI_MotifyTip.Instance.SetColor(0f);
+
+        Cursor.visible = true;
+    }
+
+    private void OnDestroy()
+    {
+        Cursor.visible = true;
+    }
+}
+```
+</details>
+
+### 6. 퀘스트 관리
+Action을 이용하여 퀘스트의 상태추적, 조건추적을 해도록 구현했습니다.
+
+<details open>
+<summary>퀘스트 매니저 Code Open</summary>
+
+```C#
 public class QuestManager
 {
-    List<Quest> activeQuests = new List<Quest>();
+    private List<Quest> activeQuests = new List<Quest>();
     public IReadOnlyList<Quest> ActiveQuests => activeQuests;
 
-    // 상태 관리 이벤트들
+    // 퀘스트추적 액션들
     public Action<QuestInfo> OnStartQuest = null;
     public Action<Quest> OnCompletedQuest = null;
     public Action<Quest> OnRewardsQuest = null;
 
-    // 조건 업데이트 이벤트들
+    // 조건추적 액션들
     public Action<string> OnKillQuestAction = null;
     public Action<string, int> OnGetQuestAction = null;
     public Action<int> OnLevelQuestAction = null;
 
     public Action<int> OnCurrentUpdate = null;
+
     public void Init() {...}
 
     // 추가 삭제 완료 메서드들
@@ -1194,7 +2588,7 @@ public class QuestManager
     public void RemoveQuest(Quest quest) {...}
     public void CompleteQuest(Quest quest) {...}
 
-    // 조건 이벤트들의 메서드들
+    // 조건업데이트 메서드들
     public void UpdateKill(string target) {...}
     public void UpdateGet(string target, int count) {...}
     public void UpdateLevel(int curLevel) {...}
@@ -1202,15 +2596,40 @@ public class QuestManager
 ```
 </details>
 
+<details Open>
+<summary> 퀘스트 UI Code </summary>
+
+```C#
+public class UI_Quest : UIPopup
+{
+    enum GameObjects
+    {
+        QuestList,
+        UI_Quest_Popup
+    }
+
+    private GameObject list;
+    private GameObject popup;
+    private int questId = int.MaxValue;
+
+    public override void Init() {...}
+    private void QuestListInit() {...}
+    public void OnQuestPopup(int id) {...}
+    private void Update() {...}
+}
+
+```
+</details>
+
 <details>
-<summary>FullCode Open</summary>
+<summary> 퀘스트 매니저 FullCode Open </summary>
 
 ```C#
 public class QuestManager
 {
-    List<Quest> activeQuests = new List<Quest>();
-
-    // 
+    private List<Quest> activeQuests = new List<Quest>();
+    public IReadOnlyList<Quest> ActiveQuests => activeQuests;
+    
     public Action<QuestInfo> OnStartQuest = null;
     public Action<Quest> OnCompletedQuest = null;
     public Action<Quest> OnRewardsQuest = null;
@@ -1220,8 +2639,6 @@ public class QuestManager
     public Action<int> OnLevelQuestAction = null;
 
     public Action<int> OnCurrentUpdate = null;
-
-    public IReadOnlyList<Quest> ActiveQuests => activeQuests;
 
     public void Init()
     {
@@ -1285,8 +2702,7 @@ public class QuestManager
                     Managers.Inventory.AddItem(new Iteminfo(Managers.Data.ItemDict[102 + i]));
                 }
             }
-        }
-            
+        }   
     }
 
     public void UpdateKill(string target)
@@ -1321,7 +2737,7 @@ public class QuestManager
 </details>
 
 <details>
-<summary>퀘스트 UI Code Open</summary>
+<summary> 퀘스트 UI FullCode Open</summary>
 
 ```C#
 public class UI_Quest : UIPopup
@@ -1332,40 +2748,9 @@ public class UI_Quest : UIPopup
         UI_Quest_Popup
     }
 
-    GameObject list;
-    GameObject popup;
-    int questId = int.MaxValue;
-
-    public override void Init() {...}
-    private void QuestListInit() {...}
-    public void OnQuestPopup(int id) {...}
-    private void Update() {...}
-}
-
-```
-</details>
-
-<details>
-<summary>FullCode Open</summary>
-
-```C#
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-
-public class UI_Quest : UIPopup
-{
-    enum GameObjects
-    {
-        QuestList,
-        UI_Quest_Popup
-    }
-
-    GameObject list;
-    GameObject popup;
-    int questId = int.MaxValue;
+    private GameObject list;
+    private GameObject popup;
+    private int questId = int.MaxValue;
 
     public override void Init()
     {
@@ -1413,22 +2798,16 @@ public class UI_Quest : UIPopup
 ```
 </details>
 
-### 6. 퀘스트 NPC
-퀘스트 매니저의 기능들을 가져와 UI 적으로 플레이어에게 제공하도록 구현했습니다.
+### 퀘스트 NPC
+퀘스트 매니저의 기능들을 가져와 시각적으로 플레이어에게 제공하도록 구현했습니다.
 
 <details open>
-<summary>퀘스트 NPC Code Open</summary>
+<summary> 퀘스트NPC Code </summary>
 
 ```C#
-using Data;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class QuestGiver : NpcController
 {
-    List<QuestInfo> quests = new List<QuestInfo>();
+    private List<QuestInfo> quests = new List<QuestInfo>();
     public List<QuestInfo> Quests => quests;
 
     public override void Init() {...}
@@ -1438,8 +2817,8 @@ public class QuestGiver : NpcController
 ```
 </details>
 
-<details>
-<summary>FullCode Open</summary>
+<details Open>
+<summary> 퀘스트NPC UI Code </summary>
 
 ```C#
 using Data;
@@ -1447,7 +2826,33 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
+public class UI_Giver : UIPopup
+{
+    enum GiverObject
+    {
+        PossibleList,
+        GiverQuest_Popup,
+        UI_Giver_ExitButton
+    }
+
+    List<QuestInfo> ownerQuests = new List<QuestInfo>();
+    GameObject popup;
+    GameObject list;
+
+    public override void Init() {...}
+    public void ListUp() {...}
+    public void UIListInit(List<QuestInfo> quests) {...}
+    public void OnGiverPopup(QuestInfo quest) {...}
+}
+```
+</details>
+
+<details>
+<summary> 퀘스트NPC FullCode Open</summary>
+
+```C#
 public class QuestGiver : NpcController
 {
     List<QuestInfo> quests = new List<QuestInfo>();
@@ -1480,39 +2885,7 @@ public class QuestGiver : NpcController
 </details>  
 
 <details>
-<summary>UI Code Open</summary>
-
-```C#
-using Data;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-
-public class UI_Giver : UIPopup
-{
-    enum GiverObject
-    {
-        PossibleList,
-        GiverQuest_Popup,
-        UI_Giver_ExitButton
-    }
-
-    List<QuestInfo> ownerQuests = new List<QuestInfo>();
-    GameObject popup;
-    GameObject list;
-
-    public override void Init() {...}
-    public void ListUp() {...}
-    public void UIListInit(List<QuestInfo> quests) {...}
-    public void OnGiverPopup(QuestInfo quest) {...}
-}
-```
-</details>
-
-<details>
-<summary>FullCode Open</summary>
+<summary> 퀘스트NPC UI FullCode Open</summary>
 
 ```C#
 public class UI_Giver : UIPopup
@@ -1524,9 +2897,9 @@ public class UI_Giver : UIPopup
         UI_Giver_ExitButton
     }
 
-    List<QuestInfo> ownerQuests = new List<QuestInfo>();
-    GameObject popup;
-    GameObject list;
+    private List<QuestInfo> ownerQuests = new List<QuestInfo>();
+    private GameObject popup;
+    private GameObject list;
 
     public override void Init()
     {
@@ -1576,17 +2949,12 @@ public class UI_Giver : UIPopup
 </details>
 
 ### 7. 상인 NPC
-아이템리스트를 띄워주는 UI발사대로 UI에 파싱된 데이터를 가져와 유저에게 제공하고 Buy, Sell기능도 UI에서 제공하도록 합니다.    
+아이템리스트를 띄워주는 UI 발사대로 UI에 파싱된 데이터를 가져와 유저에게 제공하고 Buy, Sell기능도 UI에서 제공하도록 합니다.    
 
 <details Open>
 <summary> 상인NPC Code </summary>
     
 ```C#
-using Data;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class TraderController : NpcController
 {
     public override void Init()
@@ -1608,14 +2976,42 @@ public class TraderController : NpcController
 ```
 </details>
 
+<details Open>
+<summary> 상점 아이템슬롯 Code </summary>
+
+```C#
+public class UI_Trader_Item : UIPopup
+{
+    enum ItemButtons
+    {
+        UI_Trader_Sell,
+        UI_Trader_Buy
+    }
+
+    enum ItemImage
+    {
+        UI_Trader_Item_Slot
+    }
+
+    enum ItemTexts
+    {
+        UI_Trader_Item_Name,
+        UI_Trader_Item_Sell
+    }
+
+    public override void Init() {...}
+    public void ItemInit(Iteminfo info) {...}
+    public void ItemBuy(Iteminfo item) {...}
+    public void ItemSell(Iteminfo item) {...}
+}
+```    
+</details>
+
+
 <details>
 <summary> 상점UI FullCode Open </summary>
     
 ```C#
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class UI_Trader : UIPopup
 {
     enum GameObjects
@@ -1654,52 +3050,11 @@ public class UI_Trader : UIPopup
 ```
 </details>
 
-<details Open>
-<summary> 상점 아이템슬롯 Code </summary>
 
-```C#
-using Data;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-
-public class UI_Trader_Item : UIPopup
-{
-    enum ItemButtons
-    {
-        UI_Trader_Sell,
-        UI_Trader_Buy
-    }
-
-    enum ItemImage
-    {
-        UI_Trader_Item_Slot
-    }
-
-    enum ItemTexts
-    {
-        UI_Trader_Item_Name,
-        UI_Trader_Item_Sell
-    }
-
-    public override void Init() {...}
-    public void ItemInit(Iteminfo info) {...}
-    public void ItemBuy(Iteminfo item) {...}
-    public void ItemSell(Iteminfo item) {...}
-}
-```    
-</details>
 <details>
 <summary> 상점 아이템슬롯 FullCode Open </summary>
 
 ```C#
-using Data;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-
 public class UI_Trader_Item : UIPopup
 {
     enum ItemButtons
